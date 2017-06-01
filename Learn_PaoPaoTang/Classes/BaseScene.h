@@ -2,6 +2,7 @@
 #define _BASE_SCENE_H_
 
 #include "cocos2d.h"
+#include "StringTableMgr.h"
 
 USING_NS_CC;
 

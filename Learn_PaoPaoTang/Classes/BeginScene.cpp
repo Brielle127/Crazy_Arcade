@@ -3,6 +3,7 @@
 #include"MenuSelectHandler.h"
 #include"GameUtils.h"
 #include"tinyxml.h"
+#include"StringTableMgr.h"
 
 #include<xstring>
 using namespace std;
@@ -20,10 +21,8 @@ void CBeginScene::onEnterScene()
 	auto image = MenuItemImage::create(
 		"play.png","CloseNormal.png", CC_CALLBACK_1(CMenuSelectHandler::beginScene_PlayItem, CMenuSelectHandler::sharedHandler()));
 	image->setPosition(designResolutionSize.width / 2, designResolutionSize.height / 2);
-	wstring exit = L"ÍË³öÓÎÏ·";
-	string exit2; 
-	GameUtils::WStrToUTF8(exit2, exit);
-	auto label = Label::create(exit2, "Arial", 24);
+
+	auto label = Label::create(CStringTableMgr::getString("main_menu"), "Arial", 24);
 	auto labelItem = MenuItemLabel::create(label);
 	labelItem->setPosition(designResolutionSize.width / 2, designResolutionSize.height / 2-140);
 
