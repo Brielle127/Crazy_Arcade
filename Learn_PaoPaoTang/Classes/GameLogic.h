@@ -6,6 +6,7 @@
 #include "PlayScene.h"
 #include "BaseDef.h"
 
+
 USING_NS_CC;
 
 class  GameLogic : private Application,private Scheduler

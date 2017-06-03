@@ -3,6 +3,8 @@
 
 USING_NS_CC;
 
+CRenderObj* pRenderObj = nullptr;
+
 CPlayScene::CPlayScene()
 {
 	
@@ -24,9 +26,18 @@ void CPlayScene::onEnterScene()
 	Menu* menu = Menu::create(back_labelItem, NULL);
 	menu->setPosition(Vec2::ZERO);
 	mSceneLayer->addChild(menu, 1);
+
+	pRenderObj = new(CRenderObj)();
+	mSceneLayer->addChild(pRenderObj->sprite);
+	pRenderObj->sprite->setPosition(Point(designResolutionSize.width/2,designResolutionSize.height/2));
 }
 
 void CPlayScene::onExitScene()
 {
 	mSceneLayer->removeAllChildrenWithCleanup(true);
+}
+
+void CPlayScene::onUpdate(float dt)
+{
+	pRenderObj->update(dt);
 }

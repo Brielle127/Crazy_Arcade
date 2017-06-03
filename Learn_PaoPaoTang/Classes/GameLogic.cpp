@@ -46,7 +46,7 @@ bool GameLogic::applicationDidFinishLaunching() {
     }
 
 	//
-	pDirector->getScheduler()->scheduleUpdateForTarget(this, 0,	false);
+	pDirector->getScheduler()->scheduleUpdate(this, 0,	false);
 
 	// ´´½¨³¡¾°
 	mSceneRoot = Scene::create();
