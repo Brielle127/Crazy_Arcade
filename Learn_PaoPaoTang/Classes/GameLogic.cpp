@@ -1,17 +1,17 @@
 #include "GameLogic.h"
-#include "BaseDef.h"
+
 USING_NS_CC;
 
 
 GameLogic::GameLogic()
-	:mSceneRoot(NULL)
-	,mBeginScene(NULL)
+	:mSceneRoot(nullptr),mBeginScene(nullptr)
 {
 
 }
 
 GameLogic::~GameLogic() 
 {
+
 }
 
 //if you want a different context,just modify the value of glContextAttrs
@@ -34,53 +34,31 @@ static int register_all_packages()
 
 bool GameLogic::applicationDidFinishLaunching() {
     // initialize director
-    auto director = Director::getInstance();
-    auto glview = director->getOpenGLView();
+    auto pDirector = Director::getInstance();
+    auto glview = pDirector->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         glview = GLViewImpl::createWithRect("Learn_PaoPaoTang", Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #else
         glview = GLViewImpl::create("Learn_PaoPaoTang");
 #endif
-        director->setOpenGLView(glview);
+        pDirector->setOpenGLView(glview);
     }
 
-	/*
-    // Set the design resolution
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
-	Size frameSize = glview->getFrameSize();
-    
-	// if the frame's height is larger than the height of medium size.
-    if (frameSize.height > mediumResolutionSize.height)
-    {        
-        director->setContentScaleFactor(MIN(largeResolutionSize.height/designResolutionSize.height, largeResolutionSize.width/designResolutionSize.width));
-    }
-    // if the frame's height is larger than the height of small size.
-    else if (frameSize.height > smallResolutionSize.height)
-    {        
-        director->setContentScaleFactor(MIN(mediumResolutionSize.height/designResolutionSize.height, mediumResolutionSize.width/designResolutionSize.width));
-    }
-    // if the frame's height is smaller than the height of medium size.
-    else
-    {        
-        director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
-    }
-	
-    register_all_packages();
-	*/
+	//
+	pDirector->getScheduler()->scheduleUpdateForTarget(this, 0,	false);
 
 	// 创建场景
 	mSceneRoot = Scene::create();
 	mBeginScene = new (CBeginScene)();
-	mPlayeScene = new(CPlayScene)();
-	mEndScene = new(CEndScene)();
+	mPlayScene = new (CPlayScene)();
 
 	mSceneRoot->addChild(mBeginScene->getSceneLayer());
 	mCurrentScene = mBeginScene;
 	mCurrentScene->onEnterScene();
     
 	// run
-    director->runWithScene(mSceneRoot);
+    pDirector->runWithScene(mSceneRoot);
 
     return true;
 }
@@ -101,7 +79,61 @@ void GameLogic::applicationWillEnterForeground() {
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
 
-void GameLogic::handleEvent(int eventType, void * data=NULL)
+void GameLogic::handleEvent(int eventType, void * data)
 {
+	// 过滤事件
+	switch (eventType)
+	{
+	case ESSE_Play:
+	{
+		mCurrentScene->onExitScene(); // 退出当前场景
+		mSceneRoot->removeChild(mCurrentScene->getSceneLayer(), false);
+		
+		mCurrentScene = mPlayScene;  //当前场景转化为下一场景
+		mSceneRoot->addChild(mCurrentScene->getSceneLayer());
+		mCurrentScene->onEnterScene();
+		return;
+	}
+	case ESSE_Exit:
+		{
+			mCurrentScene->onExitScene();// 释放当前场景
+			mCurrentScene = nullptr;
+			Director::getInstance()->end();
+			
+			delete mBeginScene;
+			mBeginScene = nullptr;
+			delete mPlayScene;
+			mPlayScene = nullptr;
+
+			return;// 结束处理
+		}
+	
+	case ESSE_Back2Menu: /* 返回开始菜单 */
+		{
+			mCurrentScene->onExitScene(); // 退出当前场景
+			mSceneRoot->removeChild(mCurrentScene->getSceneLayer(), false);
+			
+			mCurrentScene = mBeginScene;  //当前场景转化为开始场景
+			mSceneRoot->addChild(mCurrentScene->getSceneLayer());
+			mCurrentScene->onEnterScene();
+			return;
+		}
+	
+	}
 	mCurrentScene->onHandleEvent(eventType,data);
 }
+
+GameLogic & GameLogic::sharedGameLogic()
+{
+	return ((GameLogic&)*Application::getInstance());
+}
+
+void GameLogic::update(float dt)
+{
+	// to do
+
+	// ...
+	if (mCurrentScene)// 当前场景存在
+		mCurrentScene->onUpdate(dt);
+}
+

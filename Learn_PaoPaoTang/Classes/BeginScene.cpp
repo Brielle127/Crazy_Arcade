@@ -1,11 +1,6 @@
 #include"BeginScene.h"
-#include"BaseDef.h"
 #include"MenuSelectHandler.h"
-#include"GameUtils.h"
-#include"tinyxml.h"
-#include"StringTableMgr.h"
 
-#include<xstring>
 using namespace std;
 USING_NS_CC;
 
@@ -17,18 +12,27 @@ CBeginScene::CBeginScene()
 
 void CBeginScene::onEnterScene()
 {
+	Sprite* pBG = Sprite::create("pic/BeginScene.png");
+	pBG->setAnchorPoint(Point::ZERO);
+	mSceneLayer->addChild(pBG);
+
 	// ´´½¨²Ëµ¥
-	auto image = MenuItemImage::create(
-		"play.png","CloseNormal.png", CC_CALLBACK_1(CMenuSelectHandler::beginScene_PlayItem, CMenuSelectHandler::sharedHandler()));
-	image->setPosition(designResolutionSize.width / 2, designResolutionSize.height / 2);
+	auto play_label = Label::createWithSystemFont(CStringTableMgr::getString("play"), "Arial", 24);
+	auto play_labelItem = MenuItemLabel::create(play_label, CC_CALLBACK_1(CMenuSelectHandler::onMenu_Play, CMenuSelectHandler::sharedHandler()));
+	play_labelItem->setPosition(designResolutionSize.width / 2, designResolutionSize.height / 2 );
 
-	auto label = Label::create(CStringTableMgr::getString("main_menu"), "Arial", 24);
-	auto labelItem = MenuItemLabel::create(label);
-	labelItem->setPosition(designResolutionSize.width / 2, designResolutionSize.height / 2-140);
+	auto exit_label = Label::createWithSystemFont(CStringTableMgr::getString("exit"), "Arial", 24);
+	auto exit_labelItem = MenuItemLabel::create(exit_label, CC_CALLBACK_1(CMenuSelectHandler::onMenu_Exit, CMenuSelectHandler::sharedHandler()));
+	exit_labelItem->setPosition(designResolutionSize.width / 2, designResolutionSize.height / 2-50);
 
-	Menu* menu = Menu::create(image, labelItem, NULL);
+	Menu* menu = Menu::create(play_labelItem, exit_labelItem, NULL);
 	menu->setPosition(Vec2::ZERO);
 	mSceneLayer->addChild(menu,1);
 	
+}
+
+void CBeginScene::onExitScene()
+{
+	mSceneLayer->removeAllChildrenWithCleanup(true);
 }
 

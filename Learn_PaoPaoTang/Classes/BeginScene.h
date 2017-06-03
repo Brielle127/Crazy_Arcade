@@ -3,6 +3,10 @@
 
 #include"cocos2d.h"
 #include"BaseScene.h"
+#include"BaseDef.h"
+#include"tinyxml.h"
+#include"StringTableMgr.h"
+#include<xstring>
 
 USING_NS_CC;
 
@@ -12,7 +16,7 @@ public:
 	CBeginScene();
 
 	virtual void onEnterScene();
-	virtual void onExitScene() {}
+	virtual void onExitScene();
 	
 };
 

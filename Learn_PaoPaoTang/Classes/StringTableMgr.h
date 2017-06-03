@@ -13,8 +13,8 @@ private:
 	{
 		
 		TiXmlDocument doc;
-		bool loaded =doc.LoadFile("Config/StringTable.xml");
-		//assert(loaded == true);
+		bool loaded = doc.LoadFile("Config/StringTable.xml");
+		assert(loaded == true);
 		auto element = doc.RootElement()->FirstChildElement();
 		while (element != NULL)
 		{

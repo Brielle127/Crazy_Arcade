@@ -1,38 +1,45 @@
-﻿  CCEventListenerAssetsManagerEx.cpp
-  CCAnimate3D.cpp
-  CCAnimation3D.cpp
-  CCMesh.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\3d\CCAnimation3D.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\3d\CCAnimation3D.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\3d\CCAnimation3D.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\3d\CCAnimation3D.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\3d\CCAnimate3D.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\3d\CCAnimate3D.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\3d\CCAnimate3D.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\3d\CCAnimate3D.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\3d\CCMesh.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\3d\CCMesh.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\3d\CCMesh.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\3d\CCMesh.cpp)
+﻿  AssetsManager.cpp
+  AssetsManagerEx.cpp
+  CCEventListenerAssetsManagerEx.cpp
+  CCSprite3D.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\3d\CCSprite3D.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\3d\CCSprite3D.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\3d\CCSprite3D.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\3d\CCSprite3D.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\..\extensions\assets-manager\AssetsManager.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\..\extensions\assets-manager\AssetsManager.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\..\extensions\assets-manager\AssetsManager.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\..\extensions\assets-manager\AssetsManager.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\..\extensions\assets-manager\AssetsManagerEx.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\..\extensions\assets-manager\AssetsManagerEx.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\..\extensions\assets-manager\AssetsManagerEx.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\..\extensions\assets-manager\AssetsManagerEx.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp)
-  CCSkybox.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\3d\CCSkybox.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\3d\CCSkybox.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\3d\CCSkybox.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\3d\CCSkybox.cpp)
+  AudioCache.cpp
+..\3d\CCSprite3D.cpp(467): warning C4018: “<”: 有符号/无符号不匹配
+..\3d\CCSprite3D.cpp(777): warning C4804: “>”: 在操作中使用类型“bool”不安全
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\audio\win32\AudioCache.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\audio\win32\AudioCache.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\audio\win32\AudioCache.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\audio\win32\AudioCache.cpp)
+  AudioEngine-win32.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\audio\win32\AudioEngine-win32.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\audio\win32\AudioEngine-win32.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\audio\win32\AudioEngine-win32.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\audio\win32\AudioEngine-win32.cpp)
   SimpleAudioEngine.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\audio\win32\SimpleAudioEngine.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\audio\win32\SimpleAudioEngine.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\audio\win32\SimpleAudioEngine.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\audio\win32\SimpleAudioEngine.cpp)
-  CCConfiguration.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\base\CCConfiguration.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\base\CCConfiguration.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\base\CCConfiguration.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\base\CCConfiguration.cpp)
+  CCAsyncTaskPool.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\base\CCAsyncTaskPool.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\base\CCAsyncTaskPool.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\base\CCAsyncTaskPool.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\base\CCAsyncTaskPool.cpp)
   CCConsole.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\base\CCConsole.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\base\CCConsole.cpp)
@@ -43,12 +50,17 @@ c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(7
   ..\base\CCConsole.cpp(393): note: 请考虑在格式字符串中使用“%lls”
   ..\base\CCConsole.cpp(393): note: 请考虑在格式字符串中使用“%Ls”
   ..\base\CCConsole.cpp(393): note: 请考虑在格式字符串中使用“%ws”
-  CCDirector.cpp
+  CCScriptSupport.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\base\CCScriptSupport.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\base\CCScriptSupport.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\base\CCScriptSupport.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\base\CCScriptSupport.cpp)
+  ccUtils.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\base\ccUtils.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\base\ccUtils.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\base\ccUtils.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\base\ccUtils.cpp)
   CCDeprecated.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\base\CCDirector.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\base\CCDirector.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\base\CCDirector.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\base\CCDirector.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\deprecated\CCDeprecated.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\deprecated\CCDeprecated.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\deprecated\CCDeprecated.cpp)
@@ -73,7 +85,17 @@ c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warn
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp)
+  CCActionObject.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\CCActionObject.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\CCActionObject.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\CCActionObject.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\CCActionObject.cpp)
   CCComRender.cpp
+  CCDataReaderHelper.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\CCDataReaderHelper.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\CCDataReaderHelper.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\CCDataReaderHelper.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\CCDataReaderHelper.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\CCComRender.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\CCComRender.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\CCComRender.cpp)
@@ -83,6 +105,10 @@ c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warn
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\CCSGUIReader.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\CCSGUIReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\CCSGUIReader.cpp)
+..\editor-support\cocostudio\CCDataReaderHelper.cpp(309): warning C4996: 'cocos2d::FileUtils::getFileData': 被声明为已否决
+  D:\_Codes\LearnPPT\Learn_PaoPaoTang\cocos2d\cocos\platform/CCFileUtils.h(111): note: 参见“cocos2d::FileUtils::getFileData”的声明
+..\editor-support\cocostudio\CCDataReaderHelper.cpp(422): warning C4996: 'cocos2d::FileUtils::getFileData': 被声明为已否决
+  D:\_Codes\LearnPPT\Learn_PaoPaoTang\cocos2d\cocos\platform/CCFileUtils.h(111): note: 参见“cocos2d::FileUtils::getFileData”的声明
   CCSSceneReader.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\CCSSceneReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\CCSSceneReader.cpp)
@@ -189,11 +215,11 @@ c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warn
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\PageViewReader\PageViewReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\PageViewReader\PageViewReader.cpp)
   Particle3DReader.cpp
+  ParticleReader.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp)
-  ParticleReader.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.cpp)
@@ -209,11 +235,11 @@ c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warn
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\ScrollViewReader\ScrollViewReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\ScrollViewReader\ScrollViewReader.cpp)
   SingleNodeReader.cpp
+  BoneNodeReader.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\SingleNodeReader\SingleNodeReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\SingleNodeReader\SingleNodeReader.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\SingleNodeReader\SingleNodeReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\SingleNodeReader\SingleNodeReader.cpp)
-  BoneNodeReader.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\SkeletonReader\BoneNodeReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\SkeletonReader\BoneNodeReader.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\SkeletonReader\BoneNodeReader.cpp)
@@ -229,11 +255,11 @@ c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warn
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.cpp)
   Sprite3DReader.cpp
+  SpriteReader.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp)
-  SpriteReader.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp)
@@ -249,11 +275,11 @@ c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warn
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.cpp)
   TextFieldReader.cpp
+  TextReader.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp)
-  TextReader.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\TextReader\TextReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\TextReader\TextReader.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\TextReader\TextReader.cpp)
@@ -268,78 +294,41 @@ c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warn
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\WidgetReader.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\WidgetReader.cpp)
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\editor-support\cocostudio\WidgetReader\WidgetReader.cpp)
-  CCPhysics3DDebugDrawer.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\physics3d\CCPhysics3DDebugDrawer.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\physics3d\CCPhysics3DDebugDrawer.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\physics3d\CCPhysics3DDebugDrawer.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\physics3d\CCPhysics3DDebugDrawer.cpp)
-  CCImage.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\platform\CCImage.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\platform\CCImage.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\platform\CCImage.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\platform\CCImage.cpp)
-d:\_codes\learnppt\learn_paopaotang\cocos2d\external\bullet\bulletcollision\broadphasecollision\btDbvtBroadphase.h(62): warning C4099: “btDbvtBroadphase”: 类型名称以前使用“class”现在使用的是“struct” (编译源文件 ..\physics3d\CCPhysics3DDebugDrawer.cpp)
-  d:\_codes\learnppt\learn_paopaotang\cocos2d\external\bullet\bulletcollision\broadphasecollision\btDbvtBroadphase.h(62): note: 参见“btDbvtBroadphase”的声明 (编译源文件 ..\physics3d\CCPhysics3DDebugDrawer.cpp)
-  CCGLProgramCache.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\renderer\CCGLProgramCache.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\renderer\CCGLProgramCache.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\renderer\CCGLProgramCache.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\renderer\CCGLProgramCache.cpp)
-  CCMeshCommand.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\renderer\CCMeshCommand.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\renderer\CCMeshCommand.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\renderer\CCMeshCommand.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\renderer\CCMeshCommand.cpp)
-  CCRenderer.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\renderer\CCRenderer.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\renderer\CCRenderer.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\renderer\CCRenderer.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\renderer\CCRenderer.cpp)
-  CCTexture2D.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\renderer\CCTexture2D.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\renderer\CCTexture2D.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\renderer\CCTexture2D.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\renderer\CCTexture2D.cpp)
-  CCTextureAtlas.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\renderer\CCTextureAtlas.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\renderer\CCTextureAtlas.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\renderer\CCTextureAtlas.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\renderer\CCTextureAtlas.cpp)
-  CCVertexAttribBinding.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\renderer\CCVertexAttribBinding.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\renderer\CCVertexAttribBinding.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\renderer\CCVertexAttribBinding.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\renderer\CCVertexAttribBinding.cpp)
-  ccGLStateCache.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\renderer\ccGLStateCache.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\renderer\ccGLStateCache.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\renderer\ccGLStateCache.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\renderer\ccGLStateCache.cpp)
-  CCCameraBackgroundBrush.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 CCCameraBackgroundBrush.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 CCCameraBackgroundBrush.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 CCCameraBackgroundBrush.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 CCCameraBackgroundBrush.cpp)
-  CCDrawNode.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 CCDrawNode.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 CCDrawNode.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 CCDrawNode.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 CCDrawNode.cpp)
-  CCFontFNT.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 CCFontFNT.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 CCFontFNT.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 CCFontFNT.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 CCFontFNT.cpp)
-  CCParticleSystemQuad.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 CCParticleSystemQuad.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 CCParticleSystemQuad.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 CCParticleSystemQuad.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 CCParticleSystemQuad.cpp)
-  CCRenderTexture.cpp
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 CCRenderTexture.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 CCRenderTexture.cpp)
-c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 CCRenderTexture.cpp)
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 CCRenderTexture.cpp)
+  CCDownloader-curl.cpp
+  HttpClient.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\network\CCDownloader-curl.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\network\CCDownloader-curl.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\network\CCDownloader-curl.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\network\CCDownloader-curl.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\network\HttpClient.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\network\HttpClient.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\network\HttpClient.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\network\HttpClient.cpp)
+  SocketIO.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\network\SocketIO.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\network\SocketIO.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\network\SocketIO.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\network\SocketIO.cpp)
+  WebSocket.cpp
+  CCTextureCache.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\network\WebSocket.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\network\WebSocket.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\network\WebSocket.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\network\WebSocket.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\renderer\CCTextureCache.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\renderer\CCTextureCache.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\renderer\CCTextureCache.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\renderer\CCTextureCache.cpp)
+  CCActionManager.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 CCActionManager.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 CCActionManager.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 CCActionManager.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 CCActionManager.cpp)
+  CCNode.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 CCNode.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 CCNode.cpp)
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 CCNode.cpp)
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 CCNode.cpp)
   复制了 1 个文件
   复制了 2 个文件
   复制了 4 个文件

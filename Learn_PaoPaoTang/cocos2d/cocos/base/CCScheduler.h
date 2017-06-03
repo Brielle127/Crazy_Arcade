@@ -61,7 +61,7 @@ public:
     virtual void cancel() = 0;
     
     /** triggers the timer */
-    void update(float dt);
+    virtual void update(float dt);
     
 protected:
     
@@ -210,7 +210,7 @@ public:
      * You should NEVER call this method, unless you know what you are doing.
      * @lua NA
      */
-    void update(float dt);
+    virtual void update(float dt);
 
     /////////////////////////////////////
     
