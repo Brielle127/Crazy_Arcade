@@ -23,4 +23,19 @@
 			<ani name="root" begin="0" end="2" fps="4"/>
 		</sub>
 	</group>
+	<group name ="ground">
+		<sub file="pic/TownGround.png" tileWidth ="7" tileHeight="1" width="280" height="40">
+			<ani name="ground0" begin="0" end="0" fps="4"/>
+			<ani name="ground1" begin="1" end="1" fps="4"/>
+			<ani name="ground2" begin="2" end="2" fps="4"/>
+			<ani name="ground3" begin="3" end="3" fps="4"/>
+			<ani name="ground4" begin="4" end="4" fps="4"/>
+			<ani name="ground5" begin="5" end="5" fps="4"/>
+			<ani name="ground6" begin="6" end="6" fps="4"/>
+		</sub>
+		<sub file="pic/SandGround.png" tileWidth="2" tileHeight="1" width="80" height="40">
+			<ani name="ground7" begin="0" end="0" fps="4"/>
+			<ani name="ground8" begin="1" end="1" fps="4"/>
+		</sub>
+	</group>
 </config>

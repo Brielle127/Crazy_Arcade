@@ -6,16 +6,27 @@
 #include "BaseScene.h"
 #include "BaseDef.h"
 #include "Animation.h"
+#include "tinyxml.h"
 
 USING_NS_CC;
 
 class CPlayScene:public CBaseScene
 {
+	Layer* mGroundLayer; // 地砖
+	Layer* mObjectLayer; // 物件
+	Layer* mUILayer;     // UI
+	string mCurrentFile; // 当前场景的文件
 public:
 	CPlayScene();
 
 	virtual void onEnterScene();
 	virtual void onExitScene();
 	virtual void onUpdate(float dt);
+public:
+	void setCurrentSceneFile(const char* szFile);// 设置当前场景的文件
+	void loadScene();
+private:
+	Sprite* createGroundTile(const char* ani,size_t gx,size_t gy);
+
 };
 #endif // !_PLAY_SCENE_H_

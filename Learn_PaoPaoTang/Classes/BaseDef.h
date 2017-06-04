@@ -1,10 +1,18 @@
 #ifndef __BASE_DEF_H__
 #define __BASE_DEF_H__
 
+/* 窗口大小 */
 static cocos2d::Size designResolutionSize = cocos2d::Size(800, 600);
+/*
 static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
+*/
+
+/* 网格规模 */
+#define GRID_WIDTH 15
+#define GRID_HEIGHT 13
+#define GRID_SIZE 40
 
 enum EControlType
 {

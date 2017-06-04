@@ -1,0 +1,6 @@
+<config>
+	<grounds defaultAni="ground0">
+		<ground ani="ground2" tiles="1,2,3,4,6,7"/>
+		<ground ani="ground3" tiles="18,27,49,55,66,77"/>
+	</grounds>
+</config>
