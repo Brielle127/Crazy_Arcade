@@ -1,9 +1,12 @@
 #include "PlayScene.h"
 #include "MenuSelectHandler.h"
-
+#include "Player.h"  
+#include "Building.h"
+#include "Bomb.h"
+#include "Item.h"
 USING_NS_CC;
 
-CRenderObj* pRenderObj = nullptr; // 用于测试代码
+//CRenderObj* pRenderObj = nullptr; // 用于测试代码
 
 CPlayScene::CPlayScene()
 	:mGroundLayer(nullptr)
@@ -40,15 +43,10 @@ void CPlayScene::onEnterScene()
 	mUILayer->addChild(menu, 1);
 	
 	//测试代码
-	pRenderObj = new (CRenderObj)();
-	pRenderObj->addPart("root",Point::ZERO);
-	pRenderObj->addPart("head", Point(0, 71));
+	//pRenderObj = new (CRenderObj)();
+	//mObjectLayer->addChild(pRenderObj->sprite);
 
-	pRenderObj->setAni(0, "oasis", "root");
-	pRenderObj->setAni("head", "oasis", "head");
-
-	mObjectLayer->addChild(pRenderObj->sprite);
-	pRenderObj->sprite->setPosition(Point(designResolutionSize.width/2,designResolutionSize.height/2));
+	//pRenderObj->sprite->setPosition(Point(designResolutionSize.width/2,designResolutionSize.height/2));
 	setCurrentSceneFile("Scenes/test.xml");
 	loadScene();
 }
@@ -57,13 +55,34 @@ void CPlayScene::onExitScene()
 {
 	//mSceneLayer->removeAllChildrenWithCleanup(true);
 	mGroundLayer->removeAllChildrenWithCleanup(true);
+	
 	mObjectLayer->removeAllChildrenWithCleanup(true);
+	for (int w = 0; w < GRID_WIDTH; ++w) {
+		for (int h = 0; h < GRID_HEIGHT; ++h) {
+			auto& rObjects = mMapObject[w][h];
+			for (int i = rObjects.size() - 1; i >= 0; --i) {
+				auto obj = rObjects[i];
+				delete obj;
+			}
+			rObjects.clear();
+		}
+	}
+
 	mUILayer->removeAllChildrenWithCleanup(true);
 }
 
 void CPlayScene::onUpdate(float dt)
 {
-	pRenderObj->update(dt);
+	//pRenderObj->update(dt);
+	for (int w = 0; w < GRID_WIDTH; ++w) {
+		for (int h = 0; h < GRID_HEIGHT; ++h) {
+			auto& rObjects = mMapObject[w][h];
+			for (int i = rObjects.size() - 1; i >= 0; --i) {
+				auto obj = rObjects[i];
+				obj->update(dt);
+			}
+		}
+	}
 }
 
 void CPlayScene::setCurrentSceneFile(const char * szFile)
@@ -75,7 +94,7 @@ void CPlayScene::loadScene()
 {
 	TiXmlDocument doc;
 	if (doc.LoadFile(mCurrentFile.c_str())) {
-		map<size_t, bool> usedMap; // 记录地图网格被占用情况
+		map<size_t, bool> usedMap; // 地图网格被占用情况
 		auto root = doc.RootElement();
 		auto grounds = root->FirstChildElement();
 		auto defaultAni = grounds->Attribute("defaultAni"); // 默认背景
@@ -114,7 +133,41 @@ void CPlayScene::loadScene()
 				}
 			}
 	}
+	// object initialize
+	// 测试代码
+	auto obj = createObject(EGOT_Building);
+	obj->getSprite()->setPosition(Point(400, 300));
+	(mMapObject[0][0]).push_back(obj);
+	mObjectLayer->addChild(obj->getSprite());
 
+}
+
+CGameObject * CPlayScene::createObject(EGameObjectType objType)
+{
+	CGameObject* obj = nullptr;
+	switch (objType)
+	{
+	case EGOT_Player:
+		obj = new CPlayer(*this);
+		break;
+	case EGOT_Building:
+		obj = new CBuilding(*this);
+		break;
+	case EGOT_Bomb:
+		obj = new CBomb(*this);
+		break;
+	case EGOT_Item:
+		obj = new CItem(*this);
+		break;
+	default:
+		break;
+	}
+	return obj;
+}
+
+inline vector<CGameObject*>& CPlayScene::getObject(int gridx, int gridy)
+{
+	return mMapObject[gridx][gridy];
 }
 
 Sprite * CPlayScene::createGroundTile(const char * ani, size_t gx, size_t gy)

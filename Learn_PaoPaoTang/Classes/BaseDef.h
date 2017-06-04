@@ -38,4 +38,14 @@ enum ESceneSwitchEvent
 	ESSE_Back2Menu
 };
 
+/* 对象类型 */
+enum EGameObjectType
+{
+	EGOT_Player,   
+	EGOT_Building, 
+	EGOT_Bomb,     
+	EGOT_Item,
+	EGOT_Num
+};
+
 #endif // !__BASE_DEF_H__
