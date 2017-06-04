@@ -100,31 +100,40 @@ public:
 	}
 };
 
-/*渲染对象*/
-class CRenderObj
+/* 渲染对象部件 */
+class CRenderPart
 {
 	float currentElapsed;
-public:
-	Sprite* sprite;
 	int currentFrame;
 	CAniData* currentAniData;
-	CRenderObj()
+public:
+	Sprite* sprite; // 用于显示
+	string name;
+
+	CRenderPart(const char* szName)
 		:currentFrame(0),
 		currentElapsed(0),
-		currentAniData(nullptr)
+		currentAniData(nullptr),
+		name(szName)
 	{
 		sprite = Sprite::create();
+		sprite->retain();
+		sprite->setAnchorPoint(Size::ZERO);
+		currentAniData = new CAniData();
+	}
+	~CRenderPart()
+	{
+		sprite->release();
+	}
 
-		currentAniData = new (CAniData)();
-		
-		/* // 测试代码
-		currentAniData = CAnimationMgr::getAni("role1", "walk_down");
-		*/
-
+	void setAni(const char* groupName, const char* aniName)
+	{
+		currentAniData = CAnimationMgr::getAni(groupName, aniName);
 		auto pTexture = Director::getInstance()->getTextureCache()->addImage(currentAniData->fileName);
 		sprite->setTexture(pTexture);
-		sprite->setTextureRect(currentAniData->framesData[0]); 
+		sprite->setTextureRect(currentAniData->framesData[0]);
 	}
+
 	void update(float dt)
 	{
 		if (currentAniData) {
@@ -137,7 +146,75 @@ public:
 		}
 
 	}
+};
+
+/* 渲染对象 */
+class CRenderObj
+{
+	vector<CRenderPart*> parts;          // vector用于快速访问
+	map<string, CRenderPart*> partsMap;  // 部件名称->部件对象的映射
+public:
+	Sprite* sprite;
+public:
+	CRenderObj()
+	{
+		sprite = Sprite::create();
+	}
+
+	// 设置锚点
+	void setAnchorPoint(const Point& rPoint)
+	{
+		sprite->setAnchorPoint(rPoint);
+	}
+
+	// 使用名字设置部件动画
+	void setAni(const char* partName,const char* groupName,const char* aniName)
+	{
+		auto it = partsMap.find(partName);
+		if (it != partsMap.end())                      // 在partsMap中找到对应的部件
+			it->second->setAni(groupName, aniName);    // 将任务转接给CRendrPart::setAni()
+	}
+	// 使用索引设置部件动画
+	void setAni(int idx,const char* groupName, const char* aniName)
+	{
+		auto p = parts[idx];
+		p->setAni(groupName, aniName);
+	}
+
+	/* 添加部件 */
+	void addPart(const char* partName, /*部件的偏移*/const Point& offset) 
+	{
+		auto pNewPart = new CRenderPart(partName);   // 生成
+		pNewPart->sprite->setPosition(offset);
+		pNewPart->name = partName;
+
+		sprite->addChild(pNewPart->sprite);// 将部件精灵添加到sprite
+		parts.push_back(pNewPart);         // 向vector中注册
+		partsMap[partName] = pNewPart;     // 向map中注册
+	}
+	
+	void removePart(const char* partName)
+	{
+		auto it = partsMap.find(partName);  // 取出
+
+		sprite->removeChild(it->second->sprite,true);// 从sprite移除部件精灵
+		// 从vector移除
+		auto iter = parts.begin(), end = parts.end();
+		for (; iter != end; ++iter) {
+			if ((*iter)->name == partName)
+				parts.erase(iter);
+			delete *iter; 
+		}
 		
+	}
+
+	void update(float dt)
+	{
+		// 遍历parts
+		auto it = parts.begin(), end = parts.end();
+		for (; it != end; ++it)
+			(*it)->update(dt);
+	}
 };
 
 #endif

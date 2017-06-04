@@ -1,6 +1,6 @@
 <config>
 	<group name="role1">
-		<sub file="Pic/Role1.png" tileWidth="6" tileHeight="4" width="288" height="256">
+		<sub file="pic/Role1.png" tileWidth="6" tileHeight="4" width="288" height="256">
 			<ani name="walk_up" begin="0" end="5" fps="4"/>
 			<ani name="walk_down" begin="6" end="11" fps="4"/>
 			<ani name="walk_left" begin="12" end="17" fps="4"/>
@@ -8,11 +8,19 @@
 		</sub>
 	</group>
 	<group name="role2">
-		<sub file="Pic/Role2.png" tileWidth="6" tileHeight="4" width="336" height="268">
+		<sub file="pic/Role2.png" tileWidth="6" tileHeight="4" width="336" height="268">
 			<ani name="walk_up" begin="0" end="5" fps="4"/>
 			<ani name="walk_down" begin="6" end="11" fps="4"/>
 			<ani name="walk_left" begin="12" end="17" fps="4"/>
 			<ani name="walk_right" begin="18" end="23" fps="4"/>
+		</sub>
+	</group>
+	<group name="oasis">
+		<sub file="pic/SandOasis.png" tileWidth="1" tileHeight="1" width="160" height="72">
+			<ani name="head" begin="0" end="0" fps="4"/>
+		</sub>
+		<sub file="pic/SandOasisAni.png" tileWidth="3" tileHeight="1" width="480" height="71">
+			<ani name="root" begin="0" end="2" fps="4"/>
 		</sub>
 	</group>
 </config>

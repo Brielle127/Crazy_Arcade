@@ -3,7 +3,7 @@
 
 USING_NS_CC;
 
-CRenderObj* pRenderObj = nullptr;
+CRenderObj* pRenderObj = nullptr; // 用于测试代码
 
 CPlayScene::CPlayScene()
 {
@@ -14,7 +14,8 @@ void CPlayScene::onEnterScene()
 {
 	/*处理缩放*/
 
-	Sprite* pBG = Sprite::create("pic/BG.png");
+
+	Sprite* pBG = Sprite::create("pic/BG.png");	 // 游戏场景背景
 	pBG->setAnchorPoint(Point::ZERO);
 	mSceneLayer->addChild(pBG);
 
@@ -27,11 +28,17 @@ void CPlayScene::onEnterScene()
 	menu->setPosition(Vec2::ZERO);
 	mSceneLayer->addChild(menu, 1);
 	
-	/*//测试代码
-	pRenderObj = new(CRenderObj)();
+	//测试代码
+	pRenderObj = new (CRenderObj)();
+	pRenderObj->addPart("root",Point::ZERO);
+	pRenderObj->addPart("head", Point(0, 71));
+
+	pRenderObj->setAni(0, "oasis", "root");
+	pRenderObj->setAni("head", "oasis", "head");
+
 	mSceneLayer->addChild(pRenderObj->sprite);
 	pRenderObj->sprite->setPosition(Point(designResolutionSize.width/2,designResolutionSize.height/2));
-	*/
+	
 
 }
 
