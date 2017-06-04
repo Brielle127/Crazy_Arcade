@@ -1,0 +1,18 @@
+<config>
+	<group name="role1">
+		<sub file="Pic/Role1.png" tileWidth="6" tileHeight="4" width="288" height="256">
+			<ani name="walk_up" begin="0" end="5" fps="4"/>
+			<ani name="walk_down" begin="6" end="11" fps="4"/>
+			<ani name="walk_left" begin="12" end="17" fps="4"/>
+			<ani name="walk_right" begin="18" end="23" fps="4"/>
+		</sub>
+	</group>
+	<group name="role2">
+		<sub file="Pic/Role2.png" tileWidth="6" tileHeight="4" width="336" height="268">
+			<ani name="walk_up" begin="0" end="5" fps="4"/>
+			<ani name="walk_down" begin="6" end="11" fps="4"/>
+			<ani name="walk_left" begin="12" end="17" fps="4"/>
+			<ani name="walk_right" begin="18" end="23" fps="4"/>
+		</sub>
+	</group>
+</config>

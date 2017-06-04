@@ -26,10 +26,13 @@ void CPlayScene::onEnterScene()
 	Menu* menu = Menu::create(back_labelItem, NULL);
 	menu->setPosition(Vec2::ZERO);
 	mSceneLayer->addChild(menu, 1);
-
+	
+	/*//²âÊÔ´úÂë
 	pRenderObj = new(CRenderObj)();
 	mSceneLayer->addChild(pRenderObj->sprite);
 	pRenderObj->sprite->setPosition(Point(designResolutionSize.width/2,designResolutionSize.height/2));
+	*/
+
 }
 
 void CPlayScene::onExitScene()
