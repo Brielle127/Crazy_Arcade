@@ -193,6 +193,14 @@ public:
 		partsMap[partName] = pNewPart;     // 向map中注册
 	}
 	
+	/* 修正相对位移 */
+	void modifyPartOffset(const char* partName,const Point& offset)
+	{
+		auto it = partsMap.find(partName);
+		if (it != partsMap.end())
+			it->second->sprite->setPosition(offset);
+	}
+
 	void removePart(const char* partName)
 	{
 		auto it = partsMap.find(partName);  // 取出

@@ -24,6 +24,7 @@ public:
 	/* ÉèÖÃÎ»ÖÃ */
 	void setGrid(int gridx, int gridy) { mGridX = gridx; mGridY = gridy; }
 public:
+	virtual float getDepth() { return -mRenderObj.sprite->getPositionY(); }
 	virtual void load(const char* szName) = 0;
 	virtual void update(float dt)
 	{

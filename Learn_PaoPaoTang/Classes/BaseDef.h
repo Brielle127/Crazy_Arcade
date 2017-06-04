@@ -48,4 +48,15 @@ enum EGameObjectType
 	EGOT_Num
 };
 
+/* ½ÇÉ«Âß¼­×´Ì¬ */
+enum EPlayerLogicState
+{
+	EPLS_STAND,
+	EPLS_MOVE,
+	EPLS_WRAPED,
+	EPLS_DEAD,
+	EPLS_RIDE,
+	EPLS_NUM
+};
+
 #endif // !__BASE_DEF_H__

@@ -30,6 +30,7 @@ public:
 	void loadScene();
 public:
 	CGameObject* createObject(EGameObjectType ovjType);
+	void destroy(CGameObject* obj);
 	vector<CGameObject*>& getObject(int gridx, int gridy);
 private:
 	Sprite* createGroundTile(const char* ani,size_t gx,size_t gy);

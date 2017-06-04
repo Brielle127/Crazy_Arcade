@@ -79,6 +79,7 @@ void CPlayScene::onUpdate(float dt)
 			auto& rObjects = mMapObject[w][h];
 			for (int i = rObjects.size() - 1; i >= 0; --i) {
 				auto obj = rObjects[i];
+				mSceneLayer->reorderChild(obj->getSprite(), obj->getDepth());
 				obj->update(dt);
 			}
 		}
@@ -133,13 +134,21 @@ void CPlayScene::loadScene()
 				}
 			}
 	}
-	// object initialize
-	// ²âÊÔ´úÂë
-	auto obj = createObject(EGOT_Building);
-	obj->getSprite()->setPosition(Point(400, 300));
-	(mMapObject[0][0]).push_back(obj);
-	mObjectLayer->addChild(obj->getSprite());
 
+	{
+		auto obj = createObject(EGOT_Building);
+		obj->getSprite()->setPosition(Point(400, 300));
+		(mMapObject[0][0]).push_back(obj);
+		mObjectLayer->addChild(obj->getSprite());
+	}
+	
+	{// object initialize
+	// ²âÊÔ´úÂë
+		auto obj = createObject(EGOT_Building);
+		obj->getSprite()->setPosition(Point(400, 350));
+		(mMapObject[0][0]).push_back(obj);
+		mObjectLayer->addChild(obj->getSprite());
+	}
 }
 
 CGameObject * CPlayScene::createObject(EGameObjectType objType)
@@ -163,6 +172,24 @@ CGameObject * CPlayScene::createObject(EGameObjectType objType)
 		break;
 	}
 	return obj;
+}
+
+void CPlayScene::destroy(CGameObject* obj)
+{
+	for (int w = 0; w < GRID_WIDTH; ++w) {
+		for (int h = 0; h < GRID_HEIGHT; ++h) {
+			auto& rObjects = mMapObject[w][h];
+			auto  it = rObjects.begin(), end = rObjects.end();
+			for(;it!=end;++it)
+				if ((*it) == obj) {
+					rObjects.erase(it);
+					delete obj;
+					return;
+				}
+			rObjects.clear();
+		}
+	}
+
 }
 
 inline vector<CGameObject*>& CPlayScene::getObject(int gridx, int gridy)
