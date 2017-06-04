@@ -10,10 +10,10 @@
 
 USING_NS_CC;
 
-class CBeginScene :public CBaseScene
+class BeginScene :public BaseScene
 {
 public:
-	CBeginScene();
+	BeginScene();
 
 	virtual void onEnterScene();
 	virtual void onExitScene();

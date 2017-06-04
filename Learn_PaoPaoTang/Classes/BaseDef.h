@@ -53,10 +53,16 @@ enum EPlayerLogicState
 {
 	EPLS_STAND,
 	EPLS_MOVE,
-	EPLS_WRAPED,
+	EPLS_WRAPPED,
 	EPLS_DEAD,
-	EPLS_RIDE,
 	EPLS_NUM
 };
 
+enum EPlayerMoveState
+{
+	EPMS_UP,
+	EPMS_DOWN,
+	EPMS_LEFT,
+	EPMS_RIGHT
+};
 #endif // !__BASE_DEF_H__

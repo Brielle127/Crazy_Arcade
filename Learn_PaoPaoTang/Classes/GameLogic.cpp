@@ -50,8 +50,8 @@ bool GameLogic::applicationDidFinishLaunching() {
 
 	// 创建场景
 	mSceneRoot = Scene::create();
-	mBeginScene = new (CBeginScene)();
-	mPlayScene = new (CPlayScene)();
+	mBeginScene = new (BeginScene)();
+	mPlayScene = new (PlayScene)();
 
 	mSceneRoot->addChild(mBeginScene->getSceneLayer());
 	mCurrentScene = mBeginScene;
@@ -77,6 +77,14 @@ void GameLogic::applicationWillEnterForeground() {
 
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+}
+
+
+// 处理输入
+
+inline void GameLogic::handleInput(EControlType ectType, EPressState epState)
+{
+	mCurrentScene->handleInput(ectType, epState);
 }
 
 void GameLogic::handleEvent(int eventType, void * data)

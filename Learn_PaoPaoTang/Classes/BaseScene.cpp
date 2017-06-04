@@ -2,18 +2,18 @@
 
 USING_NS_CC;
 
-CBaseScene::CBaseScene()
+BaseScene::BaseScene()
 {
 	mSceneLayer = Layer::create();
 	mSceneLayer->retain(); // 增加引用计数
 }
 
-Layer* CBaseScene::getSceneLayer()
+Layer* BaseScene::getSceneLayer()
 {
 	return mSceneLayer;
 }
 
-void CBaseScene::onHandleEvent(int eventType, void * data)
+void BaseScene::onHandleEvent(int eventType, void * data)
 {
 
 }

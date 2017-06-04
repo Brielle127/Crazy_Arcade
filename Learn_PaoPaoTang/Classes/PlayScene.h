@@ -8,19 +8,21 @@
 #include "Animation.h"
 #include "tinyxml.h"
 #include "GameObject.h"
+#include "Player.h"
 #include <vector>
 USING_NS_CC;
 using namespace std;
 
-class CPlayScene:public CBaseScene
+class PlayScene:public BaseScene
 {
 	Layer* mGroundLayer; // 地砖
 	Layer* mObjectLayer; // 物件
 	Layer* mUILayer;     // UI
 	string mCurrentFile; // 当前场景的文件
-	vector<CGameObject*> mMapObject[GRID_WIDTH][GRID_HEIGHT];  // 静态对象
+	Player mPlayer;
+	vector<GameObject*> mMapObject[GRID_WIDTH][GRID_HEIGHT];  // 静态对象
 public:
-	CPlayScene();
+	PlayScene();
 
 	virtual void onEnterScene();
 	virtual void onExitScene();
@@ -29,9 +31,13 @@ public:
 	void setCurrentSceneFile(const char* szFile);// 设置当前场景的文件
 	void loadScene();
 public:
-	CGameObject* createObject(EGameObjectType ovjType);
-	void destroy(CGameObject* obj);
-	vector<CGameObject*>& getObject(int gridx, int gridy);
+	GameObject* createObject(EGameObjectType ovjType);
+	void destroy(GameObject* obj);
+	vector<GameObject*>& getObject(int gridx, int gridy);
+	virtual void handleInput(EControlType ectType, EPressState epState)
+	{
+		mPlayer.handleInput(ectType, epState);
+	}
 private:
 	Sprite* createGroundTile(const char* ani,size_t gx,size_t gy);
 

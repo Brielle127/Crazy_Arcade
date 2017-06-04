@@ -6,12 +6,13 @@
 #include "Item.h"
 USING_NS_CC;
 
-//CRenderObj* pRenderObj = nullptr; // 用于测试代码
+//RenderObj* pRenderObj = nullptr; // 用于测试代码
 
-CPlayScene::CPlayScene()
+PlayScene::PlayScene()
 	:mGroundLayer(nullptr)
 	, mObjectLayer(nullptr)
 	, mUILayer(nullptr)
+	,mPlayer(*this)
 {
 	mGroundLayer = Layer::create();
 	mGroundLayer->setPosition(Point(20, 40)); // 定位
@@ -24,34 +25,40 @@ CPlayScene::CPlayScene()
 	mUILayer = Layer::create();
 	mSceneLayer->addChild(mUILayer);
 }
-void CPlayScene::onEnterScene()
+
+void PlayScene::onEnterScene()
 {
 	/*处理缩放*/
 
 	Sprite* pBG = Sprite::create("pic/BG.png");	 // 游戏场景背景
 	pBG->setAnchorPoint(Point::ZERO);
 	pBG->setPosition(Point(-20, -40));
-	mGroundLayer->addChild(pBG,0);
+	mGroundLayer->addChild(pBG, 0);
 
 	/*返回主菜单按钮*/
-	auto back_label = Label::createWithSystemFont(CStringTableMgr::getString("main_menu"), "Arial", 24);
-	auto back_labelItem = MenuItemLabel::create(back_label, CC_CALLBACK_1(CMenuSelectHandler::onMenu_Back2Menu, CMenuSelectHandler::sharedHandler()));
-	back_labelItem->setPosition(designResolutionSize.width-80,25);
+	auto back_label = Label::createWithSystemFont(StringTableMgr::getString("main_menu"), "Arial", 24);
+	auto back_labelItem = MenuItemLabel::create(back_label, CC_CALLBACK_1(MenuSelectHandler::onMenu_Back2Menu, MenuSelectHandler::sharedHandler()));
+	back_labelItem->setPosition(designResolutionSize.width - 80, 25);
 
 	Menu* menu = Menu::create(back_labelItem, NULL);
 	menu->setPosition(Point::ZERO);
 	mUILayer->addChild(menu, 1);
-	
+
 	//测试代码
-	//pRenderObj = new (CRenderObj)();
+	//pRenderObj = new (RenderObj)();
 	//mObjectLayer->addChild(pRenderObj->sprite);
 
 	//pRenderObj->sprite->setPosition(Point(designResolutionSize.width/2,designResolutionSize.height/2));
 	setCurrentSceneFile("Scenes/test.xml");
 	loadScene();
+
+	mPlayer.load("");
+	mPlayer.getSprite()->setPosition(Point::ZERO);
+	mObjectLayer->addChild(mPlayer.getSprite());
+	
 }
 
-void CPlayScene::onExitScene()
+void PlayScene::onExitScene()
 {
 	//mSceneLayer->removeAllChildrenWithCleanup(true);
 	mGroundLayer->removeAllChildrenWithCleanup(true);
@@ -71,7 +78,7 @@ void CPlayScene::onExitScene()
 	mUILayer->removeAllChildrenWithCleanup(true);
 }
 
-void CPlayScene::onUpdate(float dt)
+void PlayScene::onUpdate(float dt)
 {
 	//pRenderObj->update(dt);
 	for (int w = 0; w < GRID_WIDTH; ++w) {
@@ -84,14 +91,17 @@ void CPlayScene::onUpdate(float dt)
 			}
 		}
 	}
+	mPlayer.update(dt);
+	mSceneLayer->reorderChild(mPlayer.getSprite(), mPlayer.getDepth());
+
 }
 
-void CPlayScene::setCurrentSceneFile(const char * szFile)
+void PlayScene::setCurrentSceneFile(const char * szFile)
 {
 	mCurrentFile = szFile;
 }
 
-void CPlayScene::loadScene()
+void PlayScene::loadScene()
 {
 	TiXmlDocument doc;
 	if (doc.LoadFile(mCurrentFile.c_str())) {
@@ -151,22 +161,22 @@ void CPlayScene::loadScene()
 	}
 }
 
-CGameObject * CPlayScene::createObject(EGameObjectType objType)
+GameObject * PlayScene::createObject(EGameObjectType objType)
 {
-	CGameObject* obj = nullptr;
+	GameObject* obj = nullptr;
 	switch (objType)
 	{
 	case EGOT_Player:
-		obj = new CPlayer(*this);
+		obj = new Player(*this);
 		break;
 	case EGOT_Building:
-		obj = new CBuilding(*this);
+		obj = new Building(*this);
 		break;
 	case EGOT_Bomb:
-		obj = new CBomb(*this);
+		obj = new Bomb(*this);
 		break;
 	case EGOT_Item:
-		obj = new CItem(*this);
+		obj = new Item(*this);
 		break;
 	default:
 		break;
@@ -174,7 +184,7 @@ CGameObject * CPlayScene::createObject(EGameObjectType objType)
 	return obj;
 }
 
-void CPlayScene::destroy(CGameObject* obj)
+void PlayScene::destroy(GameObject* obj)
 {
 	for (int w = 0; w < GRID_WIDTH; ++w) {
 		for (int h = 0; h < GRID_HEIGHT; ++h) {
@@ -192,14 +202,14 @@ void CPlayScene::destroy(CGameObject* obj)
 
 }
 
-inline vector<CGameObject*>& CPlayScene::getObject(int gridx, int gridy)
+inline vector<GameObject*>& PlayScene::getObject(int gridx, int gridy)
 {
 	return mMapObject[gridx][gridy];
 }
 
-Sprite * CPlayScene::createGroundTile(const char * ani, size_t gx, size_t gy)
+Sprite * PlayScene::createGroundTile(const char * ani, size_t gx, size_t gy)
 {
-	CAniData* grdAni = CAnimationMgr::getAni("ground", ani);
+	AniData* grdAni = AnimationMgr::getAni("ground", ani);
 	auto pGrd = Sprite::create(grdAni->fileName, grdAni->framesData[0]);
 	pGrd->setAnchorPoint(Point::ZERO);
 	pGrd->setPosition(Point(gx*GRID_SIZE, gy*GRID_SIZE));

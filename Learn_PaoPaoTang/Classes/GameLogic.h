@@ -24,7 +24,7 @@ public:
     virtual void applicationWillEnterForeground();
 	
 	// ¥¶¿Ì ‰»Î
-	void handleInput(EControlType ectType, EPressState epState);
+	virtual void handleInput(EControlType ectType, EPressState epState);
 
 	void handleEvent(int eventType, void *data=nullptr);
 
@@ -34,9 +34,9 @@ public:
 	virtual void update(float dt);
 private:
 	Scene* mSceneRoot;
-	class CBeginScene*  mBeginScene;
-	class CPlayScene* mPlayScene;
-	class CBaseScene* mCurrentScene;
+	class BeginScene*  mBeginScene;
+	class PlayScene* mPlayScene;
+	class BaseScene* mCurrentScene;
 };
 
 #endif // _APP_DELEGATE_H_

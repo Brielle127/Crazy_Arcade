@@ -7,16 +7,16 @@
 
 USING_NS_CC;
 
-class CMenuSelectHandler :public Ref
+class MenuSelectHandler :public Ref
 {
 private:
-	CMenuSelectHandler(){}
+	MenuSelectHandler(){}
 public:
-	static CMenuSelectHandler* sharedHandler()
+	static MenuSelectHandler* sharedHandler()
 	{
-		static CMenuSelectHandler* instance=NULL;
+		static MenuSelectHandler* instance=NULL;
 		if (instance == NULL)
-			instance = new (CMenuSelectHandler)();
+			instance = new (MenuSelectHandler)();
 		return instance;
 	}
 

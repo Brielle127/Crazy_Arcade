@@ -3,15 +3,16 @@
 
 #include "cocos2d.h"
 #include "StringTableMgr.h"
+#include "BaseDef.h"
 
 USING_NS_CC;
 
-class CBaseScene
+class BaseScene
 {
 public:
-	CBaseScene();
+	BaseScene();
 
-	virtual ~CBaseScene()
+	virtual ~BaseScene()
 	{
 		mSceneLayer->release();
 		mSceneLayer = nullptr;
@@ -23,6 +24,10 @@ public:
 	virtual void onEnterScene(){}
 	virtual void onExitScene(){}
 	virtual void onUpdate(float dt) 
+	{
+
+	}
+	virtual void handleInput(EControlType ectType, EPressState epState)
 	{
 
 	}

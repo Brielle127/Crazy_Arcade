@@ -3,22 +3,22 @@
 
 #include "Animation.h"
 #include "BaseDef.h"
-class CPlayScene;
 
-class CGameObject
+class PlayScene;
+class GameObject
 {
 	EGameObjectType mType;
 protected:
-	CRenderObj mRenderObj;
-	CPlayScene& mScene;
+	RenderObj mRenderObj;
+	PlayScene& mScene;
 	int mGridX;
 	int mGridY;
 public:
-	CGameObject(CPlayScene& rScene,EGameObjectType type)
+	GameObject(PlayScene& rScene,EGameObjectType type)
 		:mScene(rScene),mType(type)
 		,mGridX(-1),mGridY(-1)
 	{}
-	virtual ~CGameObject(){}
+	virtual ~GameObject(){}
 
 	EGameObjectType getType() { return mType; }
 	/* …Ë÷√Œª÷√ */

@@ -9,7 +9,7 @@ USING_NS_CC;
 using namespace std;
 
 
-struct CAniData
+struct AniData
 {
 	// 动画名
 	string name;
@@ -21,9 +21,9 @@ struct CAniData
 	vector<Rect> framesData;
 };
 
-typedef map<string, CAniData> AniGroup;      // 一个AniGroup类型的对象表示一个动画： 动画名->动画的参数配置
+typedef map<string, AniData> AniGroup;      // 一个AniGroup类型的对象表示一个动画： 动画名->动画的参数配置
 
-class CAnimationMgr 
+class AnimationMgr 
 {
 private: 
 	// 加载配置文件
@@ -56,7 +56,7 @@ private:
 					while (ani)
 					{
 						auto aniName = ani->Attribute("name");
-						rGroup.insert(make_pair(aniName,CAniData()));
+						rGroup.insert(make_pair(aniName,AniData()));
 						auto& rAni = rGroup[aniName];
 
 						int begin, end, fps;
@@ -84,7 +84,7 @@ private:
 		}
 	}
 public:
-	static CAniData* getAni(const char* groupName, const char* aniName)
+	static AniData* getAni(const char* groupName, const char* aniName)
 	{
 		static map<string, AniGroup> aniGroup; // aniGroup表示一个动画组：组名->动画
 		if (aniGroup.size() == 0)
@@ -101,16 +101,16 @@ public:
 };
 
 /* 渲染对象部件 */
-class CRenderPart
+class RenderPart
 {
 	float currentElapsed;
 	int currentFrame;
-	CAniData* currentAniData;
+	AniData* currentAniData;
 public:
 	Sprite* sprite; // 用于显示
 	string name;
 
-	CRenderPart(const char* szName)
+	RenderPart(const char* szName)
 		:currentFrame(0),
 		currentElapsed(0),
 		currentAniData(nullptr),
@@ -119,16 +119,16 @@ public:
 		sprite = Sprite::create();
 		sprite->retain();
 		sprite->setAnchorPoint(Size::ZERO);
-		currentAniData = new CAniData();
+		currentAniData = new AniData();
 	}
-	~CRenderPart()
+	~RenderPart()
 	{
 		sprite->release();
 	}
 
 	void setAni(const char* groupName, const char* aniName)
 	{
-		currentAniData = CAnimationMgr::getAni(groupName, aniName);
+		currentAniData = AnimationMgr::getAni(groupName, aniName);
 		auto pTexture = Director::getInstance()->getTextureCache()->addImage(currentAniData->fileName);
 		sprite->setTexture(pTexture);
 		sprite->setTextureRect(currentAniData->framesData[0]);
@@ -149,14 +149,14 @@ public:
 };
 
 /* 渲染对象 */
-class CRenderObj
+class RenderObj
 {
-	vector<CRenderPart*> parts;          // vector用于快速访问
-	map<string, CRenderPart*> partsMap;  // 部件名称->部件对象的映射
+	vector<RenderPart*> parts;          // vector用于快速访问
+	map<string, RenderPart*> partsMap;  // 部件名称->部件对象的映射
 public:
 	Sprite* sprite;
 public:
-	CRenderObj()
+	RenderObj()
 	{
 		sprite = Sprite::create();
 	}
@@ -184,7 +184,7 @@ public:
 	/* 添加部件 */
 	void addPart(const char* partName, /*部件的偏移*/const Point& offset) 
 	{
-		auto pNewPart = new CRenderPart(partName);   // 生成
+		auto pNewPart = new RenderPart(partName);   // 生成
 		pNewPart->sprite->setPosition(offset);
 		pNewPart->name = partName;
 
