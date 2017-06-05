@@ -11,16 +11,19 @@
 class Player;
 typedef void(Player::*Method)();       // Player的无参无返回值成员函数
 typedef void(Player::*UpdateMethod)(float); // 更新方法
+typedef void(Player::*InputMethod)(ControlType, PressState);
 struct StateMethod  // 状态方法
 {
 	Method enter;
 	Method exit;
 	UpdateMethod update;
-	void init(Method en, Method ex, UpdateMethod up)
+	InputMethod input;
+	void init(Method en, Method ex, UpdateMethod up,InputMethod ip)
 	{
 		enter = en;
 		exit = ex;
 		update = up;
+		input = ip;
 	}
 };
 class Player:public GameObject
@@ -30,6 +33,7 @@ class Player:public GameObject
 	int mMaxBombNum;  // 炸弹数量
 	int mBombStrength;// 炸弹威力
 	bool mIsRiding;   // 是否骑乘
+	PlayerMoveState mMoveState; // 移动方向
 	bool mTransTable[PLS_NUM][PLS_NUM]; // 状态转换表
 	StateMethod states[PLS_NUM];
 public:
@@ -41,15 +45,49 @@ public:
 	}
 	virtual void update(float dt) 
 	{
-		(this->*states[PLS_STAND].update)(dt); // 调用成员函数
+		(this->*states[mState].update)(dt); // 调用成员函数
 		// ...
 		GameObject::update(dt);
+	}
+public:
+	void handleInput(ControlType ectType, PressState epState)
+	{ 
+		(this->*states[mState].input)(ectType,epState);
+	}
+	void standHandleInput(ControlType ectType, PressState epState)
+	{
+		if (epState == PS_DOWN) {
+			mState = PLS_MOVE;//切换逻辑状态为移动
+			switch (ectType)
+			{
+			case CT_LEFT:
+				mMoveState = PMS_LEFT;
+				break;
+			case CT_RIGHT:
+				mMoveState = PMS_RIGHT;
+				break;
+			case CT_UP:
+				mMoveState = PMS_UP;
+				break;
+			case CT_DOWN:
+				mMoveState = PMS_DOWN;
+				break;
+			default:
+				mState = PLS_STAND;
+			}
+		}
+	}
+
+	void moveHandleInput(ControlType ectType, PressState epState)
+	{
+
 	}
 private: // 默认方法
 	void defaultEnter() {}
 	void  defaultExit() {}
 	void defaultUpdate(float dt) {}
-};
+	void defaultHandleInput(ControlType ectType, PressState epState) {}
+ };
 
 
 #endif // !_PALYER_H_

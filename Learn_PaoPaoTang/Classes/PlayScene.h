@@ -37,6 +37,7 @@ public:
 		mSceneLayer->addChild(mUILayer);
 	}
 
+
 	virtual void onEnterScene();
 	virtual void onExitScene();
 	virtual void onUpdate(float dt);
@@ -44,9 +45,13 @@ public:
 	void setCurrentSceneFile(const char* szFile);// 设置当前场景的文件
 	void loadScene();
 public:
-	GameObject* createObject(GameObjectType ovjType);
+	GameObject* createObject(GameObjectType objType);
 	void destroy(GameObject* obj);
 	vector<GameObject*>& getObject(int gridx, int gridy);
+	virtual void handleInput(ControlType ectType, PressState epState)
+	{
+		mPlayer.handleInput(ectType, epState);
+	}
 private:
 	Sprite* createGroundTile(const char* ani,size_t gx,size_t gy);
 

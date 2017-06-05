@@ -7,6 +7,7 @@ class Building :public GameObject
 {
 public:
 	Building(PlayScene& rScene) :GameObject(rScene, GOT_Building)
+
 	{
 		mRenderObj.addPart("root", Point::ZERO);
 		mRenderObj.addPart("head", Point(0, 71));

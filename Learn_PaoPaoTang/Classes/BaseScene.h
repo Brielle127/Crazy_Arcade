@@ -33,6 +33,12 @@ public:
 	{
 
 	}
+
+	virtual void handleInput(ControlType ectType, PressState epState)
+	{
+
+	}
+	// UI π”√
 	virtual void onHandleEvent(int eventType, void* data)
 	{
 

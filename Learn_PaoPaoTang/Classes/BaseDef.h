@@ -59,4 +59,20 @@ enum PlayerLogicState
 	PLS_NUM
 };
 
+enum EPlayerMoveState
+{
+	EPMS_UP,
+	EPMS_DOWN,
+	EPMS_LEFT,
+	EPMS_RIGHT
+};
+
+/* 角色移动方向 */
+enum PlayerMoveState
+{
+	PMS_UP,
+	PMS_DOWN,
+	PMS_LEFT,
+	PMS_RIGHT
+};
 #endif // !__BASE_DEF_H__

@@ -3,6 +3,7 @@
 
 #include "Animation.h"
 #include "BaseDef.h"
+
 class PlayScene;
 
 class GameObject
@@ -14,6 +15,7 @@ protected:
 	int mGridX;
 	int mGridY;
 public:
+
 	GameObject(PlayScene& rScene,GameObjectType type)
 		:mScene(rScene),mType(type)
 		,mGridX(-1),mGridY(-1)

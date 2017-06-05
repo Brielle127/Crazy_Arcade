@@ -6,7 +6,9 @@
 class Bomb :public GameObject
 {
 public:
+
 	Bomb(PlayScene& rScene) :GameObject(rScene, GOT_Bomb)
+
 	{
 
 	}

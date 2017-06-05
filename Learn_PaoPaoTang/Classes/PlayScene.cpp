@@ -6,6 +6,8 @@
 #include "Item.h"
 USING_NS_CC;
 
+
+
 void PlayScene::onEnterScene()
 {
 	/*处理缩放*/
@@ -13,23 +15,32 @@ void PlayScene::onEnterScene()
 	Sprite* pBG = Sprite::create("pic/BG.png");	 // 游戏场景背景
 	pBG->setAnchorPoint(Point::ZERO);
 	pBG->setPosition(Point(-20, -40));
-	mGroundLayer->addChild(pBG,0);
+	mGroundLayer->addChild(pBG, 0);
 
 	/*返回主菜单按钮*/
 	auto back_label = Label::createWithSystemFont(StringTableMgr::getString("main_menu"), "Arial", 24);
 	auto back_labelItem = MenuItemLabel::create(back_label, CC_CALLBACK_1(MenuSelectHandler::onMenu_Back2Menu, MenuSelectHandler::sharedHandler()));
-	back_labelItem->setPosition(designResolutionSize.width-80,25);
+
+	back_labelItem->setPosition(designResolutionSize.width - 80, 25);
 
 	Menu* menu = Menu::create(back_labelItem, NULL);
 	menu->setPosition(Point::ZERO);
 	mUILayer->addChild(menu, 1);
-	
+
+
+	//测试代码
+	//pRenderObj = new (RenderObj)();
+	//mObjectLayer->addChild(pRenderObj->sprite);
+
+	//pRenderObj->sprite->setPosition(Point(designResolutionSize.width/2,designResolutionSize.height/2));
+
 	setCurrentSceneFile("Scenes/test.xml");
 	loadScene();
 
 	mPlayer.load("");
 	mPlayer.getSprite()->setPosition(Point::ZERO);
 	mObjectLayer->addChild(mPlayer.getSprite());
+
 }
 
 void PlayScene::onExitScene()
@@ -65,6 +76,7 @@ void PlayScene::onUpdate(float dt)
 	}
 	mPlayer.update(dt);
 	mSceneLayer->reorderChild(mPlayer.getSprite(), mPlayer.getDepth());
+
 }
 
 void PlayScene::setCurrentSceneFile(const char * szFile)
@@ -132,6 +144,7 @@ void PlayScene::loadScene()
 	}
 	*/
 }
+
 
 GameObject * PlayScene::createObject(GameObjectType objType)
 {

@@ -56,6 +56,15 @@ void GameLogic::applicationWillEnterForeground() {
 
 }
 
+
+
+// 处理输入
+
+void GameLogic::handleInput(ControlType ectType, PressState epState)
+{
+	mCurrentScene->handleInput(ectType, epState);
+}
+
 void GameLogic::handleEvent(int eventType, void * data)
 {
 	// 过滤事件

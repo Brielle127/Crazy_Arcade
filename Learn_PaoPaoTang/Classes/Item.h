@@ -7,6 +7,7 @@ class Item :public GameObject
 {
 public:
 	Item(PlayScene& rScene) :GameObject(rScene, GOT_Item)
+
 	{
 
 	}

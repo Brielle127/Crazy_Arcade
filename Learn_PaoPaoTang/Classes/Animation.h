@@ -130,8 +130,10 @@ private:
 	float currentElapsed;
 	int currentFrame;
 	AniData* currentAniData;
+
 	PlayFlag mFlag;
 	bool mPlaying;
+
 public:
 	Sprite* sprite; // ÓÃÓÚÏÔÊ¾
 	string name;
@@ -147,6 +149,9 @@ public:
 		sprite = Sprite::create();
 		sprite->retain();
 		sprite->setAnchorPoint(Size::ZERO);
+
+		currentAniData = new AniData();
+
 	}
 	~RenderPart()
 	{
@@ -155,6 +160,7 @@ public:
 
 	void setAni(const char* groupName, const char* aniName)
 	{
+
 		mPlaying = true;
 		//mFlag = flag;
 		if (groupName == NULL || aniName == NULL) {
@@ -167,11 +173,17 @@ public:
 				sprite->setTexture(NULL);
 			}
 			else {
-				Texture2D* pTexture = TextureCache::sharedTextureCache()->addImage(currentAniData->fileName.c_str());
+				Texture2D* pTexture = Director::getInstance()->getTextureCache()->addImage(currentAniData->fileName.c_str());
 				sprite->setTexture(pTexture);
 				sprite->setTextureRect(currentAniData->framesData[0]);
 			}
 		}
+
+		currentAniData = AnimationMgr::getAni(groupName, aniName);
+		auto pTexture = Director::getInstance()->getTextureCache()->addImage(currentAniData->fileName);
+		sprite->setTexture(pTexture);
+		sprite->setTextureRect(currentAniData->framesData[0]);
+
 	}
 
 	void update(float dt)
