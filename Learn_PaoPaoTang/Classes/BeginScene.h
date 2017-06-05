@@ -3,17 +3,13 @@
 
 #include"cocos2d.h"
 #include"BaseScene.h"
-#include"BaseDef.h"
-#include"tinyxml.h"
-#include"StringTableMgr.h"
-#include<xstring>
 
 USING_NS_CC;
 
-class CBeginScene :public CBaseScene
+class BeginScene :public BaseScene
 {
 public:
-	CBeginScene();
+	BeginScene();
 
 	virtual void onEnterScene();
 	virtual void onExitScene();

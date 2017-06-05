@@ -6,25 +6,7 @@
 #include "Item.h"
 USING_NS_CC;
 
-//CRenderObj* pRenderObj = nullptr; // 用于测试代码
-
-CPlayScene::CPlayScene()
-	:mGroundLayer(nullptr)
-	, mObjectLayer(nullptr)
-	, mUILayer(nullptr)
-{
-	mGroundLayer = Layer::create();
-	mGroundLayer->setPosition(Point(20, 40)); // 定位
-	mSceneLayer->addChild(mGroundLayer);
-
-	mObjectLayer = Layer::create();
-	mObjectLayer->setPosition(Point(20, 40));
-	mSceneLayer->addChild(mObjectLayer);
-
-	mUILayer = Layer::create();
-	mSceneLayer->addChild(mUILayer);
-}
-void CPlayScene::onEnterScene()
+void PlayScene::onEnterScene()
 {
 	/*处理缩放*/
 
@@ -34,26 +16,24 @@ void CPlayScene::onEnterScene()
 	mGroundLayer->addChild(pBG,0);
 
 	/*返回主菜单按钮*/
-	auto back_label = Label::createWithSystemFont(CStringTableMgr::getString("main_menu"), "Arial", 24);
-	auto back_labelItem = MenuItemLabel::create(back_label, CC_CALLBACK_1(CMenuSelectHandler::onMenu_Back2Menu, CMenuSelectHandler::sharedHandler()));
+	auto back_label = Label::createWithSystemFont(StringTableMgr::getString("main_menu"), "Arial", 24);
+	auto back_labelItem = MenuItemLabel::create(back_label, CC_CALLBACK_1(MenuSelectHandler::onMenu_Back2Menu, MenuSelectHandler::sharedHandler()));
 	back_labelItem->setPosition(designResolutionSize.width-80,25);
 
 	Menu* menu = Menu::create(back_labelItem, NULL);
 	menu->setPosition(Point::ZERO);
 	mUILayer->addChild(menu, 1);
 	
-	//测试代码
-	//pRenderObj = new (CRenderObj)();
-	//mObjectLayer->addChild(pRenderObj->sprite);
-
-	//pRenderObj->sprite->setPosition(Point(designResolutionSize.width/2,designResolutionSize.height/2));
 	setCurrentSceneFile("Scenes/test.xml");
 	loadScene();
+
+	mPlayer.load("");
+	mPlayer.getSprite()->setPosition(Point::ZERO);
+	mObjectLayer->addChild(mPlayer.getSprite());
 }
 
-void CPlayScene::onExitScene()
+void PlayScene::onExitScene()
 {
-	//mSceneLayer->removeAllChildrenWithCleanup(true);
 	mGroundLayer->removeAllChildrenWithCleanup(true);
 	
 	mObjectLayer->removeAllChildrenWithCleanup(true);
@@ -71,9 +51,8 @@ void CPlayScene::onExitScene()
 	mUILayer->removeAllChildrenWithCleanup(true);
 }
 
-void CPlayScene::onUpdate(float dt)
+void PlayScene::onUpdate(float dt)
 {
-	//pRenderObj->update(dt);
 	for (int w = 0; w < GRID_WIDTH; ++w) {
 		for (int h = 0; h < GRID_HEIGHT; ++h) {
 			auto& rObjects = mMapObject[w][h];
@@ -84,14 +63,16 @@ void CPlayScene::onUpdate(float dt)
 			}
 		}
 	}
+	mPlayer.update(dt);
+	mSceneLayer->reorderChild(mPlayer.getSprite(), mPlayer.getDepth());
 }
 
-void CPlayScene::setCurrentSceneFile(const char * szFile)
+void PlayScene::setCurrentSceneFile(const char * szFile)
 {
 	mCurrentFile = szFile;
 }
 
-void CPlayScene::loadScene()
+void PlayScene::loadScene()
 {
 	TiXmlDocument doc;
 	if (doc.LoadFile(mCurrentFile.c_str())) {
@@ -134,9 +115,9 @@ void CPlayScene::loadScene()
 				}
 			}
 	}
-
+/*
 	{
-		auto obj = createObject(EGOT_Building);
+		auto obj = createObject(GOT_Building);
 		obj->getSprite()->setPosition(Point(400, 300));
 		(mMapObject[0][0]).push_back(obj);
 		mObjectLayer->addChild(obj->getSprite());
@@ -144,29 +125,30 @@ void CPlayScene::loadScene()
 	
 	{// object initialize
 	// 测试代码
-		auto obj = createObject(EGOT_Building);
+		auto obj = createObject(GOT_Building);
 		obj->getSprite()->setPosition(Point(400, 350));
 		(mMapObject[0][0]).push_back(obj);
 		mObjectLayer->addChild(obj->getSprite());
 	}
+	*/
 }
 
-CGameObject * CPlayScene::createObject(EGameObjectType objType)
+GameObject * PlayScene::createObject(GameObjectType objType)
 {
-	CGameObject* obj = nullptr;
+	GameObject* obj = nullptr;
 	switch (objType)
 	{
-	case EGOT_Player:
-		obj = new CPlayer(*this);
+	case GOT_Player:
+		obj = new Player(*this);
 		break;
-	case EGOT_Building:
-		obj = new CBuilding(*this);
+	case GOT_Building:
+		obj = new Building(*this);
 		break;
-	case EGOT_Bomb:
-		obj = new CBomb(*this);
+	case GOT_Bomb:
+		obj = new Bomb(*this);
 		break;
-	case EGOT_Item:
-		obj = new CItem(*this);
+	case GOT_Item:
+		obj = new Item(*this);
 		break;
 	default:
 		break;
@@ -174,7 +156,7 @@ CGameObject * CPlayScene::createObject(EGameObjectType objType)
 	return obj;
 }
 
-void CPlayScene::destroy(CGameObject* obj)
+void PlayScene::destroy(GameObject* obj)
 {
 	for (int w = 0; w < GRID_WIDTH; ++w) {
 		for (int h = 0; h < GRID_HEIGHT; ++h) {
@@ -192,14 +174,14 @@ void CPlayScene::destroy(CGameObject* obj)
 
 }
 
-inline vector<CGameObject*>& CPlayScene::getObject(int gridx, int gridy)
+inline vector<GameObject*>& PlayScene::getObject(int gridx, int gridy)
 {
 	return mMapObject[gridx][gridy];
 }
 
-Sprite * CPlayScene::createGroundTile(const char * ani, size_t gx, size_t gy)
+Sprite * PlayScene::createGroundTile(const char * ani, size_t gx, size_t gy)
 {
-	CAniData* grdAni = CAnimationMgr::getAni("ground", ani);
+	AniData* grdAni = AnimationMgr::getAni("ground", ani);
 	auto pGrd = Sprite::create(grdAni->fileName, grdAni->framesData[0]);
 	pGrd->setAnchorPoint(Point::ZERO);
 	pGrd->setPosition(Point(gx*GRID_SIZE, gy*GRID_SIZE));

@@ -2,7 +2,6 @@
 
 USING_NS_CC;
 
-
 GameLogic::GameLogic()
 	:mSceneRoot(nullptr),mBeginScene(nullptr)
 {
@@ -12,24 +11,6 @@ GameLogic::GameLogic()
 GameLogic::~GameLogic() 
 {
 
-}
-
-//if you want a different context,just modify the value of glContextAttrs
-//it will takes effect on all platforms
-void GameLogic::initGLContextAttrs()
-{
-    //set OpenGL context attributions,now can only set six attributions:
-    //red,green,blue,alpha,depth,stencil
-    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
-
-    GLView::setGLContextAttrs(glContextAttrs);
-}
-
-// If you want to use packages manager to install more packages, 
-// don't modify or remove this function
-static int register_all_packages()
-{
-    return 0; //flag for packages manager
 }
 
 bool GameLogic::applicationDidFinishLaunching() {
@@ -50,8 +31,8 @@ bool GameLogic::applicationDidFinishLaunching() {
 
 	// 创建场景
 	mSceneRoot = Scene::create();
-	mBeginScene = new (CBeginScene)();
-	mPlayScene = new (CPlayScene)();
+	mBeginScene = new (BeginScene)();
+	mPlayScene = new (PlayScene)();
 
 	mSceneRoot->addChild(mBeginScene->getSceneLayer());
 	mCurrentScene = mBeginScene;
@@ -63,20 +44,16 @@ bool GameLogic::applicationDidFinishLaunching() {
     return true;
 }
 
-// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
+
 void GameLogic::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
 
-    // if you use SimpleAudioEngine, it must be pause
-    // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 }
 
-// this function will be called when the app is active again
+
 void GameLogic::applicationWillEnterForeground() {
     Director::getInstance()->startAnimation();
 
-    // if you use SimpleAudioEngine, it must resume here
-    // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
 
 void GameLogic::handleEvent(int eventType, void * data)
@@ -84,7 +61,7 @@ void GameLogic::handleEvent(int eventType, void * data)
 	// 过滤事件
 	switch (eventType)
 	{
-	case ESSE_Play:
+	case SSE_Play:
 	{
 		mCurrentScene->onExitScene(); // 退出当前场景
 		mSceneRoot->removeChild(mCurrentScene->getSceneLayer(), false);
@@ -94,7 +71,7 @@ void GameLogic::handleEvent(int eventType, void * data)
 		mCurrentScene->onEnterScene();
 		return;
 	}
-	case ESSE_Exit:
+	case SSE_Exit:
 		{
 			mCurrentScene->onExitScene();// 释放当前场景
 			mCurrentScene = nullptr;
@@ -108,7 +85,7 @@ void GameLogic::handleEvent(int eventType, void * data)
 			return;// 结束处理
 		}
 	
-	case ESSE_Back2Menu: /* 返回开始菜单 */
+	case SSE_Back2Menu: /* 返回开始菜单 */
 		{
 			mCurrentScene->onExitScene(); // 退出当前场景
 			mSceneRoot->removeChild(mCurrentScene->getSceneLayer(), false);

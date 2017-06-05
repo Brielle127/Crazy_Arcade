@@ -3,10 +3,10 @@
 
 #include "GameObject.h"
 
-class CItem :public CGameObject
+class Item :public GameObject
 {
 public:
-	CItem(CPlayScene& rScene) :CGameObject(rScene, EGOT_Item)
+	Item(PlayScene& rScene) :GameObject(rScene, GOT_Item)
 	{
 
 	}
@@ -20,7 +20,7 @@ public:
 	{
 		//  
 
-		CGameObject::update(dt);
+		GameObject::update(dt);
 	}
 
 };

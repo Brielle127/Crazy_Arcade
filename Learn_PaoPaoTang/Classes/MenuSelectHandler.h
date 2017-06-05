@@ -7,40 +7,40 @@
 
 USING_NS_CC;
 
-class CMenuSelectHandler :public Ref
+class MenuSelectHandler :public Ref
 {
 private:
-	CMenuSelectHandler(){}
+	MenuSelectHandler(){}
 public:
-	static CMenuSelectHandler* sharedHandler()
+	static MenuSelectHandler* sharedHandler()
 	{
-		static CMenuSelectHandler* instance=NULL;
+		static MenuSelectHandler* instance=NULL;
 		if (instance == NULL)
-			instance = new (CMenuSelectHandler)();
+			instance = new (MenuSelectHandler)();
 		return instance;
 	}
 
 	/*
 	void beginScene_PlayItem(Ref* sender)
 	{
-		GameLogic::sharedGameLogic().handleEvent(ESSE_Play);// 测试代码 
+		GameLogic::sharedGameLogic().handleEvent(SSE_Play);// 测试代码 
 	}
 	*/
 
 	/* 处理菜单事件 */
 	void onMenu_Play(Ref* pSeder)
 	{
-		GameLogic::sharedGameLogic().handleEvent(ESSE_Play);
+		GameLogic::sharedGameLogic().handleEvent(SSE_Play);
 	}
 
 	void onMenu_Exit(Ref* pSender)
 	{
-		GameLogic::sharedGameLogic().handleEvent(ESSE_Exit);
+		GameLogic::sharedGameLogic().handleEvent(SSE_Exit);
 	}
 
 	void onMenu_Back2Menu(Ref* pSender)
 	{
-		GameLogic::sharedGameLogic().handleEvent(ESSE_Back2Menu);
+		GameLogic::sharedGameLogic().handleEvent(SSE_Back2Menu);
 	}
 };
 

@@ -3,12 +3,13 @@
 #include"tinyxml.h"
 #include<assert.h>
 #include<map>
+#include<string>
 using namespace std;
 
-class CStringTableMgr
+class StringTableMgr
 {
 private:
-	CStringTableMgr(){}
+	StringTableMgr(){}
 	static void init(map<string,string>& StringTable)
 	{
 		

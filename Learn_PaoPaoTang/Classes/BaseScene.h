@@ -3,21 +3,28 @@
 
 #include "cocos2d.h"
 #include "StringTableMgr.h"
-
+#include "BaseDef.h"
 USING_NS_CC;
 
-class CBaseScene
+class BaseScene
 {
 public:
-	CBaseScene();
+	BaseScene()
+	{
+		mSceneLayer = Layer::create();
+		mSceneLayer->retain(); // 增加引用计数
+	}
 
-	virtual ~CBaseScene()
+	virtual ~BaseScene()
 	{
 		mSceneLayer->release();
 		mSceneLayer = nullptr;
 	}
 
-	Layer* getSceneLayer();
+	Layer* getSceneLayer()
+	{
+		return mSceneLayer;
+	}
 
 public:
 	virtual void onEnterScene(){}
@@ -26,7 +33,10 @@ public:
 	{
 
 	}
-	virtual void onHandleEvent(int eventType, void* data );
+	virtual void onHandleEvent(int eventType, void* data)
+	{
+
+	}
 protected:
 	Layer* mSceneLayer;
 };

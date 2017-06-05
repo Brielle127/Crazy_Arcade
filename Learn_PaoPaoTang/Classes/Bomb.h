@@ -3,10 +3,10 @@
 
 #include "GameObject.h"
 
-class CBomb :public CGameObject
+class Bomb :public GameObject
 {
 public:
-	CBomb(CPlayScene& rScene) :CGameObject(rScene, EGOT_Bomb)
+	Bomb(PlayScene& rScene) :GameObject(rScene, GOT_Bomb)
 	{
 
 	}
@@ -20,7 +20,7 @@ public:
 	{
 		//  
 
-		CGameObject::update(dt);
+		GameObject::update(dt);
 	}
 
 };

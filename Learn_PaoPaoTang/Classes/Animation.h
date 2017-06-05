@@ -9,7 +9,7 @@ USING_NS_CC;
 using namespace std;
 
 
-struct CAniData
+struct AniData
 {
 	// 动画名
 	string name;
@@ -21,13 +21,13 @@ struct CAniData
 	vector<Rect> framesData;
 };
 
-typedef map<string, CAniData> AniGroup;      // 一个AniGroup类型的对象表示一个动画： 动画名->动画的参数配置
+typedef map<string, AniData> AniGroup;      // 一个AniGroup类型的对象表示一个动画： 动画名->动画的参数配置
 
-class CAnimationMgr 
+class AnimationMgr 
 {
 private: 
 	// 加载配置文件
-	static void load(map<string,AniGroup>& raniGroup)                             
+	static void load(map<string,AniGroup>& rAniGroups)                             
 	{
 		TiXmlDocument doc;
 		if (doc.LoadFile("Config/GroupTable.xml"))
@@ -38,8 +38,8 @@ private:
 			while (group)
 			{
 				auto groupName = group->Attribute("name");
-				raniGroup.insert(make_pair(groupName, AniGroup()));
-				auto& rGroup = raniGroup[groupName];
+				rAniGroups.insert(make_pair(groupName, AniGroup()));
+				auto& rGroup = rAniGroups[groupName];
 
 				sub = group->FirstChildElement();
 				while(sub)
@@ -56,7 +56,7 @@ private:
 					while (ani)
 					{
 						auto aniName = ani->Attribute("name");
-						rGroup.insert(make_pair(aniName,CAniData()));
+						rGroup.insert(make_pair(aniName,AniData()));
 						auto& rAni = rGroup[aniName];
 
 						int begin, end, fps;
@@ -83,8 +83,13 @@ private:
 			}
 		}
 	}
+	static map<string, AniGroup>& getGroups()
+	{
+		static map<string, AniGroup> aniGroups;
+		return aniGroups;
+	}
 public:
-	static CAniData* getAni(const char* groupName, const char* aniName)
+	static AniData* getAni(const char* groupName, const char* aniName)
 	{
 		static map<string, AniGroup> aniGroup; // aniGroup表示一个动画组：组名->动画
 		if (aniGroup.size() == 0)
@@ -98,50 +103,104 @@ public:
 		}
 		return nullptr;
 	}
+	static const AniGroup* getGroup(const char* groupName)
+	{
+		map<string, AniGroup>& aniGroups = getGroups();
+		if (aniGroups.size() == 0)
+			load(aniGroups);
+		map<string, AniGroup>::iterator it = aniGroups.find(groupName);
+		if (it != aniGroups.end()) {
+			return &it->second;
+		}
+		return nullptr;
+	}
 };
 
+
 /* 渲染对象部件 */
-class CRenderPart
+class RenderPart
 {
+public:
+	enum PlayFlag {
+		PF_LOOP,
+		PF_COMPLETE_CLEAR,
+		PF_COMPLETE_STOP,
+	};
+private:
 	float currentElapsed;
 	int currentFrame;
-	CAniData* currentAniData;
+	AniData* currentAniData;
+	PlayFlag mFlag;
+	bool mPlaying;
 public:
 	Sprite* sprite; // 用于显示
 	string name;
 
-	CRenderPart(const char* szName)
+	RenderPart(const char* szName)
 		:currentFrame(0),
 		currentElapsed(0),
 		currentAniData(nullptr),
 		name(szName)
+		, mPlaying(true)
+		, mFlag(PF_LOOP)
 	{
 		sprite = Sprite::create();
 		sprite->retain();
 		sprite->setAnchorPoint(Size::ZERO);
-		currentAniData = new CAniData();
 	}
-	~CRenderPart()
+	~RenderPart()
 	{
 		sprite->release();
 	}
 
 	void setAni(const char* groupName, const char* aniName)
 	{
-		currentAniData = CAnimationMgr::getAni(groupName, aniName);
-		auto pTexture = Director::getInstance()->getTextureCache()->addImage(currentAniData->fileName);
-		sprite->setTexture(pTexture);
-		sprite->setTextureRect(currentAniData->framesData[0]);
+		mPlaying = true;
+		//mFlag = flag;
+		if (groupName == NULL || aniName == NULL) {
+			currentAniData = NULL;
+			sprite->setTexture(NULL);
+		}
+		else {
+			currentAniData = AnimationMgr::getAni(groupName, aniName);
+			if (currentAniData == NULL) {
+				sprite->setTexture(NULL);
+			}
+			else {
+				Texture2D* pTexture = TextureCache::sharedTextureCache()->addImage(currentAniData->fileName.c_str());
+				sprite->setTexture(pTexture);
+				sprite->setTextureRect(currentAniData->framesData[0]);
+			}
+		}
 	}
 
 	void update(float dt)
 	{
+		if (mPlaying == false)
+			return;
 		if (currentAniData) {
 			if (currentAniData->framesData.size() == 1) // 处理只有1帧的动画
 				return;
 			currentElapsed += dt;
 			currentFrame = currentElapsed*currentAniData->fps;
-			currentFrame %= currentAniData->framesData.size();
+			const int maxFrame = currentAniData->framesData.size();
+			if (currentFrame >= maxFrame) {
+				switch (mFlag)
+				{
+				case PF_LOOP:
+				{
+					currentFrame %= maxFrame;
+				}
+				break;
+				case PF_COMPLETE_CLEAR:
+					setAni(NULL, NULL);
+					return;
+				case PF_COMPLETE_STOP:
+					currentFrame = maxFrame - 1;
+					mPlaying = false;
+					break;
+				}
+			}
 			sprite->setTextureRect(currentAniData->framesData[currentFrame]);
 		}
 
@@ -149,14 +208,14 @@ public:
 };
 
 /* 渲染对象 */
-class CRenderObj
+class RenderObj
 {
-	vector<CRenderPart*> parts;          // vector用于快速访问
-	map<string, CRenderPart*> partsMap;  // 部件名称->部件对象的映射
+	vector<RenderPart*> parts;          // vector用于快速访问
+	map<string, RenderPart*> partsMap;  // 部件名称->部件对象的映射
 public:
 	Sprite* sprite;
 public:
-	CRenderObj()
+	RenderObj()
 	{
 		sprite = Sprite::create();
 	}
@@ -184,7 +243,7 @@ public:
 	/* 添加部件 */
 	void addPart(const char* partName, /*部件的偏移*/const Point& offset) 
 	{
-		auto pNewPart = new CRenderPart(partName);   // 生成
+		auto pNewPart = new RenderPart(partName);   // 生成
 		pNewPart->sprite->setPosition(offset);
 		pNewPart->name = partName;
 

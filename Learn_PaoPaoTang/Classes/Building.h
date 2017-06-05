@@ -3,10 +3,10 @@
 
 #include "GameObject.h"
 
-class CBuilding :public CGameObject
+class Building :public GameObject
 {
 public:
-	CBuilding(CPlayScene& rScene) :CGameObject(rScene, EGOT_Building)
+	Building(PlayScene& rScene) :GameObject(rScene, GOT_Building)
 	{
 		mRenderObj.addPart("root", Point::ZERO);
 		mRenderObj.addPart("head", Point(0, 71));
@@ -25,7 +25,7 @@ public:
 	{
 		//  
 
-		CGameObject::update(dt);
+		GameObject::update(dt);
 	}
 
 };

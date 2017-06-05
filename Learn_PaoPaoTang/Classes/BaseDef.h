@@ -14,49 +14,49 @@ static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 #define GRID_HEIGHT 13
 #define GRID_SIZE 40
 
-enum EControlType
+enum ControlType
 {
-	ECT_NONE,
-	ECT_UP, 
-	ECT_DOWN,
-	ECT_LEFT,
-	ECT_RIGHT,
-	ECT_PRESS,
-	ECT_NUM
+	CT_NONE,
+	CT_UP, 
+	CT_DOWN,
+	CT_LEFT,
+	CT_RIGHT,
+	CT_PRESS,
+	CT_NUM
 };
 
-enum EPressState
+enum PressState
 {
-	EPS_DOWN,
-	EPS_UP
+	PS_DOWN,
+	PS_UP
 };
 
-enum ESceneSwitchEvent
+/* 场景转换事件 */
+enum SceneSwitchEvent
 {
-	ESSE_Play,
-	ESSE_Exit,
-	ESSE_Back2Menu
+	SSE_Play,
+	SSE_Exit,
+	SSE_Back2Menu
 };
 
 /* 对象类型 */
-enum EGameObjectType
+enum GameObjectType
 {
-	EGOT_Player,   
-	EGOT_Building, 
-	EGOT_Bomb,     
-	EGOT_Item,
-	EGOT_Num
+	GOT_Player,   
+	GOT_Building, 
+	GOT_Bomb,     
+	GOT_Item,
+	GOT_Num
 };
 
 /* 角色逻辑状态 */
-enum EPlayerLogicState
+enum PlayerLogicState
 {
-	EPLS_STAND,
-	EPLS_MOVE,
-	EPLS_WRAPED,
-	EPLS_DEAD,
-	EPLS_RIDE,
-	EPLS_NUM
+	PLS_STAND,
+	PLS_MOVE,
+	PLS_WRAPPED,
+	PLS_DEAD,
+	PLS_NUM
 };
 
 #endif // !__BASE_DEF_H__
