@@ -53,9 +53,9 @@ public:
 		, mIsRiding(false)
 	{
 		mRenderObj.addPart(PART_BODY, Point::ZERO);
-		mRenderObj.addPart(PART_EFX, Point::ZERO);
-		mRenderObj.addPart(PART_RIDE, Point::ZERO);
-
+		//mRenderObj.addPart(PART_EFX, Point::ZERO);
+		//mRenderObj.addPart(PART_RIDE, Point::ZERO);
+		mRenderObj.setAnchorPoint(Point(24, 0));
 		memset(mTransTable, 0, sizeof(mTransTable));
 
 		// 设置默认允许的操作……
@@ -173,8 +173,8 @@ private:
 		// 步径大小
 		float dx = dirx[mMoveState] * mSpeed * dt;
 		float dy = diry[mMoveState] * mSpeed * dt;
-		mRenderObj.sprite->setPositionX(mRenderObj.sprite->getPositionX() + dx);
-		mRenderObj.sprite->setPositionY(mRenderObj.sprite->getPositionY() + dy);
+		const Point rPoint = mRenderObj.getPosition();
+		mRenderObj.setPosition(Point(rPoint.x + dx, rPoint.y + dy));
 	}
 private:
 	// 切换动画

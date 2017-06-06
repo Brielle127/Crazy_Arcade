@@ -25,8 +25,18 @@ public:
 	GameObjectType getType() { return mType; }
 	/* ÉèÖÃÎ»ÖÃ */
 	void setGrid(int gridx, int gridy) { mGridX = gridx; mGridY = gridy; }
+	void setPosition(const Point& rPoint)
+	{
+		mRenderObj.setPosition(rPoint);
+	}
+
+	const Point& getPosition()
+	{
+		return mRenderObj.getPosition();
+	}
+
 public:
-	virtual float getDepth() { return -mRenderObj.sprite->getPositionY(); }
+	virtual int getDepth() { return -mRenderObj.getPosition().y; }
 	virtual void load(const char* szName) = 0;
 	virtual void update(float dt)
 	{

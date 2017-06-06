@@ -224,19 +224,39 @@ class RenderObj
 {
 	vector<RenderPart*> parts;          // vector用于快速访问
 	map<string, RenderPart*> partsMap;  // 部件名称->部件对象的映射
+	Point anchorPoint;  // 锚点
+	Point position;     // 位置
 public:
 	Sprite* sprite;
 public:
 	RenderObj()
 	{
 		sprite = Sprite::create();
-		//sprite->retain();
+		sprite->retain();
+	}
+
+	~RenderObj()
+	{
+		sprite->release();
 	}
 
 	// 设置锚点
 	void setAnchorPoint(const Point& rPoint)
 	{
-		sprite->setAnchorPoint(rPoint);
+		anchorPoint = rPoint;
+	}
+
+	// sprite自身的位置设置方法
+	void setPosition(const Point& rPoint)
+	{
+		position = rPoint;
+		sprite->setPositionX(rPoint.x - anchorPoint.x);
+		sprite->setPositionY(rPoint.y - anchorPoint.y);
+	}
+
+	const Point& getPosition()
+	{
+		return position;
 	}
 
 	// 使用名字设置部件动画

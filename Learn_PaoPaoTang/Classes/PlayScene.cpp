@@ -38,7 +38,7 @@ void PlayScene::onEnterScene()
 	loadScene();
 
 	mPlayer.load("");
-	mPlayer.getSprite()->setPosition(Point::ZERO);
+	mPlayer.setPosition(Point::ZERO);
 	mObjectLayer->addChild(mPlayer.getSprite());
 
 }
@@ -69,13 +69,14 @@ void PlayScene::onUpdate(float dt)
 			auto& rObjects = mMapObject[w][h];
 			for (int i = rObjects.size() - 1; i >= 0; --i) {
 				auto obj = rObjects[i];
-				mSceneLayer->reorderChild(obj->getSprite(), obj->getDepth());
+				// ÅÅÐò
+				mObjectLayer->reorderChild(obj->getSprite(), obj->getDepth());
 				obj->update(dt);
 			}
 		}
 	}
 	mPlayer.update(dt);
-	mSceneLayer->reorderChild(mPlayer.getSprite(), mPlayer.getDepth());
+	mObjectLayer->reorderChild(mPlayer.getSprite(), mPlayer.getDepth());
 
 }
 
@@ -127,10 +128,10 @@ void PlayScene::loadScene()
 				}
 			}
 	}
-/*
+
 	{
 		auto obj = createObject(GOT_Building);
-		obj->getSprite()->setPosition(Point(400, 300));
+		obj->setPosition(Point(400, 300));
 		(mMapObject[0][0]).push_back(obj);
 		mObjectLayer->addChild(obj->getSprite());
 	}
@@ -138,11 +139,11 @@ void PlayScene::loadScene()
 	{// object initialize
 	// ²âÊÔ´úÂë
 		auto obj = createObject(GOT_Building);
-		obj->getSprite()->setPosition(Point(400, 350));
+		obj->setPosition(Point(400, 350));
 		(mMapObject[0][0]).push_back(obj);
 		mObjectLayer->addChild(obj->getSprite());
 	}
-	*/
+	
 }
 
 

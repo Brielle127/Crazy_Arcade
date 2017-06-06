@@ -18,6 +18,7 @@ class PlayScene:public BaseScene
 	string mCurrentFile; // 当前场景的文件
 	Player mPlayer;
 	vector<GameObject*> mMapObject[GRID_WIDTH][GRID_HEIGHT];  // 静态对象
+	bool mMapBarrier[GRID_WIDTH][GRID_HEIGHT]; // 阻挡格子
 public:
 	PlayScene()
 		:mGroundLayer(nullptr)
@@ -35,6 +36,8 @@ public:
 
 		mUILayer = Layer::create();
 		mSceneLayer->addChild(mUILayer);
+
+		memset(mMapBarrier, false, sizeof(mMapBarrier));
 	}
 
 
@@ -44,6 +47,19 @@ public:
 public:
 	void setCurrentSceneFile(const char* szFile);// 设置当前场景的文件
 	void loadScene();
+	// 设置障碍物
+	void setBarrier(int gridx, int gridy, bool bBarrier)
+	{
+		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy << GRID_HEIGHT)
+			mMapBarrier[gridx][gridy] = bBarrier;
+	}
+
+	bool getBarrier(int gridx, int gridy)
+	{
+		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy << GRID_HEIGHT)
+			return mMapBarrier[gridx][gridy];
+		return true; // 地图以外设为阻挡
+	}
 public:
 	GameObject* createObject(GameObjectType objType);
 	void destroy(GameObject* obj);
