@@ -11,36 +11,73 @@
 class Player;
 typedef void(Player::*Method)();       // Player的无参无返回值成员函数
 typedef void(Player::*UpdateMethod)(float); // 更新方法
-typedef void(Player::*InputMethod)(ControlType, PressState);
+//typedef void(Player::*InputMethod)(ControlType, PressState);
 struct StateMethod  // 状态方法
 {
 	Method enter;
 	Method exit;
 	UpdateMethod update;
-	InputMethod input;
-	void init(Method en, Method ex, UpdateMethod up,InputMethod ip)
+	//InputMethod input;
+	void init(Method en, Method ex, UpdateMethod up/*,InputMethod ip*/)
 	{
 		enter = en;
 		exit = ex;
 		update = up;
-		input = ip;
+		//input = ip;
 	}
 };
+
+union TransParam
+{
+	PlayerMoveState nextMoveState;
+};
+
 class Player:public GameObject
 {
 	PlayerLogicState mState; // 角色当前状态
+	PlayerMoveState mMoveState; // 移动方向
+	TransParam mTransParam;
 	float mSpeed;     // 速度
 	int mMaxBombNum;  // 炸弹数量
 	int mBombStrength;// 炸弹威力
 	bool mIsRiding;   // 是否骑乘
-	PlayerMoveState mMoveState; // 移动方向
-	bool mTransTable[PLS_NUM][PLS_NUM]; // 状态转换表
+	PlayerLogicState mTransTable[PLS_NUM][PLS_NUM]; // 状态转换表
 	StateMethod states[PLS_NUM];
 public:
-	Player(PlayScene& rScene);
+	Player(PlayScene& rScene)
+		:GameObject(rScene, GOT_Player)
+		, mState(PLS_STAND)
+		, mSpeed(100)
+		, mMaxBombNum(0)
+		, mBombStrength(0)
+		, mIsRiding(false)
+	{
+		mRenderObj.addPart(PART_BODY, Point::ZERO);
+		mRenderObj.addPart(PART_EFX, Point::ZERO);
+		mRenderObj.addPart(PART_RIDE, Point::ZERO);
+
+		memset(mTransTable, 0, sizeof(mTransTable));
+
+		// 设置默认允许的操作……
+		mTransTable[PI_KILL][PLS_STAND] = PLS_WRAPPED; // 静止状态+炸弹爆炸->被泡泡包裹
+		mTransTable[PI_MOVE][PLS_STAND] = PLS_MOVE;    // 静止状态+请求移动->移动状态
+
+		mTransTable[PI_KILL][PLS_MOVE] = PLS_WRAPPED;
+		mTransTable[PI_STOP][PLS_MOVE] = PLS_STAND;
+
+		// 飞针道具…
+		mTransTable[PI_KILL][PLS_WRAPPED] = PLS_DEAD;
+
+		// 初始化默认方法
+		states[PLS_STAND].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate/*, &Player::standHandleInput*/);
+		states[PLS_MOVE].init(&Player::moveStateEnter, &Player::defaultExit, &Player::moveStateUpdate/*, &Player::moveHandleInput*/);
+		states[PLS_WRAPPED].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate/*, &Player::defaultHandleInput*/);
+		states[PLS_DEAD].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate/*, &Player::defaultHandleInput*/);
+	}
 
 	virtual void load(const char* szName)
 	{
+		//mRenderObj.addPart(PART_BODY, Point::ZERO);
 		mRenderObj.setAni(PART_BODY, "role1", "walk_up");
 	}
 	virtual void update(float dt) 
@@ -52,39 +89,119 @@ public:
 public:
 	void handleInput(ControlType ectType, PressState epState)
 	{ 
-		(this->*states[mState].input)(ectType,epState);
-	}
-	void standHandleInput(ControlType ectType, PressState epState)
-	{
-		if (epState == PS_DOWN) {
-			mState = PLS_MOVE;//切换逻辑状态为移动
-			switch (ectType)
-			{
-			case CT_LEFT:
-				mMoveState = PMS_LEFT;
-				break;
-			case CT_RIGHT:
-				mMoveState = PMS_RIGHT;
-				break;
-			case CT_UP:
-				mMoveState = PMS_UP;
-				break;
-			case CT_DOWN:
-				mMoveState = PMS_DOWN;
-				break;
-			default:
-				mState = PLS_STAND;
-			}
+		switch (epState)
+		{
+		case PS_DOWN:
+			handleDown(ectType);
+			break;
+		case PS_UP:
+			handleUp(ectType);
+			break;
+		default:
+			return;
 		}
 	}
 
-	void moveHandleInput(ControlType ectType, PressState epState)
+private:
+	void handleDown(ControlType ectType)
+	{
+		switch (ectType)
+		{
+		case CT_PRESS: // 空格放置炸弹
+		{
+			
+		}
+		break;
+		case CT_LEFT:
+		case CT_RIGHT:
+		case CT_UP:
+		case CT_DOWN:
+		{
+			static PlayerMoveState getMoveState[] = { PMS_UP,PMS_DOWN,PMS_LEFT,PMS_RIGHT };
+			mTransParam.nextMoveState = getMoveState[ectType-CT_UP];
+			PlayerLogicState s = mTransTable[PI_MOVE][mState];
+			if (s != PLS_NONE)
+				changeState(s);
+		}
+		break;
+		default:
+			return;
+
+		}
+	}
+	void handleUp(ControlType ectType)
 	{
 
+		switch (ectType)
+		{
+		case CT_PRESS: // 空格放置炸弹
+		{
+
+		}
+		break;
+		case CT_LEFT:
+		case CT_RIGHT:
+		case CT_UP:
+		case CT_DOWN:
+		{
+			PlayerLogicState s = mTransTable[PI_STOP][mState];  // 请求停下
+			if (s != PLS_NONE)
+				changeState(s);
+		}
+		break;
+		default:
+			return;
+
+		}
+	}
+	// 切换状态
+	void changeState(PlayerLogicState nextState)
+	{
+		// 退出先前状态
+		StateMethod rCurrent = states[mState];
+		(this->*rCurrent.exit)();
+
+		mState = nextState;
+		StateMethod rNext = states[nextState];
+		(this->*rNext.enter)();
+	}
+	void moveStateUpdate(float dt)
+	{
+		// 上下左右的位移
+		static int dirx[] = {0,0,-1,1};
+		static int diry[] = {1,-1,0,0};
+		// 步径大小
+		float dx = dirx[mMoveState] * mSpeed * dt;
+		float dy = diry[mMoveState] * mSpeed * dt;
+		mRenderObj.sprite->setPositionX(mRenderObj.sprite->getPositionX() + dx);
+		mRenderObj.sprite->setPositionY(mRenderObj.sprite->getPositionY() + dy);
+	}
+private:
+	// 切换动画
+	void moveStateEnter()
+	{
+		switch (mTransParam.nextMoveState)
+		{
+		case PMS_UP:
+			mRenderObj.setAni(PART_BODY, "role1", "walk_up");
+			break;
+		case PMS_DOWN:
+			mRenderObj.setAni(PART_BODY, "role1", "walk_down");
+			break;
+		case PMS_LEFT:
+			mRenderObj.setAni(PART_BODY, "role1", "walk_left");
+			break;
+		case PMS_RIGHT:
+			mRenderObj.setAni(PART_BODY, "role1", "walk_right");
+			break;
+		default:
+			return;
+		}
+		mMoveState = mTransParam.nextMoveState;
 	}
 private: // 默认方法
 	void defaultEnter() {}
-	void  defaultExit() {}
+	void defaultExit() {}
 	void defaultUpdate(float dt) {}
 	void defaultHandleInput(ControlType ectType, PressState epState) {}
  };

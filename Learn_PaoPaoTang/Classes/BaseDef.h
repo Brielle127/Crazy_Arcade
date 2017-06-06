@@ -52,6 +52,7 @@ enum GameObjectType
 /* 角色逻辑状态 */
 enum PlayerLogicState
 {
+	PLS_NONE,
 	PLS_STAND,
 	PLS_MOVE,
 	PLS_WRAPPED,
@@ -65,6 +66,16 @@ enum EPlayerMoveState
 	EPMS_DOWN,
 	EPMS_LEFT,
 	EPMS_RIGHT
+};
+
+enum PlayerInput
+{
+	PI_NONE,    // 非法动作请求
+	PI_STOP,
+	PI_MOVE,
+//	PI_ATTACKED,// 受到攻击
+	PI_KILL,     // 炸弹爆炸
+	PI_NUM
 };
 
 /* 角色移动方向 */

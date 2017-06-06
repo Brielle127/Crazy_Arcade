@@ -230,6 +230,7 @@ public:
 	RenderObj()
 	{
 		sprite = Sprite::create();
+		//sprite->retain();
 	}
 
 	// ÉèÖÃÃªµã
