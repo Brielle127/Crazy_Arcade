@@ -158,6 +158,15 @@ public:
 		sprite->release();
 	}
 
+	Rect* getSize()
+	{
+		if (currentAniData) {
+			if (currentAniData->framesData.size())
+				return &currentAniData->framesData[0];
+		}
+		return nullptr;
+	}
+
 	void setAni(const char* groupName, const char* aniName)
 	{
 
@@ -238,6 +247,14 @@ public:
 	~RenderObj()
 	{
 		sprite->release();
+	}
+
+	// 返回当前parts动画的一帧
+	Rect* getSize()
+	{
+		if (parts.size() > 0)
+			return parts[0]->getSize();
+		return nullptr;
 	}
 
 	// 设置锚点

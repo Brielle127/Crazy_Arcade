@@ -75,8 +75,8 @@ void PlayScene::onUpdate(float dt)
 			}
 		}
 	}
-	mPlayer.update(dt);
 	mObjectLayer->reorderChild(mPlayer.getSprite(), mPlayer.getDepth());
+	mPlayer.update(dt);
 
 }
 
@@ -139,7 +139,7 @@ void PlayScene::loadScene()
 	{// object initialize
 	// ²âÊÔ´úÂë
 		auto obj = createObject(GOT_Building);
-		obj->setPosition(Point(400, 350));
+		obj->setPosition(Point(0, 1));
 		(mMapObject[0][0]).push_back(obj);
 		mObjectLayer->addChild(obj->getSprite());
 	}

@@ -2,6 +2,8 @@
 #define _BUILDING_H_
 
 #include "GameObject.h"
+#include "BuildingInfoConfig.h"
+#include "Animation.h"
 
 class Building :public GameObject
 {
@@ -10,22 +12,31 @@ private:// 静态属性
 public:
 	Building(PlayScene& rScene) :GameObject(rScene, GOT_Building)
 	{
-		
+		load("oasis");
 	}
 
 	virtual void load(const char* szName)
 	{
-		mRenderObj.addPart("root", Point::ZERO);
-		mRenderObj.addPart("head", Point(0, 71));
+		BuildingInfo& info = *BuildingIfoMgr::getBuildingInfo(szName);
+		 
+		for (int i = 0; i < info.partInfo.size(); ++i)
+		{
+			mRenderObj.addPart(info.partInfo[i].name.c_str(), info.partInfo[i].offset);
+			mRenderObj.setAni(info.partInfo[i].name.c_str(), info.partInfo[i].group.c_str(), info.partInfo[i].aniName.c_str());
+		}
 
-		mRenderObj.setAni(0, "oasis", "root");
-		mRenderObj.setAni("head", "oasis", "head");
-
+		auto rect = mRenderObj.getSize();
+		if (rect) {
+			int bw = info.barrierX*GRID_SIZE; // 阻挡的宽
+			int fw = mRenderObj.getSize()->size.width;// 对象的宽
+			int anx = (bw - fw) / 2; // 锚点横坐标
+			mRenderObj.setAnchorPoint(Point(anx, 0));
+		}
 	}
 	// 用于排序
-	virtual int getDepth()
+	virtual float getDepth()
 	{
-		return -mRenderObj.getPosition().y + GRID_SIZE; // 向上漂移一格
+		return -(mRenderObj.getPosition().y + GRID_SIZE); // 向上漂移一格
 	}
 
 	virtual void update(float dt)

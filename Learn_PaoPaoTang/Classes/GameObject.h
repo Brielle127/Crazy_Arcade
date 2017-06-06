@@ -36,7 +36,7 @@ public:
 	}
 
 public:
-	virtual int getDepth() { return -mRenderObj.getPosition().y; }
+	virtual float getDepth() { return -mRenderObj.getPosition().y; }
 	virtual void load(const char* szName) = 0;
 	virtual void update(float dt)
 	{

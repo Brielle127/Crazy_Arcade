@@ -1,0 +1,6 @@
+<config>
+	<info name="oasis" barrierX = "4" barrierY = "1">
+		<part name="p1" group="oasis" ani="head" offsetX="0" offsetY="71"/>
+		<part name="p2" group="oasis" ani="root" offsetX="0" offsetY="0"/>
+	</info>
+</config>
