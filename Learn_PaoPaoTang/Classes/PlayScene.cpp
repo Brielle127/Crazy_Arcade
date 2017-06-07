@@ -28,17 +28,11 @@ void PlayScene::onEnterScene()
 	mUILayer->addChild(menu, 1);
 
 
-	//测试代码
-	//pRenderObj = new (RenderObj)();
-	//mObjectLayer->addChild(pRenderObj->sprite);
-
-	//pRenderObj->sprite->setPosition(Point(designResolutionSize.width/2,designResolutionSize.height/2));
-
 	setCurrentSceneFile("Scenes/test.xml");
 	loadScene();
 
 	mPlayer.load("");
-	mPlayer.setPosition(Point::ZERO);
+	mPlayer.setPosition(Point(100,100));
 	mObjectLayer->addChild(mPlayer.getSprite());
 
 }
@@ -85,6 +79,7 @@ void PlayScene::setCurrentSceneFile(const char * szFile)
 	mCurrentFile = szFile;
 }
 
+// 加载场景
 void PlayScene::loadScene()
 {
 	TiXmlDocument doc;
@@ -93,12 +88,14 @@ void PlayScene::loadScene()
 		auto root = doc.RootElement();
 		auto grounds = root->FirstChildElement();
 		auto defaultAni = grounds->Attribute("defaultAni"); // 默认背景
+
+		// 加载背景
 		auto ground = grounds->FirstChildElement();
 		while (ground) {
 			auto ani = ground->Attribute("ani");
 			string tiles = ground->Attribute("tiles");
 			auto idx = tiles.find_first_of(',');
-			while(idx) {
+			while (idx) {
 				string sub = tiles.substr(0, idx);
 				int gridIdx = atoi(sub.c_str());
 				int gx, gy;
@@ -107,8 +104,8 @@ void PlayScene::loadScene()
 				createGroundTile(ani, gx, gy);
 				usedMap[gridIdx] = true;
 				tiles = tiles.substr(idx + 1, tiles.length());
-				idx= tiles.find_first_of(',');
-				if (idx ==size_t(-1)) 
+				idx = tiles.find_first_of(',');
+				if (idx == size_t(-1))
 				{
 					gridIdx = atoi(tiles.substr(0, idx).c_str());
 					gx = gridIdx % GRID_WIDTH;
@@ -120,30 +117,39 @@ void PlayScene::loadScene()
 			}
 			ground = ground->NextSiblingElement();
 		}
-			for (size_t i = 0; i < GRID_WIDTH; ++i) {
-				for (size_t j = 0; j < GRID_HEIGHT; ++j) {
-					auto it = usedMap.find(i + j*GRID_WIDTH);
-					if (it == usedMap.end())
-						createGroundTile(defaultAni, i, j);
-				}
+
+		for (size_t i = 0; i < GRID_WIDTH; ++i) {
+			for (size_t j = 0; j < GRID_HEIGHT; ++j) {
+				auto it = usedMap.find(i + j*GRID_WIDTH);
+				if (it == usedMap.end())
+					createGroundTile(defaultAni, i, j);
 			}
+		}
+
+		// 加载building
+		auto buildings = grounds->NextSiblingElement();
+		if (buildings) {
+			auto building = buildings->FirstChildElement();
+			while (building) {
+				int gridx = atoi(building->Attribute("gridX"));
+				int gridy = atoi(building->Attribute("gridY"));
+				auto name = building->Attribute("name");
+
+				// 创建building对象
+				auto obj = (Building*)createObject(GOT_Building);
+				obj->load(name);
+				obj->setPosition(Point(gridx*GRID_SIZE, gridy*GRID_SIZE));
+				obj->setGrid(gridx, gridy);
+				obj->init();
+				(mMapObject[gridx][gridy]).push_back(obj);
+				mObjectLayer->addChild(obj->getSprite());
+
+				// 下一节点
+				building = building->NextSiblingElement();
+			}
+		}
 	}
 
-	{
-		auto obj = createObject(GOT_Building);
-		obj->setPosition(Point(400, 300));
-		(mMapObject[0][0]).push_back(obj);
-		mObjectLayer->addChild(obj->getSprite());
-	}
-	
-	{// object initialize
-	// 测试代码
-		auto obj = createObject(GOT_Building);
-		obj->setPosition(Point(0, 1));
-		(mMapObject[0][0]).push_back(obj);
-		mObjectLayer->addChild(obj->getSprite());
-	}
-	
 }
 
 
@@ -186,11 +192,6 @@ void PlayScene::destroy(GameObject* obj)
 		}
 	}
 
-}
-
-inline vector<GameObject*>& PlayScene::getObject(int gridx, int gridy)
-{
-	return mMapObject[gridx][gridy];
 }
 
 Sprite * PlayScene::createGroundTile(const char * ani, size_t gx, size_t gy)

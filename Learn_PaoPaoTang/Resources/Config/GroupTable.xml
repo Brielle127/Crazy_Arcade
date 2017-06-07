@@ -1,41 +1,274 @@
 <config>
+	<!--角色1-->
 	<group name="role1">
-		<sub file="pic/Role1.png" tileWidth="6" tileHeight="4" width="288" height="256">
+    <!--行走动画-->
+		<sub file="Pic/Role1.png" tileWidth="6" tileHeight="4" width="288" height="256">
 			<ani name="walk_up" begin="0" end="5" fps="4"/>
 			<ani name="walk_down" begin="6" end="11" fps="4"/>
 			<ani name="walk_left" begin="12" end="17" fps="4"/>
 			<ani name="walk_right" begin="18" end="23" fps="4"/>
+      <ani name="stand_up" begin="0" end="0" fps="4"/>
+      <ani name="stand_down" begin="6" end="6" fps="4"/>
+      <ani name="stand_left" begin="12" end="12" fps="4"/>
+      <ani name="stand_right" begin="18" end="18" fps="4"/>
 		</sub>
+    <!--骑乘动画-->
+    <sub file="Pic/Role1Ride.png" tileWidth="4" tileHeight="1" width="192" height="56">
+      <ani name="ride_up" begin="0" end="0" fps="0"/>
+      <ani name="ride_down" begin="1" end="1" fps="1"/>
+      <ani name="ride_left" begin="2" end="2" fps="2"/>
+      <ani name="ride_right" begin="3" end="3" fps="3"/>
+    </sub>
+    <!--被泡泡包围的动画-->
+    <sub file="Pic/Role1Ani.png" tileWidth="8" tileHeight="1" width="384" height="64">
+      <ani name="surrounded" begin="0" end="1" fps="1"/>
+    </sub>
+    <!--死亡动画-->
+    <sub file="Pic/Role1Die.png" tileWidth="11" tileHeight="1" width="528" height="100">
+      <ani name="die" begin="0" end="7" fps="4"/>
+    </sub>
 	</group>
+	<!--角色2-->
 	<group name="role2">
-		<sub file="pic/Role2.png" tileWidth="6" tileHeight="4" width="336" height="268">
+		<sub file="Pic/Role2.png" tileWidth="6" tileHeight="4"  width="336" height="268">
 			<ani name="walk_up" begin="0" end="5" fps="4"/>
 			<ani name="walk_down" begin="6" end="11" fps="4"/>
 			<ani name="walk_left" begin="12" end="17" fps="4"/>
 			<ani name="walk_right" begin="18" end="23" fps="4"/>
+      <ani name="stand_up" begin="0" end="0" fps="4"/>
+      <ani name="stand_down" begin="6" end="6" fps="4"/>
+      <ani name="stand_left" begin="12" end="12" fps="4"/>
+      <ani name="stand_right" begin="18" end="18" fps="4"/>
+		</sub>
+    <!--骑乘动画-->
+    <sub file="Pic/Role2Ride.png" tileWidth="4" tileHeight="1" width="224" height="60">
+      <ani name="ride_up" begin="0" end="0" fps="0"/>
+      <ani name="ride_down" begin="1" end="1" fps="1"/>
+      <ani name="ride_left" begin="2" end="2" fps="2"/>
+      <ani name="ride_right" begin="3" end="3" fps="3"/>
+    </sub>
+    <!--被泡泡包围的动画-->
+    <sub file="Pic/Role2Ani.png" tileWidth="8" tileHeight="1" width="448" height="70">
+      <ani name="surrounded" begin="0" end="1" fps="1"/>
+    </sub>
+    <!--死亡动画-->
+    <sub file="Pic/Role2Die.png" tileWidth="11" tileHeight="1" width="616" height="98">
+      <ani name="die" begin="0" end="7" fps="4"/>
+    </sub>
+	</group>
+	<!--角色影子-->
+	<group name="roleshadow">
+		<sub file= "Pic/ShadowRole.png" tileWidth = "1" tileHeight="1" width="32" height="15">
+			<ani name="ShadowRole" begin = "0" end="0" fps="4"/>
 		</sub>
 	</group>
-	<group name="oasis">
-		<sub file="pic/SandOasis.png" tileWidth="1" tileHeight="1" width="160" height="72">
-			<ani name="head" begin="0" end="0" fps="4"/>
+  <!--大泡泡-->
+  <group name="BigPopo">
+    <sub file= "Pic/BigPopo.png" tileWidth = "9" tileHeight="1" width="648" height="72">
+      <ani name="surrounded" begin ="3" end="3" fps="4"/>
+      <ani name="ani2" begin ="4" end="8" fps="4"/>
+    </sub>
+  </group>
+	<!--泡泡-->
+	<group name="Popo">
+		<sub file= "Pic/Popo.png" tileWidth = "3" tileHeight="1" width="132" height="41">
+			<ani name="idle" begin = "0" end="2" fps="4"/>
 		</sub>
-		<sub file="pic/SandOasisAni.png" tileWidth="3" tileHeight="1" width="480" height="71">
-			<ani name="root" begin="0" end="2" fps="4"/>
+		<sub file= "Pic/ShadowPopo.png" tileWidth = "3" tileHeight="1" width="105" height="16">
+			<ani name="shadow" begin = "0" end="2" fps="4"/>
 		</sub>
 	</group>
-	<group name ="ground">
-		<sub file="pic/TownGround.png" tileWidth ="7" tileHeight="1" width="280" height="40">
-			<ani name="ground0" begin="0" end="0" fps="4"/>
-			<ani name="ground1" begin="1" end="1" fps="4"/>
-			<ani name="ground2" begin="2" end="2" fps="4"/>
-			<ani name="ground3" begin="3" end="3" fps="4"/>
-			<ani name="ground4" begin="4" end="4" fps="4"/>
-			<ani name="ground5" begin="5" end="5" fps="4"/>
-			<ani name="ground6" begin="6" end="6" fps="4"/>
+	<!--泡泡爆炸效果-->
+	<group name="Explosion">
+		<sub file= "Pic/Explosion.png" tileWidth = "14" tileHeight="5" width="560" height="200">
+			<ani name="up" begin = "0" end="0" fps="4"/>
+			<ani name="down" begin = "14" end="14" fps="4"/>
+			<ani name="left" begin = "28" end="28" fps="4"/>
+			<ani name="right" begin = "42" end="42" fps="4"/>
+			<ani name="middle" begin = "56" end="56" fps="4"/>
+			<ani name="up_m" begin = "4" end="4" fps="4"/>
+			<ani name="down_m" begin = "18" end="18" fps="4"/>
+			<ani name="left_m" begin = "32" end="32" fps="4"/>
+			<ani name="right_m" begin = "46" end="46" fps="4"/>
 		</sub>
-		<sub file="pic/SandGround.png" tileWidth="2" tileHeight="1" width="80" height="40">
-			<ani name="ground7" begin="0" end="0" fps="4"/>
-			<ani name="ground8" begin="1" end="1" fps="4"/>
+	</group>
+	<!--道具-->
+	<group name="gift">
+		<sub file= "Pic/Gift1.png" tileWidth = "3" tileHeight="1" width="126" height="45">
+			<ani name="Gift1" begin = "0" end="2" fps="4"/>
+		</sub>
+		<sub file= "Pic/Gift2.png" tileWidth = "3" tileHeight="1" width="126" height="45">
+			<ani name="Gift2" begin = "0" end="2" fps="4"/>
+		</sub>
+		<sub file= "Pic/Gift3.png" tileWidth = "3" tileHeight="1" width="126" height="45">
+			<ani name="Gift3" begin = "0" end="2" fps="4"/>
+		</sub>
+		<sub file= "Pic/Gift4.png" tileWidth = "3" tileHeight="1" width="126" height="45">
+			<ani name="Gift4" begin = "0" end="2" fps="4"/>
+		</sub>
+		<sub file= "Pic/Gift5.png" tileWidth = "3" tileHeight="1" width="126" height="45">
+			<ani name="Gift5" begin = "0" end="2" fps="4"/>
+		</sub>
+		<sub file= "Pic/Gift6.png" tileWidth = "3" tileHeight="1" width="126" height="46">
+			<ani name="Gift6" begin = "0" end="2" fps="4"/>
+		</sub>
+		<sub file= "Pic/GiftOwl.png" tileWidth = "3" tileHeight="1" width="108" height="38">
+			<ani name="GiftOwl" begin = "0" end="2" fps="4"/>
+		</sub>
+		<sub file= "Pic/GiftTurtle.png" tileWidth = "3" tileHeight="1" width="108" height="41">
+			<ani name="GiftTurtle" begin = "0" end="2" fps="4"/>
+		</sub>
+		<sub file= "Pic/GiftUFO.png" tileWidth = "3" tileHeight="1" width="120" height="41">
+			<ani name="GiftUFO" begin = "0" end="2" fps="4"/>
+		</sub>
+		<sub file= "Pic/ShadowGift.png" tileWidth = "2" tileHeight="1" width="36" height="9">
+			<ani name="ShadowGift" begin = "0" end="1" fps="4"/>
+		</sub>
+	</group>
+
+	<!--坐骑-->
+	<group name="FastTurtle">
+		<sub file="Pic/FastTurtle.png" tileWidth = "2" tileHeight="4" width="96" height="128">
+			<ani name="walk_up" begin = "0" end="1" fps="4"/>
+			<ani name="walk_down" begin = "2" end="3" fps="4"/>
+			<ani name="walk_left" begin = "4" end="5" fps="4"/>
+			<ani name="walk_right" begin = "6" end="7" fps="4"/>
+      <ani name="stand_up" begin = "0" end="0" fps="4"/>
+      <ani name="stand_down" begin = "2" end="2" fps="4"/>
+      <ani name="stand_left" begin = "4" end="4" fps="4"/>
+      <ani name="stand_right" begin = "6" end="6" fps="4"/>
+		</sub>
+	</group>
+
+	<group name="FastUFO">
+		<sub file="Pic/FastUFO.png" tileWidth = "2" tileHeight="4" width="104" height="124">
+			<ani name="walk_up" begin = "0" end="1" fps="4"/>
+			<ani name="walk_down" begin = "2" end="3" fps="4"/>
+			<ani name="walk_left" begin = "4" end="5" fps="4"/>
+			<ani name="walk_right" begin = "6" end="7" fps="4"/>
+      <ani name="stand_up" begin = "0" end="0" fps="4"/>
+      <ani name="stand_down" begin = "2" end="2" fps="4"/>
+      <ani name="stand_left" begin = "4" end="4" fps="4"/>
+      <ani name="stand_right" begin = "6" end="6" fps="4"/>
+		</sub>
+	</group>
+
+	<group name="Owl">
+		<sub file="Pic/Owl.png" tileWidth = "2" tileHeight="4" width="80" height="160">
+			<ani name="walk_up" begin = "0" end="1" fps="4"/>
+			<ani name="walk_down" begin = "2" end="3" fps="4"/>
+			<ani name="walk_left" begin = "4" end="5" fps="4"/>
+			<ani name="walk_right" begin = "6" end="7" fps="4"/>
+      <ani name="stand_up" begin = "0" end="0" fps="4"/>
+      <ani name="stand_down" begin = "2" end="2" fps="4"/>
+      <ani name="stand_left" begin = "4" end="4" fps="4"/>
+      <ani name="stand_right" begin = "6" end="6" fps="4"/>
+		</sub>
+	</group>
+	<!--坐骑结束-->
+
+	<group name = "ground">
+		<sub file="Pic/TownGround.png" tileWidth = "7" tileHeight="1" width ="280" height = "40">
+			<ani name="ground0" begin ="0" end="0" fps="4"/>
+			<ani name="ground1" begin ="1" end="1" fps="4"/>
+			<ani name="ground2" begin ="2" end="2" fps="4"/>
+			<ani name="ground3" begin ="3" end="3" fps="4"/>
+			<ani name="ground4" begin ="4" end="4" fps="4"/>
+			<ani name="ground5" begin ="5" end="5" fps="4"/>
+			<ani name="ground6" begin ="6" end="6" fps="4"/>
+		</sub>
+		<sub file="Pic/SandGround.png" tileWidth = "2" tileHeight="1" width ="80" height = "40">
+			<ani name="ground7" begin ="0" end="0" fps="4"/>
+			<ani name="ground8" begin ="1" end="1" fps="4"/>
+		</sub>
+	</group>
+
+	<!--静态物件-->
+	<group name = "buildings">
+		<!--树下有水池-->
+		<sub file= "Pic/SandOasis.png" tileWidth = "1" tileHeight="1" width="160" height="72">
+			<ani name="SandOasis" begin = "0" end="0" fps="4"/>
+		</sub>
+		<sub file= "Pic/SandOasisAni.png" tileWidth = "3" tileHeight="1" width="480" height="71">
+			<ani name="SandOasisAni" begin = "0" end="2" fps="4"/>
+		</sub>
+		<!--沙滩阻挡1-->
+		<sub file= "Pic/SandBlockBuff.png" tileWidth = "1" tileHeight="1" width="40" height="44">
+			<ani name="SandBlockBuff" begin = "0" end="0" fps="4"/>
+		</sub>
+		<!--沙滩阻挡2-->
+		<sub file= "Pic/SandBlockYellow.png" tileWidth = "1" tileHeight="1" width="40" height="44">
+			<ani name="SandBlockYellow" begin = "0" end="0" fps="4"/>
+		</sub>
+		<!--沙滩盒子-->
+		<sub file= "Pic/SandBox.png" tileWidth = "1" tileHeight="1" width="40" height="45">
+			<ani name="SandBox" begin = "0" end="0" fps="4"/>
+		</sub>
+		<!--沙滩绿仙人掌-->
+		<sub file= "Pic/SandCactiGreen.png" tileWidth = "1" tileHeight="1" width="40" height="59">
+			<ani name="SandCactiGreen" begin = "0" end="0" fps="4"/>
+		</sub>
+		<!--沙滩绿仙人掌2-->
+		<sub file= "Pic/SandCactiGreenBold.png" tileWidth = "1" tileHeight="1" width="40" height="59">
+			<ani name="SandCactiGreenBold" begin = "0" end="0" fps="4"/>
+		</sub>
+		<!---->
+		<sub file= "Pic/SandCactiTea.png" tileWidth = "1" tileHeight="1" width="40" height="59">
+			<ani name="SandCactiTea" begin = "0" end="0" fps="4"/>
+		</sub>
+		<!---->
+		<sub file= "Pic/SandHouseBlue.png" tileWidth = "1" tileHeight="1" width="40" height="63">
+			<ani name="SandHouseBlue" begin = "0" end="0" fps="4"/>
+		</sub>
+		<!---->
+		<sub file= "Pic/SandHouseGreen.png" tileWidth = "1" tileHeight="1" width="40" height="63">
+			<ani name="SandHouseGreen" begin = "0" end="0" fps="4"/>
+		</sub>
+		<!---->
+		<sub file= "Pic/SandHouseTea.png" tileWidth = "1" tileHeight="1" width="40" height="63">
+			<ani name="SandHouseTea" begin = "0" end="0" fps="4"/>
+		</sub>
+		<!---->
+		<sub file= "Pic/SandShopBlue.png" tileWidth = "1" tileHeight="1" width="40" height="67">
+			<ani name="SandShopBlue" begin = "0" end="0" fps="4"/>
+		</sub>
+		<sub file= "Pic/SandShopRed.png" tileWidth = "1" tileHeight="1" width="40" height="67">
+			<ani name="SandShopRed" begin = "0" end="0" fps="4"/>
+		</sub>
+		<sub file= "Pic/SandShopYellow.png" tileWidth = "1" tileHeight="1" width="40" height="67">
+			<ani name="SandShopYellow" begin = "0" end="0" fps="4"/>
+		</sub>
+		<sub file= "Pic/SandStone.png" tileWidth = "1" tileHeight="1" width="40" height="47">
+			<ani name="SandStone" begin = "0" end="0" fps="4"/>
+		</sub>
+		<sub file= "Pic/SandTentBlue.png" tileWidth = "3" tileHeight="1" width="132" height="71">
+			<ani name="SandTentBlue" begin = "0" end="2" fps="4"/>
+		</sub>
+		<sub file= "Pic/SandTentRed.png" tileWidth = "3" tileHeight="1" width="132" height="71">
+			<ani name="SandTentRed" begin = "0" end="0" fps="4"/>
+		</sub>
+		<sub file= "Pic/SandTentYellow.png" tileWidth = "3" tileHeight="1" width="132" height="71">
+			<ani name="SandTentYellow" begin = "0" end="0" fps="4"/>
+		</sub>
+		<sub file= "Pic/SandTree.png" tileWidth = "1" tileHeight="1" width="63" height="80">
+			<ani name="SandTree" begin = "0" end="0" fps="4"/>
+		</sub>
+		<sub file= "Pic/SandTreeGreen.png" tileWidth = "1" tileHeight="1" width="63" height="80">
+			<ani name="SandTreeGreen" begin = "0" end="0" fps="4"/>
+		</sub>
+		<sub file= "Pic/SandTreeYellow.png" tileWidth = "1" tileHeight="1" width="63" height="80">
+			<ani name="SandTreeYellow" begin = "0" end="0" fps="4"/>
+		</sub>
+
+		<!--影子-->
+		<sub file= "Pic/ShadowBlock.png" tileWidth = "1" tileHeight="1" width="45" height="45">
+			<ani name="ShadowBlock" begin = "0" end="0" fps="4"/>
+		</sub>
+		<sub file= "Pic/ShadowBush.png" tileWidth = "1" tileHeight="1" width="48" height="51">
+			<ani name="ShadowBush" begin = "0" end="0" fps="4"/>
+		</sub>
+		<sub file= "Pic/ShadowTent.png" tileWidth = "1" tileHeight="1" width="45" height="45">
+			<ani name="ShadowTent" begin = "0" end="0" fps="4"/>
 		</sub>
 	</group>
 </config>

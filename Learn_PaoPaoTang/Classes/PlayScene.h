@@ -63,7 +63,11 @@ public:
 public:
 	GameObject* createObject(GameObjectType objType);
 	void destroy(GameObject* obj);
-	vector<GameObject*>& getObject(int gridx, int gridy);
+	// 根据坐标返回该位置上的对象数组
+	vector<GameObject*>& getObject(int gridx, int gridy)
+	{
+		return mMapObject[gridx][gridy];
+	}
 	virtual void handleInput(ControlType ectType, PressState epState)
 	{
 		mPlayer.handleInput(ectType, epState);

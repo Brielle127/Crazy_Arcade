@@ -1,6 +1,9 @@
 <config>
 	<info name="oasis" barrierX = "4" barrierY = "1">
-		<part name="p1" group="oasis" ani="head" offsetX="0" offsetY="71"/>
-		<part name="p2" group="oasis" ani="root" offsetX="0" offsetY="0"/>
+		<part name="part1" group="oasis" ani="head" offsetX="0" offsetY="71"/>
+		<part name="part2" group="oasis" ani="root" offsetX="0" offsetY="0"/>
+	</info>
+	<info name="SandCactiGreen" barrierX = "1" barrierY = "1" destroy="0">
+		<part name="part1" group="buildings" ani="SandCactiGreen" offsetX="0" offsetY="15"/>
 	</info>
 </config>

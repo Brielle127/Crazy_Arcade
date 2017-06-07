@@ -165,17 +165,7 @@ private:
 		StateMethod rNext = states[nextState];
 		(this->*rNext.enter)();
 	}
-	void moveStateUpdate(float dt)
-	{
-		// 上下左右的位移
-		static int dirx[] = {0,0,-1,1};
-		static int diry[] = {1,-1,0,0};
-		// 步径大小
-		float dx = dirx[mMoveState] * mSpeed * dt;
-		float dy = diry[mMoveState] * mSpeed * dt;
-		const Point rPoint = mRenderObj.getPosition();
-		mRenderObj.setPosition(Point(rPoint.x + dx, rPoint.y + dy));
-	}
+	void moveStateUpdate(float dt);
 private:
 	// 切换动画
 	void moveStateEnter()

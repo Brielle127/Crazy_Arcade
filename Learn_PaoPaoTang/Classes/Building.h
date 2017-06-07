@@ -8,11 +8,11 @@
 class Building :public GameObject
 {
 private:// 静态属性
-	int mBarrierCnt;  // 占用的阻挡格子数
+	int mBarrierGridCnt;  // 占用的阻挡格子数
 public:
 	Building(PlayScene& rScene) :GameObject(rScene, GOT_Building)
 	{
-		load("oasis");
+	
 	}
 
 	virtual void load(const char* szName)
@@ -32,7 +32,10 @@ public:
 			int anx = (bw - fw) / 2; // 锚点横坐标
 			mRenderObj.setAnchorPoint(Point(anx, 0));
 		}
+	
+		mBarrierGridCnt = info.barrierX;
 	}
+	
 	// 用于排序
 	virtual float getDepth()
 	{
@@ -46,15 +49,16 @@ public:
 		GameObject::update(dt);
 	}
 
+	// 初始化
 	void init()
 	{
-		for (int i = 0; i < mBarrierCnt; ++i)
+		for (int i = 0; i < mBarrierGridCnt; ++i)
 			mScene.setBarrier(mGridX + i, mGridY, true);
 	}
 
 	void destroy()
 	{
-		for (int i = 0; i < mBarrierCnt; ++i)
+		for (int i = 0; i < mBarrierGridCnt; ++i)
 			mScene.setBarrier(mGridX + i, mGridY, false);
 	}
 };
