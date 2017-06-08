@@ -20,12 +20,6 @@ public:
 		return instance;
 	}
 
-	/*
-	void beginScene_PlayItem(Ref* sender)
-	{
-		GameLogic::sharedGameLogic().handleEvent(SSE_Play);// 测试代码 
-	}
-	*/
 
 	/* 处理菜单事件 */
 	void onMenu_Play(Ref* pSeder)

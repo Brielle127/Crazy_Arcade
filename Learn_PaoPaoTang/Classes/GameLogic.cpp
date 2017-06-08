@@ -1,7 +1,6 @@
 #include "GameLogic.h"
 
 USING_NS_CC;
-
 GameLogic::GameLogic()
 	:mSceneRoot(nullptr),mBeginScene(nullptr)
 {
@@ -25,7 +24,7 @@ bool GameLogic::applicationDidFinishLaunching() {
 #endif
         pDirector->setOpenGLView(glview);
     }
-
+	
 	//
 	pDirector->getScheduler()->scheduleUpdate(this, 0,	false);
 
@@ -114,11 +113,13 @@ GameLogic & GameLogic::sharedGameLogic()
 	return ((GameLogic&)*Application::getInstance());
 }
 
+//typedef EventKeyboard::KeyCode KC;
 void GameLogic::update(float dt)
 {
+	//log("GameLogic::update");
+	
 	// to do
-
-	// ...
+	
 	if (mCurrentScene)// 当前场景存在
 		mCurrentScene->onUpdate(dt);
 }

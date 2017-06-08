@@ -19,7 +19,7 @@ public:
 	{
 		BuildingInfo& info = *BuildingIfoMgr::getBuildingInfo(szName);
 		 
-		for (int i = 0; i < info.partInfo.size(); ++i)
+		for (size_t i = 0; i < info.partInfo.size(); ++i)
 		{
 			mRenderObj.addPart(info.partInfo[i].name.c_str(), info.partInfo[i].offset);
 			mRenderObj.setAni(info.partInfo[i].name.c_str(), info.partInfo[i].group.c_str(), info.partInfo[i].aniName.c_str());

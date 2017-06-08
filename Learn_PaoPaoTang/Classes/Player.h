@@ -4,6 +4,10 @@
 
 #include "GameObject.h"
 
+#include<map>
+#include <vector>
+using namespace std;
+
 #define PART_BODY  "body"
 #define PART_EFX "dead"  // 目前只有一种特效：死亡
 #define PART_RIDE "ride"
@@ -41,7 +45,9 @@ class Player:public GameObject
 	int mMaxBombNum;  // 炸弹数量
 	int mBombStrength;// 炸弹威力
 	bool mIsRiding;   // 是否骑乘
-	PlayerLogicState mTransTable[PLS_NUM][PLS_NUM]; // 状态转换表
+	
+
+	PlayerLogicState mTransTable[PI_NUM][PLS_NUM]; // 状态转换表  请求动作+当前状态->下一状态
 	StateMethod states[PLS_NUM];
 public:
 	Player(PlayScene& rScene)
@@ -62,6 +68,7 @@ public:
 		mTransTable[PI_KILL][PLS_STAND] = PLS_WRAPPED; // 静止状态+炸弹爆炸->被泡泡包裹
 		mTransTable[PI_MOVE][PLS_STAND] = PLS_MOVE;    // 静止状态+请求移动->移动状态
 
+		mTransTable[PI_MOVE][PLS_MOVE] = PLS_MOVE;
 		mTransTable[PI_KILL][PLS_MOVE] = PLS_WRAPPED;
 		mTransTable[PI_STOP][PLS_MOVE] = PLS_STAND;
 
@@ -69,10 +76,12 @@ public:
 		mTransTable[PI_KILL][PLS_WRAPPED] = PLS_DEAD;
 
 		// 初始化默认方法
-		states[PLS_STAND].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate/*, &Player::standHandleInput*/);
-		states[PLS_MOVE].init(&Player::moveStateEnter, &Player::defaultExit, &Player::moveStateUpdate/*, &Player::moveHandleInput*/);
-		states[PLS_WRAPPED].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate/*, &Player::defaultHandleInput*/);
-		states[PLS_DEAD].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate/*, &Player::defaultHandleInput*/);
+		states[PLS_STAND].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate);
+		states[PLS_MOVE].init(&Player::moveStateEnter, &Player::defaultExit, &Player::moveStateUpdate);
+		states[PLS_WRAPPED].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate);
+		states[PLS_DEAD].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate);
+		
+	
 	}
 
 	virtual void load(const char* szName)
@@ -83,7 +92,6 @@ public:
 	virtual void update(float dt) 
 	{
 		(this->*states[mState].update)(dt); // 调用成员函数
-		// ...
 		GameObject::update(dt);
 	}
 public:
@@ -101,9 +109,9 @@ public:
 			return;
 		}
 	}
-
+	
 private:
-	void handleDown(ControlType ectType)
+	void handleDown(ControlType ectType) // 处理键盘按下事件
 	{
 		switch (ectType)
 		{
@@ -116,10 +124,11 @@ private:
 		case CT_RIGHT:
 		case CT_UP:
 		case CT_DOWN:
-		{
+		{	
+			
 			static PlayerMoveState getMoveState[] = { PMS_UP,PMS_DOWN,PMS_LEFT,PMS_RIGHT };
 			mTransParam.nextMoveState = getMoveState[ectType-CT_UP];
-			PlayerLogicState s = mTransTable[PI_MOVE][mState];
+			PlayerLogicState s = mTransTable[PI_MOVE][mState];  // 请求移动
 			if (s != PLS_NONE)
 				changeState(s);
 		}
@@ -144,9 +153,23 @@ private:
 		case CT_UP:
 		case CT_DOWN:
 		{
-			PlayerLogicState s = mTransTable[PI_STOP][mState];  // 请求停下
-			if (s != PLS_NONE)
-				changeState(s);
+			//auto it = mInputCache.begin(), end = mInputCache.end();
+			//for (; it != end; ++it) {
+				//if (*it == ectType) {
+					//mInputCache.erase(it);// 删除
+					//break;
+				//}
+			//}
+
+			//if (mInputCache.empty()) {     // 缓存为空
+				PlayerLogicState s = mTransTable[PI_STOP][mState];  // 请求停下
+				if (s != PLS_NONE)
+					changeState(s);
+			//}
+			//else {
+				//auto ec = mInputCache[0];
+				
+			//}
 		}
 		break;
 		default:

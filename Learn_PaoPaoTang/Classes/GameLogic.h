@@ -10,6 +10,7 @@ USING_NS_CC;
 
 class  GameLogic : private Application,private Scheduler
 {
+	
 public:
     GameLogic();
     virtual ~GameLogic();
@@ -29,6 +30,7 @@ public:
 
 	// Ö÷Ñ­»·
 	virtual void update(float dt);
+
 private:
 	Scene* mSceneRoot;
 	class BeginScene*  mBeginScene;

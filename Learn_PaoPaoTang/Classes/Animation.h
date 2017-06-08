@@ -197,6 +197,7 @@ public:
 
 	void update(float dt)
 	{
+		//log("RenderPart::update");
 		if (mPlaying == false)
 			return;
 		if (currentAniData) {
@@ -327,6 +328,7 @@ public:
 
 	void update(float dt)
 	{
+		//log("RenderObjcte::update");
 		// ±éÀúparts
 		auto it = parts.begin(), end = parts.end();
 		for (; it != end; ++it)

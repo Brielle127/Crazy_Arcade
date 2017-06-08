@@ -14,6 +14,7 @@ static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 #define GRID_HEIGHT 13
 #define GRID_SIZE 40
 
+/* ¼üÅÌ²Ù×÷ÀàÐÍ */
 enum ControlType
 {
 	CT_NONE,
@@ -27,6 +28,7 @@ enum ControlType
 
 enum PressState
 {
+	PS_NONE,
 	PS_DOWN,
 	PS_UP
 };
@@ -58,14 +60,6 @@ enum PlayerLogicState
 	PLS_WRAPPED,
 	PLS_DEAD,
 	PLS_NUM
-};
-
-enum EPlayerMoveState
-{
-	EPMS_UP,
-	EPMS_DOWN,
-	EPMS_LEFT,
-	EPMS_RIGHT
 };
 
 enum PlayerInput

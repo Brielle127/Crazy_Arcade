@@ -25,7 +25,7 @@ public:
 	GameObjectType getType() { return mType; }
 	/* 设置位置 */
 	void setGrid(int gridx, int gridy) { mGridX = gridx; mGridY = gridy; }
-	void setPosition(const Point& rPoint)
+	virtual void setPosition(const Point& rPoint)
 	{
 		mRenderObj.setPosition(rPoint);
 	}
@@ -40,6 +40,7 @@ public:
 	virtual void load(const char* szName) = 0;
 	virtual void update(float dt)
 	{
+		//log("GameObject::update");
 		mRenderObj.update(dt);// 更新显示内容
 	}
 
