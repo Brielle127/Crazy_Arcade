@@ -47,4 +47,4 @@ protected:
 	Layer* mSceneLayer;
 };
 
-#endif /gmk/ !_BASE_SCENE_H_
+#endif // !_BASE_SCENE_H_
