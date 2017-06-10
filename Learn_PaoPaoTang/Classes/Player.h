@@ -46,10 +46,11 @@ class Player:public GameObject
 	int mBombStrength;// 炸弹威力
 	bool mIsRiding;   // 是否骑乘
 	
-
+	
 	PlayerLogicState mTransTable[PI_NUM][PLS_NUM]; // 状态转换表  请求动作+当前状态->下一状态
 	StateMethod states[PLS_NUM];
 public:
+	
 	Player(PlayScene& rScene)
 		:GameObject(rScene, GOT_Player)
 		, mState(PLS_STAND)
@@ -217,6 +218,10 @@ private: // 默认方法
 	void defaultExit() {}
 	void defaultUpdate(float dt) {}
 	void defaultHandleInput(ControlType ectType, PressState epState) {}
+
+public:
+	//得到人物范围，用于道具类 //李志鹏
+	Rect BoundingBox() { return mRenderObj.sprite->getBoundingBox(); }
  };
 
 
