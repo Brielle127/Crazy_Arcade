@@ -14,6 +14,9 @@ static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 #define GRID_HEIGHT 13
 #define GRID_SIZE 40
 
+#define ORIGIN_PLAYER_BOMB_NUM 3  // 默认初始炸弹数
+#define ORIGIN_PLAYER_BOMB_STRENGTH 3 // 初始炸弹威力
+#define ORIGIN_PLAYER_BOMB_SPEED 100  // 初始速度
 /* 键盘操作类型 */
 enum ControlType
 {

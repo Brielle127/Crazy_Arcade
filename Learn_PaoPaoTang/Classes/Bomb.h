@@ -3,12 +3,13 @@
 
 #include "GameObject.h"
 #include "BaseDef.h"
-
+#include "PlayScene.h"
 #define TIME_OUT 1
 class Bomb :public GameObject
 {
 	int mIdleTime;// 爆炸时间
 	int mLength;  // 威力
+	int *mBombPtr; //持有Player泡泡数目
 	float mCurrentTime; // 当前读秒时间
 	BombState mState;
 public:
@@ -29,6 +30,11 @@ public:
 		mRenderObj.setAnchorPoint(Point(mRenderObj.getSize()->size.width / 2, 10));
 	}
 
+public:
+	void setRelatedPtr(int *ptr)
+	{
+		mBombPtr = ptr;
+	}
 	virtual void load(const char* szName)
 	{
 
@@ -37,7 +43,17 @@ public:
 	virtual void setGrid(int gridx, int gridy)
 	{
 		GameObject::setGrid(gridx, gridy);
-		mScene.setBarrier(gridx, gridy,true);
+		mScene.setBarrier(gridx, gridy, true);
+	}
+	// 取得泡泡的深度
+	virtual float getDepth()
+	{
+		if (mState == BS_EXPLODE) 
+		{
+			return -0xffff;    // 爆炸总是发生在玩家下方
+		}
+	   return -mRenderObj.getPosition().y-GRID_SIZE/4;// 未爆炸状态
+
 	}
 
 	virtual void update(float dt)
@@ -55,6 +71,7 @@ public:
 				mCurrentTime = 0;
 				mScene.setBarrier(mGridX, mGridY, false);
 				explosion();
+				(*mBombPtr)++;  // 增加炸弹计数
 				// ... 
 				mState = BS_EXPLODE;       // 状态切换为爆炸
 			}
@@ -71,62 +88,7 @@ public:
 		GameObject::update(dt);
 	}
 private:
-	void explosion()  // 爆炸效果
-	{
-		mRenderObj.removePart("p0");
-		mRenderObj.removePart("p1");
-		mRenderObj.setAnchorPoint(Point::ZERO);
-		mRenderObj.setPosition(Point(mGridX*GRID_SIZE, mGridY*GRID_SIZE));
-		
-		mRenderObj.addPart("middle", Point::ZERO);
-		mRenderObj.setAni("middle", "Explosion", "middle");
-
-		static char buf[256];
-		for (int i = 0; i < mLength * 2 + 1; ++i) {
-
-			for (int j = 0; j < mLength * 2 + 1; ++j) {
-				if ((i == j&&i == mLength) || (i != mLength && j != mLength)) {
-					continue; // 中间
-				}
-				int px, py;
-				px = (i - mLength)*GRID_SIZE;
-				py = (mLength - j)*GRID_SIZE;
-				sprintf(buf, "part_%d", i + j);
-				mRenderObj.addPart(buf, Point(px, py));
-
-				if (j == mLength) {
-					if (i == 0) {  // 左边界
-						mRenderObj.setAni(buf, "Explosion", "left");
-					}
-					else if (i == mLength * 2) { //右边界
-						mRenderObj.setAni(buf, "Explosion", "right");
-					}
-					else if (i < mLength) {
-						mRenderObj.setAni(buf, "Explosion", "left_m");
-					}
-					else {
-						mRenderObj.setAni(buf, "Explosion", "right_m");
-					}
-				}
-
-				if (i == mLength) {
-					if (j == 0) {   // 上边界
-						mRenderObj.setAni(buf, "Explosion", "up");
-					}
-					else if (j == mLength * 2) {   // 下边界
-						mRenderObj.setAni(buf, "Explosion", "down");
-					}
-					else if (j < mLength) {
-						mRenderObj.setAni(buf, "Explosion", "up_m");
-					}
-					else {
-						mRenderObj.setAni(buf, "Explosion", "down_m");
-					}
-				}
-			}
-		}
-
-	}
+	void explosion();// 爆炸效果
 };
 
 #endif // !_PALYER_H_

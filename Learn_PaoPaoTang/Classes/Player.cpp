@@ -4,9 +4,9 @@
 Player::Player(PlayScene & rScene)
 	:GameObject(rScene, GOT_Player)
 	, mState(PLS_STAND)
-	, mSpeed(100)
-	, mMaxBombNum(0)
-	, mBombStrength(0)
+	, mSpeed(ORIGIN_PLAYER_BOMB_SPEED)
+	, mMaxBombNum(ORIGIN_PLAYER_BOMB_NUM) 
+	, mBombStrength(ORIGIN_PLAYER_BOMB_STRENGTH)
 	, mIsRiding(false)
 {
 	mRenderObj.addPart(PART_BODY, Point::ZERO);
@@ -251,6 +251,9 @@ void Player::moveAndStandOrderHandler(OrderType type, void * data)
 	{
 	case OT_SET_BOMB:
 	{
+		if (mMaxBombNum <= 0)
+			return;
+
 		auto& rPoint = this->getPosition();
 		int gridx = rPoint.x / GRID_SIZE, gridy = rPoint.y / GRID_SIZE;
 	
@@ -258,10 +261,11 @@ void Player::moveAndStandOrderHandler(OrderType type, void * data)
 			return;
 
 		auto obj = (Bomb*)mScene.createObject(GOT_Bomb);
-
+		obj->setRelatedPtr(&mMaxBombNum);
 		obj->setPosition(Point(gridx*GRID_SIZE + GRID_SIZE / 2, gridy*GRID_SIZE + GRID_SIZE / 2));
 		obj->setGrid(gridx, gridy);
 		mScene.addObj(obj, gridx, gridy);
+		mMaxBombNum--;  // 放一次炸弹递减数量
 	}
 	break;
 	default:
