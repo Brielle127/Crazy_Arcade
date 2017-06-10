@@ -9,8 +9,12 @@ class Building :public GameObject
 {
 private:// 静态属性
 	int mBarrierGridCnt;  // 占用的阻挡格子数
+	bool mDestroyEnable;  // 是否可摧毁
 public:
-	Building(PlayScene& rScene) :GameObject(rScene, GOT_Building)
+	Building(PlayScene& rScene) 
+		:GameObject(rScene, GOT_Building)
+		,mBarrierGridCnt(0)
+		,mDestroyEnable(false)
 	{
 	
 	}
@@ -34,6 +38,7 @@ public:
 		}
 	
 		mBarrierGridCnt = info.barrierX;
+		mDestroyEnable = info.isDestroyEnable;
 	}
 	
 	// 用于排序
@@ -54,6 +59,14 @@ public:
 	{
 		for (int i = 0; i < mBarrierGridCnt; ++i)
 			mScene.setBarrier(mGridX + i, mGridY, true);
+	}
+
+	virtual void beAttacked()
+	{
+		if (mDestroyEnable) {
+			destroy();
+			mNeedDestroy = true;
+		}
 	}
 
 	void destroy()

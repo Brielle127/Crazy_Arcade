@@ -206,7 +206,7 @@ void Player::moveStateUpdate(float dt)
 	pgy += diry[mMoveState];
 
 	static int baTestFactorX[] = { 0,			 0, int(GRID_SIZE*1.5), -GRID_SIZE / 2 };
-	static int baTestFactorY[] = { -GRID_SIZE / 4,GRID_SIZE + 1,			0,				0 };
+	static int baTestFactorY[] = { -GRID_SIZE / 2,GRID_SIZE + 1,			0,				0 };
 
 	if (pgy<GRID_HEIGHT)
 		if (mScene.getBarrier(pgx, pgy)) {                       // 下一位置阻挡物	

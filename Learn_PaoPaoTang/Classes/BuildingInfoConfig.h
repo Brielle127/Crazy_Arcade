@@ -25,6 +25,7 @@ struct BuildingInfo
 	vector<PartInfo> partInfo;
 	int barrierX;// ºáÏò×èµ²
 	int barrierY;// ×İÏò×èµ²
+	bool isDestroyEnable; // ÊÇ·ñ¿É´İ»Ù
 };
 
 typedef map<string, BuildingInfo> TBuildingInfoMap; 
@@ -47,7 +48,7 @@ public:
 				rInfo.name = name;
 				rInfo.barrierX = atoi(info->Attribute("barrierX"));
 				rInfo.barrierY = atoi(info->Attribute("barrierY"));
-
+				rInfo.isDestroyEnable = atoi(info->Attribute("destroy")) != 0;
 				auto part = info->FirstChildElement();
 
 				while (part)

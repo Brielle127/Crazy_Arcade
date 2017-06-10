@@ -80,6 +80,7 @@ public:
 			if (mCurrentTime > TIME_OUT)
 			{
 				mNeedDestroy = true;
+				attack();
 				//mScene.destroy(this);
 			}
 			break;
@@ -89,6 +90,7 @@ public:
 	}
 private:
 	void explosion();// ±¬Õ¨Ð§¹û
+	void attack();   // Õ¨µ¯¹¥»÷
 };
 
 #endif // !_PALYER_H_

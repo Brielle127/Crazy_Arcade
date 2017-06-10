@@ -1,5 +1,5 @@
 <config>
-	<grounds defaultAni="ground0">
+	<grounds defaultAni="ground8">
 		<ground ani="ground2" tiles="1,2,3,4,6,7"/>
 		<ground ani="ground3" tiles="18,27,49,55,66,77"/>
 	</grounds>
@@ -8,5 +8,8 @@
 		<building gridX="5" gridY="5" name="SandCactiGreen"/>
 		<building gridX="10" gridY="10" name="SandCactiGreen"/>
 		<building gridX="11" gridY="11" name="SandCactiGreen"/>
+		<building gridX="2" gridY="11" name="SandBox"/>
+		<building gridX="5" gridY="3" name="SandBox"/>
+		<building gridX="6" gridY="6" name="SandBox"/>
 	</buildings>
 </config>
