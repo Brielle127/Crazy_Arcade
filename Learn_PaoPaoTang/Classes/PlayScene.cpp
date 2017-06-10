@@ -4,6 +4,7 @@
 #include "Building.h"
 #include "Bomb.h"
 #include "Item.h"
+#include"PlayTool.h"
 USING_NS_CC;
 
 ControlType getControllType(EventKeyboard::KeyCode keyCode)
@@ -62,14 +63,16 @@ bool isValidCT(ControlType ectType)
 
 void PlayScene::onEnterScene()
 { 
+
+
 	/*处理缩放*/
 
 	Sprite* pBG = Sprite::create("pic/BG.png");	 // 游戏场景背景
 	pBG->setAnchorPoint(Point::ZERO);
-	pBG->setPosition(Point(-20, -40));
+	
 	mGroundLayer->addChild(pBG, 0);
 
-	
+
 	/*返回主菜单按钮*/
 	auto back_label = Label::createWithSystemFont(StringTableMgr::getString("main_menu"), "Arial", 24);
 	auto back_labelItem = MenuItemLabel::create(back_label, CC_CALLBACK_1(MenuSelectHandler::onMenu_Back2Menu, MenuSelectHandler::sharedHandler()));
@@ -108,7 +111,17 @@ void PlayScene::onEnterScene()
 	mPlayer.load("");
 	mPlayer.setPosition(Point(100,100));
 	mObjectLayer->addChild(mPlayer.getSprite());
+
 	
+	//出现鞋子
+	
+	PlayTools _ToolShoe;
+	Sprite* Shoe = _ToolShoe.GeneratePlayTool("pic/shoe.png");
+	
+
+	mToolLayer->addChild(Shoe,0,"shoe");
+
+
 }
 
 void PlayScene::onExitScene()
@@ -179,7 +192,17 @@ void PlayScene::onUpdate(float dt)
 		mPlayer.handleInput(CT_NONE, PS_UP);
 		break;
 	}
+
+	Rect mPlayerRect = mPlayer.BoundingBox();
 	
+	//Sprite* shoe = mToolLayer->getChildByName("shoe");
+	/*
+	if (_ToolShoe.IntersectPlayer(mPlayerRect))
+	{
+		CCActionInterval* fadeout = CCFadeOut::create(0.1);
+		(mToolLayer)->runAction(fadeout);
+	}
+	*/
 }
 
 void PlayScene::setCurrentSceneFile(const char * szFile)

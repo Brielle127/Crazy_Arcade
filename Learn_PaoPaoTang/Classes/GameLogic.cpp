@@ -39,7 +39,7 @@ bool GameLogic::applicationDidFinishLaunching() {
     
 	// run
     pDirector->runWithScene(mSceneRoot);
-
+	//system("pause");
     return true;
 }
 

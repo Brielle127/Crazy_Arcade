@@ -9,11 +9,8 @@ USING_NS_CC;
 class BaseScene
 {
 public:
-	BaseScene()
-	{
-		mSceneLayer = Layer::create();
-		mSceneLayer->retain(); // 增加引用计数
-	}
+	BaseScene();
+
 
 	virtual ~BaseScene()
 	{
@@ -21,10 +18,7 @@ public:
 		mSceneLayer = nullptr;
 	}
 
-	Layer* getSceneLayer()
-	{
-		return mSceneLayer;
-	}
+	Layer* getSceneLayer();
 
 public:
 	virtual void onEnterScene(){}
@@ -39,10 +33,7 @@ public:
 
 	}
 	// UI使用
-	virtual void onHandleEvent(int eventType, void* data)
-	{
-
-	}
+	virtual void onHandleEvent(int eventType, void* data);
 protected:
 	Layer* mSceneLayer;
 };

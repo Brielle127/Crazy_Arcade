@@ -12,13 +12,15 @@
 USING_NS_CC;
 using namespace std;
 
+
 class PlayScene:public BaseScene,public Scene
 {
 	Layer* mGroundLayer; // 地砖
 	Layer* mObjectLayer; // 物件
 	Layer* mUILayer;     // UI
+	Layer* mToolLayer;  //道具
 	string mCurrentFile; // 当前场景的文件
-	Player mPlayer;
+	Player mPlayer;  
 	vector<GameObject*> mMapObject[GRID_WIDTH][GRID_HEIGHT];  // 静态对象
 	bool mMapBarrier[GRID_WIDTH][GRID_HEIGHT]; // 阻挡格子
 	map<EventKeyboard::KeyCode, bool> keys;    // 按键状态
@@ -30,7 +32,7 @@ public:
 	PlayScene()
 		:mGroundLayer(nullptr)
 		, mObjectLayer(nullptr)
-		, mUILayer(nullptr)
+		, mUILayer(nullptr),mToolLayer(nullptr)
 		,mPlayer(*this)
 		,ectType1(CT_NONE)
 		,ectType2(CT_NONE)
@@ -43,6 +45,9 @@ public:
 		mObjectLayer = Layer::create();
 		mObjectLayer->setPosition(Point(20, 40));
 		mSceneLayer->addChild(mObjectLayer);
+
+		mToolLayer = Layer::create();
+		mSceneLayer->addChild(mToolLayer);
 
 		mUILayer = Layer::create();
 		mSceneLayer->addChild(mUILayer);
