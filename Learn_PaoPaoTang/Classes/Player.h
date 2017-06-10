@@ -47,11 +47,48 @@ class Player:public GameObject
 	int mBombStrength;// 炸弹威力
 	bool mIsRiding;   // 是否骑乘
 	
-
+	
 	PlayerLogicState mTransTable[PI_NUM][PLS_NUM]; // 状态转换表  请求动作+当前状态->下一状态
 	StateMethod states[PLS_NUM];
 public:
+<<<<<<< HEAD
 	Player(PlayScene& rScene);
+=======
+	
+	Player(PlayScene& rScene)
+		:GameObject(rScene, GOT_Player)
+		, mState(PLS_STAND)
+		, mSpeed(100)
+		, mMaxBombNum(0)
+		, mBombStrength(0)
+		, mIsRiding(false)
+	{
+		mRenderObj.addPart(PART_BODY, Point::ZERO);
+		//mRenderObj.addPart(PART_EFX, Point::ZERO);
+		//mRenderObj.addPart(PART_RIDE, Point::ZERO);
+		mRenderObj.setAnchorPoint(Point(24, 0));
+		memset(mTransTable, 0, sizeof(mTransTable));
+
+		// 设置默认允许的操作……
+		mTransTable[PI_KILL][PLS_STAND] = PLS_WRAPPED; // 静止状态+炸弹爆炸->被泡泡包裹
+		mTransTable[PI_MOVE][PLS_STAND] = PLS_MOVE;    // 静止状态+请求移动->移动状态
+
+		mTransTable[PI_MOVE][PLS_MOVE] = PLS_MOVE;
+		mTransTable[PI_KILL][PLS_MOVE] = PLS_WRAPPED;
+		mTransTable[PI_STOP][PLS_MOVE] = PLS_STAND;
+
+		// 飞针道具…
+		mTransTable[PI_KILL][PLS_WRAPPED] = PLS_DEAD;
+
+		// 初始化默认方法
+		states[PLS_STAND].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate);
+		states[PLS_MOVE].init(&Player::moveStateEnter, &Player::defaultExit, &Player::moveStateUpdate);
+		states[PLS_WRAPPED].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate);
+		states[PLS_DEAD].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate);
+		
+	
+	}
+>>>>>>> db872432032f8c33494e292918e07a44dcd62716
 
 	virtual void load(const char* szName)
 	{
@@ -81,7 +118,14 @@ private: // 默认方法
 	void defaultExit() {}
 	void defaultUpdate(float dt) {}
 	void defaultHandleInput(ControlType ectType, PressState epState) {}
+<<<<<<< HEAD
 	void defaultOrderHandler(OrderType,void*){}
+=======
+
+public:
+	//得到人物范围，用于道具类 //李志鹏
+	Rect BoundingBox() { return mRenderObj.sprite->getBoundingBox(); }
+>>>>>>> db872432032f8c33494e292918e07a44dcd62716
  };
 
 #endif // !_PALYER_H_

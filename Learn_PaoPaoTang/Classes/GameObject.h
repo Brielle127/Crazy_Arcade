@@ -34,7 +34,7 @@ public:
 	{
 		return mRenderObj.getPosition();
 	}
-
+	
 public:
 	virtual float getDepth() { return -mRenderObj.getPosition().y; }
 	virtual void load(const char* szName) = 0;

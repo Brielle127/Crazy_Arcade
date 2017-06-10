@@ -2,6 +2,7 @@
 
 USING_NS_CC;
 
+
 BaseScene::BaseScene()
 {
 	mSceneLayer = Layer::create();
@@ -13,7 +14,5 @@ Layer* BaseScene::getSceneLayer()
 	return mSceneLayer;
 }
 
-void BaseScene::onHandleEvent(int eventType, void * data)
-{
 
-}
+void BaseScene::onHandleEvent(int eventType, void * data) {}

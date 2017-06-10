@@ -15,7 +15,7 @@ void BeginScene::onEnterScene()
 	Sprite* pBG = Sprite::create("pic/BeginScene.png");
 	pBG->setAnchorPoint(Point::ZERO);
 	mSceneLayer->addChild(pBG);
-
+	//system("pause");
 	// ´´½¨²Ëµ¥
 	auto play_label = Label::createWithSystemFont(StringTableMgr::getString("play"), "Arial", 24);
 	auto play_labelItem = MenuItemLabel::create(play_label, CC_CALLBACK_1(MenuSelectHandler::onMenu_Play, MenuSelectHandler::sharedHandler()));
