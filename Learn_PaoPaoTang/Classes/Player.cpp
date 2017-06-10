@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "PlayScene.h"
-
+#include "Bomb.h"
 Player::Player(PlayScene & rScene)
 	:GameObject(rScene, GOT_Player)
 	, mState(PLS_STAND)
@@ -251,21 +251,18 @@ void Player::moveAndStandOrderHandler(OrderType type, void * data)
 	{
 	case OT_SET_BOMB:
 	{
-		// ²âÊÔ
 		auto& rPoint = this->getPosition();
-		int gridx, gridy;
-		gridx = rPoint.x / GRID_SIZE;
-		gridy = rPoint.y / GRID_SIZE;
-		if (!mScene.getBarrier(gridx, gridy))
+		int gridx = rPoint.x / GRID_SIZE, gridy = rPoint.y / GRID_SIZE;
+	
+		if (mScene.getBarrier(gridx, gridy))
+			return;
 
-		{
-			GameObject* obj = mScene.createObject(GOT_Bomb);
+		auto obj = (Bomb*)mScene.createObject(GOT_Bomb);
 
-			mScene.setBarrier(gridx, gridy, true);
-			obj->setPosition(Point(gridx*GRID_SIZE + GRID_SIZE / 2, gridy*GRID_SIZE + GRID_SIZE / 2));
-			obj->setGrid(gridx, gridy);
-			mScene.addObj(obj, gridx, gridy);
-		}}
+		obj->setPosition(Point(gridx*GRID_SIZE + GRID_SIZE / 2, gridy*GRID_SIZE + GRID_SIZE / 2));
+		obj->setGrid(gridx, gridy);
+		mScene.addObj(obj, gridx, gridy);
+	}
 	break;
 	default:
 		break;

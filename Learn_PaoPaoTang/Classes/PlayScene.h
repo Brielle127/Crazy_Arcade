@@ -56,13 +56,13 @@ public:
 	// 设置障碍物
 	void setBarrier(int gridx, int gridy, bool bBarrier)
 	{
-		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy << GRID_HEIGHT)
+		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy < GRID_HEIGHT)
 			mMapBarrier[gridx][gridy] = bBarrier;
 	}
 
 	bool getBarrier(int gridx, int gridy)
 	{
-		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy << GRID_HEIGHT)
+		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy < GRID_HEIGHT)
 			return mMapBarrier[gridx][gridy];
 		return true; // 地图以外设为阻挡
 	}

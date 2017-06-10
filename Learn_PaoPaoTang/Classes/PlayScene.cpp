@@ -121,15 +121,18 @@ void PlayScene::onExitScene()
 
 void PlayScene::onUpdate(float dt)
 {
-	//log("PlayScene::onUpdate");
 	for (int w = 0; w < GRID_WIDTH; ++w) {
 		for (int h = 0; h < GRID_HEIGHT; ++h) {
 			auto& rObjects = mMapObject[w][h];
 			for (int i = rObjects.size() - 1; i >= 0; --i) {
 				auto obj = rObjects[i];
-				// ÅÅÐò
-				mObjectLayer->reorderChild(obj->getSprite(), obj->getDepth());
-				obj->update(dt);
+				if (obj->isNeedDestroy()) {
+					destroy(obj);
+				}
+				else {
+					obj->update(dt);
+					mObjectLayer->reorderChild(obj->getSprite(), obj->getDepth());
+				}
 			}
 		}
 	}
@@ -162,7 +165,7 @@ void PlayScene::onUpdate(float dt)
 				mPlayer.handleInput(CT_LEFT, PS_DOWN);
 			else
 				mPlayer.handleInput(CT_LEFT, PS_UP);
-			break;
+			break; 
 		case CT_RIGHT:
 			if (keys[KC::KEY_D] || keys[KC::KEY_CAPITAL_D])
 				mPlayer.handleInput(CT_RIGHT, PS_DOWN);
@@ -283,14 +286,13 @@ void PlayScene::destroy(GameObject* obj)
 	for (int w = 0; w < GRID_WIDTH; ++w) {
 		for (int h = 0; h < GRID_HEIGHT; ++h) {
 			auto& rObjects = mMapObject[w][h];
-			auto  it = rObjects.begin(), end = rObjects.end();
-			for(;it!=end;++it)
+			for(auto  it = rObjects.begin();it!=rObjects.end();++it)
 				if ((*it) == obj) {
-					rObjects.erase(it);
+					obj->getSprite()->removeAllChildrenWithCleanup(true);
 					delete obj;
+					rObjects.erase(it);
 					return;
 				}
-			rObjects.clear();
 		}
 	}
 

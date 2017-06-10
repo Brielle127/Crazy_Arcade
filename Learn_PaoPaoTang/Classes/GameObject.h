@@ -14,15 +14,18 @@ protected:
 	PlayScene& mScene;
 	int mGridX;
 	int mGridY;
+	bool mNeedDestroy;
 public:
 
 	GameObject(PlayScene& rScene,GameObjectType type)
 		:mScene(rScene),mType(type)
 		,mGridX(-1),mGridY(-1)
+		,mNeedDestroy(false)
 	{}
 	virtual ~GameObject(){}
 
 	GameObjectType getType() { return mType; }
+	bool isNeedDestroy() { return mNeedDestroy; }
 	/* …Ë÷√Œª÷√ */
 	virtual void setGrid(int gridx, int gridy) { mGridX = gridx; mGridY = gridy; }
 	virtual void setPosition(const Point& rPoint)

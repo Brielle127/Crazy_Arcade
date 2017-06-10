@@ -248,6 +248,11 @@ public:
 	~RenderObj()
 	{
 		sprite->release();
+
+		for (auto iter = parts.begin(); iter !=parts.end(); ) {
+			delete *iter;
+			iter = parts.erase(iter);
+		}
 	}
 
 	// 返回当前parts动画的一帧
@@ -317,11 +322,13 @@ public:
 
 		sprite->removeChild(it->second->sprite,true);// 从sprite移除部件精灵
 		// 从vector移除
-		auto iter = parts.begin(), end = parts.end();
-		for (; iter != end; ++iter) {
+		for (auto iter = parts.begin(); iter != parts.end(); ++iter) {
 			if ((*iter)->name == partName)
+			{	
+				delete *iter;
 				parts.erase(iter);
-			delete *iter; 
+				break;
+			}
 		}
 		
 	}
@@ -330,8 +337,7 @@ public:
 	{
 		//log("RenderObjcte::update");
 		// 遍历parts
-		auto it = parts.begin(), end = parts.end();
-		for (; it != end; ++it)
+		for (auto it = parts.begin(); it != parts.end(); ++it)
 			(*it)->update(dt);
 	}
 };
