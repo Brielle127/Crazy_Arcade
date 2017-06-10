@@ -24,7 +24,7 @@ public:
 
 	GameObjectType getType() { return mType; }
 	/* …Ë÷√Œª÷√ */
-	void setGrid(int gridx, int gridy) { mGridX = gridx; mGridY = gridy; }
+	virtual void setGrid(int gridx, int gridy) { mGridX = gridx; mGridY = gridy; }
 	virtual void setPosition(const Point& rPoint)
 	{
 		mRenderObj.setPosition(rPoint);

@@ -36,27 +36,12 @@ bool isValidCT(ControlType ectType)
 	case CT_DOWN:
 	case CT_LEFT:
 	case CT_RIGHT:
-	case CT_PRESS:
+	//case CT_PRESS:
 		return true;
 	}
 	return false;
 }
 
-//
-//void MY_LPFN_ACCELEROMETER_KEYHOOK(EventKeyboard::KeyCode keyCode, bool isPressed)
-//{
-//	ControlType eCtrlType = CT_NONE;
-//	PressState ePressState = PS_NONE;
-//
-//	if (isPressed)
-//		ePressState = PS_DOWN;
-//	else
-//		ePressState = PS_UP;
-//	eCtrlType = getControllType(keyCode);
-//
-//	if (eCtrlType != CT_NONE && ePressState != PS_NONE)
-//		GameLogic::sharedGameLogic().handleInput(eCtrlType, ePressState);
-//}
 
 
 
@@ -90,17 +75,21 @@ void PlayScene::onEnterScene()
 			
 		if (isValidCT(getControllType(keyCode))) {
 			keys[keyCode] = true;
-			ectType3 = getControllType(keyCode);
-			ectType1 = ectType2;
-			ectType2 = ectType3;
+			ectTypes.push_back(getControllType(keyCode));
+
 		}
 	};
 	listener->onKeyReleased = [=](EventKeyboard::KeyCode keyCode, Event* event) {
-		if (isValidCT(getControllType(keyCode))) {
+		if (keyCode == EventKeyboard::KeyCode::KEY_SPACE)
+			mPlayer.handleInput(CT_PRESS, PS_UP);
+		else if (isValidCT(getControllType(keyCode))) {
 			keys[keyCode] = false;
-			ectType3 = ectType2;
-			ectType2 = ectType1;
-			ectType1 = CT_NONE;
+			for (auto i = ectTypes.begin() + ectTypes.size() - 1; i != ectTypes.begin(); --i)
+				if (*i == getControllType(keyCode))
+				{
+					ectTypes.erase(i);
+					break;
+				}
 		}
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, mObjectLayer);
@@ -147,40 +136,46 @@ void PlayScene::onUpdate(float dt)
 	mObjectLayer->reorderChild(mPlayer.getSprite(), mPlayer.getDepth());
 	mPlayer.update(dt);
 	typedef EventKeyboard::KeyCode KC;
-	
-	switch (ectType3)
+	if (ectTypes.empty())
 	{
-	case CT_UP:
-		if (keys[KC::KEY_W] || keys[KC::KEY_CAPITAL_W])
-			mPlayer.handleInput(CT_UP, PS_DOWN);
-		else
-			mPlayer.handleInput(CT_UP, PS_UP);
-		break;
-	case CT_DOWN:
-		if (keys[KC::KEY_S] || keys[KC::KEY_CAPITAL_S])
-			mPlayer.handleInput(CT_DOWN, PS_DOWN);
-		else
-			mPlayer.handleInput(CT_DOWN, PS_UP);
-		break;
-	case CT_LEFT:
-		if (keys[KC::KEY_A] || keys[KC::KEY_CAPITAL_A])
-			mPlayer.handleInput(CT_LEFT, PS_DOWN);
-		else
-			mPlayer.handleInput(CT_LEFT, PS_UP);
-		break;
-	case CT_RIGHT:
-		if (keys[KC::KEY_D] || keys[KC::KEY_CAPITAL_D])
-			mPlayer.handleInput(CT_RIGHT, PS_DOWN);
-		else
-			mPlayer.handleInput(CT_RIGHT, PS_UP);
-		break;
-	default:
 		mPlayer.handleInput(CT_NONE, PS_DOWN);
 		mPlayer.handleInput(CT_NONE, PS_UP);
-		break;
 	}
-	
+
+	else
+		switch (ectTypes.back())
+		{
+		case CT_UP:
+			if (keys[KC::KEY_W] || keys[KC::KEY_CAPITAL_W])
+				mPlayer.handleInput(CT_UP, PS_DOWN);
+			else
+				mPlayer.handleInput(CT_UP, PS_UP);
+			break;
+		case CT_DOWN:
+			if (keys[KC::KEY_S] || keys[KC::KEY_CAPITAL_S])
+				mPlayer.handleInput(CT_DOWN, PS_DOWN);
+			else
+				mPlayer.handleInput(CT_DOWN, PS_UP);
+			break;
+		case CT_LEFT:
+			if (keys[KC::KEY_A] || keys[KC::KEY_CAPITAL_A])
+				mPlayer.handleInput(CT_LEFT, PS_DOWN);
+			else
+				mPlayer.handleInput(CT_LEFT, PS_UP);
+			break;
+		case CT_RIGHT:
+			if (keys[KC::KEY_D] || keys[KC::KEY_CAPITAL_D])
+				mPlayer.handleInput(CT_RIGHT, PS_DOWN);
+			else
+				mPlayer.handleInput(CT_RIGHT, PS_UP);
+			break;
+		default:
+			mPlayer.handleInput(CT_NONE, PS_DOWN);
+			mPlayer.handleInput(CT_NONE, PS_UP);
+			break;
+		}
 }
+
 
 void PlayScene::setCurrentSceneFile(const char * szFile)
 {
@@ -259,7 +254,6 @@ void PlayScene::loadScene()
 	}
 
 }
-
 
 GameObject * PlayScene::createObject(GameObjectType objType)
 {
