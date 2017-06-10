@@ -7,7 +7,6 @@
 #include "GameObject.h"
 #include <vector>
 #include <map>
-#include <stack>
 #include"Player.h"
 USING_NS_CC;
 using namespace std;
@@ -22,19 +21,14 @@ class PlayScene:public BaseScene,public Scene
 	vector<GameObject*> mMapObject[GRID_WIDTH][GRID_HEIGHT];  // 静态对象
 	bool mMapBarrier[GRID_WIDTH][GRID_HEIGHT]; // 阻挡格子
 	map<EventKeyboard::KeyCode, bool> keys;    // 按键状态
-	ControlType ectType1;
-	ControlType ectType2;
-	ControlType ectType3;
-	stack<ControlType> ectTypes;// 输入缓存
+	vector<ControlType> ectTypes; // 输入缓存
+
 public:
 	PlayScene()
 		:mGroundLayer(nullptr)
 		, mObjectLayer(nullptr)
 		, mUILayer(nullptr)
 		,mPlayer(*this)
-		,ectType1(CT_NONE)
-		,ectType2(CT_NONE)
-		, ectType3(CT_NONE)
 	{
 		mGroundLayer = Layer::create();
 		mGroundLayer->setPosition(Point(20, 40)); // 定位
@@ -48,10 +42,7 @@ public:
 		mSceneLayer->addChild(mUILayer);
 
 		memset(mMapBarrier, false, sizeof(mMapBarrier));
-		
-		
 	}
-
 
 	virtual void onEnterScene();
 	virtual void onExitScene();
@@ -63,13 +54,13 @@ public:
 	// 设置障碍物
 	void setBarrier(int gridx, int gridy, bool bBarrier)
 	{
-		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy << GRID_HEIGHT)
+		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy < GRID_HEIGHT)
 			mMapBarrier[gridx][gridy] = bBarrier;
 	}
 
 	bool getBarrier(int gridx, int gridy)
 	{
-		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy << GRID_HEIGHT)
+		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy < GRID_HEIGHT)
 			return mMapBarrier[gridx][gridy];
 		return true; // 地图以外设为阻挡
 	}
@@ -78,10 +69,15 @@ public:
 	GameObject* createObject(GameObjectType objType);
 	// 销毁对象
 	void destroy(GameObject* obj);
-	// 根据坐标返回该位置上的对象数组
-	vector<GameObject*>& getObject(int gridx, int gridy)
+	void addObj(GameObject *obj, int gridX,int gridY)
 	{
-		return mMapObject[gridx][gridy];
+		mMapObject[gridX][gridY].push_back(obj);
+		mObjectLayer->addChild(obj->getSprite());
+	}
+	// 根据坐标返回该位置上的对象数组
+	vector<GameObject*>& getObject(int gridX, int gridY)
+	{
+		return mMapObject[gridX][gridY];
 	}
 	virtual void handleInput(ControlType ectType, PressState epState)
 	{

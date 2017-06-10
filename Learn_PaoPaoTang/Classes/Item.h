@@ -26,4 +26,4 @@ public:
 
 };
 
-#endif // !_PALYER_H_
+#endif

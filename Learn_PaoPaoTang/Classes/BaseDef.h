@@ -80,4 +80,16 @@ enum PlayerMoveState
 	PMS_LEFT,
 	PMS_RIGHT
 };
+/*Õ¨µ¯×´Ì¬*/
+enum BombState
+{
+	BS_IDLE,// ¶ÁÃë×´Ì¬
+	BS_EXPLODE // ±¬Õ¨×´Ì¬
+};
+
+// Âß¼­ÃüÁîÊäÈë
+enum OrderType{
+	OT_SET_BOMB,// ·ÅÖÃÕ¨µ¯
+
+};
 #endif // !__BASE_DEF_H__
