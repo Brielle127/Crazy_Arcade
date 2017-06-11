@@ -13,7 +13,7 @@ GameLogic::~GameLogic()
 }
 
 bool GameLogic::applicationDidFinishLaunching() {
-	srand(time(nullptr));
+	srand(time(nullptr));   // 随机数种子
     // initialize director
     auto pDirector = Director::getInstance();
     auto glview = pDirector->getOpenGLView();

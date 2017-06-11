@@ -10,14 +10,18 @@
 		<building gridX="11" gridY="11" name="SandCactiGreen"/>
 		<building gridX="2" gridY="11" name="SandBox"/>
 		<building gridX="5" gridY="3" name="SandBox"/>
+		<building gridX="3" gridY="11" name="SandBox"/>
+		<building gridX="4" gridY="3" name="SandBox"/>
 		<building gridX="6" gridY="6" name="SandBox"/>
+		<building gridX="2" gridY="5" name="SandBox"/>
+		<building gridX="4" gridY="1" name="SandBox"/>
 	</buildings>
 	<items global_percent="0.3">
-		<item tid="10000" p="10"/>
-		<item tid="10001" p="30"/>
+		<item tid="10000" p="50"/>
+		<item tid="10001" p="50"/>
 		<item tid="10002" p="50"/>
-		<item tid="10004" p="10"/>
-		<item tid="10005" p="30"/>
+		<item tid="10004" p="50"/>
+		<item tid="10005" p="50"/>
 		<item tid="20000" p="10"/>
 		<item tid="20001" p="10"/>
 		<item tid="20002" p="10"/>

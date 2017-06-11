@@ -268,7 +268,7 @@ void PlayScene::loadScene()
 			item = item->NextSiblingElement();
 		}
 	}
-
+	;
 }
 
 GameObject * PlayScene::createObject(GameObjectType objType)

@@ -50,8 +50,7 @@ class Player :public GameObject
 public:
 	Player(PlayScene& rScene);
 	
-
-		virtual void load(const char* szName)
+	virtual void load(const char* szName)
 	{
 		mRenderObj.setAni(PART_BODY, "role1", "stand_down");
 	}
@@ -62,7 +61,13 @@ public:
 	}
 public:
 	void handleInput(ControlType ectType, PressState epState);
-
+public:
+	void setBombNum(int bn) { mMaxBombNum = bn; }
+	void setStr(int bs) { mBombStrength = bs; }
+	void setSpeed(int sp) { mSpeed = sp; }
+	int getBombNum() { return mMaxBombNum; }
+	int getStr() { return mBombStrength; }
+	int getSpeed() { return mSpeed; }
 private:
 	void handleDown(ControlType ectType);
 	void handleUp(ControlType ectType);

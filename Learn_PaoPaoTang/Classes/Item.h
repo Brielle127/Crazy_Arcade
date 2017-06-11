@@ -5,8 +5,11 @@
 #include "ItemConfig.h"
 class Item :public GameObject
 {
+	ItemInfo* mInfo;
 public:
-	Item(PlayScene& rScene) :GameObject(rScene, GOT_Item)
+	Item(PlayScene& rScene) 
+		:GameObject(rScene, GOT_Item)
+		,mInfo(nullptr)
 	{
 		 
 	}
@@ -20,6 +23,8 @@ public:
 			return false;
 		mRenderObj.addPart(buf, Point::ZERO);
 		mRenderObj.setAni(buf, info->group.c_str(), info->ani.c_str());
+		
+		mInfo = info;
 		return true;
 	}
 
@@ -28,12 +33,7 @@ public:
 
 	}
 
-	virtual void update(float dt)
-	{
-		//  
-
-		GameObject::update(dt);
-	}
+	virtual void update(float dt);
 
 };
 

@@ -4,9 +4,9 @@
 Player::Player(PlayScene & rScene)
 	:GameObject(rScene, GOT_Player)
 	, mState(PLS_STAND)
-	, mSpeed(ORIGIN_PLAYER_BOMB_SPEED)
-	, mMaxBombNum(ORIGIN_PLAYER_BOMB_NUM) 
-	, mBombStrength(ORIGIN_PLAYER_BOMB_STRENGTH)
+	, mSpeed(RPV_NORMAL_SPEED)
+	, mMaxBombNum(PRV_NORMAL_POPO_NUM)
+	, mBombStrength(RPV_NORMAL_POPO_STR)
 	, mIsRiding(false)
 {
 	mRenderObj.addPart(PART_BODY, Point::ZERO);

@@ -14,9 +14,6 @@ static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 #define GRID_HEIGHT 13
 #define GRID_SIZE 40
 
-#define ORIGIN_PLAYER_BOMB_NUM 3  // 默认初始炸弹数
-#define ORIGIN_PLAYER_BOMB_STRENGTH 3 // 初始炸弹威力
-#define ORIGIN_PLAYER_BOMB_SPEED 100  // 初始速度
 /* 键盘操作类型 */
 enum ControlType
 {
@@ -97,6 +94,27 @@ enum OrderType {
 
 };
 
+enum ItemType
+{
+	IT_NORMAL,
+	IT_RIDE,
+	IT_NUM
+};
+
+enum RolePropValue
+{   // 泡泡数量
+	RPV_MIN_POPO_NUM=3,   
+	PRV_NORMAL_POPO_NUM=3,
+	RPV_MAX_POPO_NUM=5,
+
+	RPV_MIN_POPO_STR=3,
+	RPV_NORMAL_POPO_STR=3,
+	RPV_MAX_POPO_STR=10,
+
+	RPV_MIN_SPEED=50,
+	RPV_NORMAL_SPEED=100,
+	RPV_MAX_SPEED=200,
+};
 //// 道具种类
 //enum ItemType 
 //{
@@ -108,12 +126,6 @@ enum OrderType {
 //	IT_RIDE,             // 坐骑
 //	EI_NUM
 //};
-enum ItemType
-{
-	IT_NORMAL,
-	IT_RIDE,
-	IT_NUM
-};
 
 //// 道具影响的玩家属性
 //enum ItemPropType
@@ -124,4 +136,4 @@ enum ItemType
 //	IPT_KICK_POPO, // 踢炸弹
 //	IPT_NUM
 //};
-#endif // !__BASE_DEF_H__
+#endif 

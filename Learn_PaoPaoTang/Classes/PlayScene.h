@@ -50,6 +50,7 @@ public:
 	virtual void onExitScene();
 	virtual void onUpdate(float dt);
 public:
+	Player* getPlayer() { return &mPlayer; }
 	float getGlobalPercent() { return mGlobalPercent; }
 	vector<int>& getItemsPercent() { return mItemsPercent; }
 	void setCurrentSceneFile(const char* szFile);// 设置当前场景的文件
