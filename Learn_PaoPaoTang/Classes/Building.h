@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "BuildingInfoConfig.h"
 #include "Animation.h"
+#include "Item.h"
 
 class Building :public GameObject
 {
@@ -64,7 +65,12 @@ public:
 	virtual void beAttacked()
 	{
 		if (mDestroyEnable) {
-			destroy();
+			destroy(); // 被摧毁
+			// 显示道具
+			Item* pItem = (Item*)mScene.createObject(GOT_Item);
+			pItem->init(10000);
+			pItem->setPosition(mRenderObj.getPosition());
+			mScene.addObj(pItem, mGridX, mGridY);
 			mNeedDestroy = true;
 		}
 	}

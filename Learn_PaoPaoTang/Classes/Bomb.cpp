@@ -73,7 +73,7 @@ void Bomb::attack()
 		int idx = i + 1;
 		if (mScene.getBarrier(mGridX, mGridY + idx)) { // ´æÔÚ×èµ²
 			auto& rVec = mScene.getObject(mGridX, mGridY + idx);
-			for (int m = 0; m < rVec.size(); ++m) {
+			for (size_t m = 0; m < rVec.size(); ++m) {
 				rVec[m]->beAttacked();
 			}
 			break;
@@ -86,7 +86,7 @@ void Bomb::attack()
 		int idx = i + 1;
 		if (mScene.getBarrier(mGridX, mGridY - idx)) {
 			auto& rVec = mScene.getObject(mGridX, mGridY - idx);
-			for (int m = 0; m < rVec.size(); ++m) {
+			for (size_t m = 0; m < rVec.size(); ++m) {
 				rVec[m]->beAttacked();
 			}
 			break;
@@ -97,7 +97,7 @@ void Bomb::attack()
 		int idx = i + 1;
 		if (mScene.getBarrier(mGridX - idx, mGridY)) {
 			auto& rVec = mScene.getObject(mGridX - idx, mGridY);
-			for (int m = 0; m < rVec.size(); ++m) {
+			for (size_t m = 0; m < rVec.size(); ++m) {
 				rVec[m]->beAttacked();
 			}
 			break;
@@ -108,7 +108,7 @@ void Bomb::attack()
 		int idx = i + 1;
 		if (mScene.getBarrier(mGridX + idx, mGridY)) {
 			auto& rVec = mScene.getObject(mGridX + idx, mGridY);
-			for (int m = 0; m < rVec.size(); ++m) {
+			for (size_t m = 0; m < rVec.size(); ++m) {
 				rVec[m]->beAttacked();
 			}
 			break;

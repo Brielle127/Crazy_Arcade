@@ -13,35 +13,30 @@ using namespace std;
 struct ItemInfo
 {
 	ItemType type;
+	int templateId;
 	string group;
 	string ani;
-	int speed;
-	bool fly;    // 坐骑
-	vector<ItemPropInfo> props;
+	int popoNum;
+	int popoStr;
+	int roleSpeed;
+	bool canKick;
+	string rideGroup;
+	bool isFlying;
 };
 
-struct ItemPropInfo
-{
-	ItemPropType type;
-	string group;
-	string ani;
-	string name;
-	int value;
-};
 
-typedef map<ItemType, ItemInfo> TItemInfoMap;
-// 管理器
-class ItemInfoMgr
+typedef map<int, ItemInfo> TItemInfoMap;  // ID->ItemInfo
+class ItemInfoMgr// 管理器
 {
 public:
 	// 加载函数
-	static ItemInfo* getItemInfo(ItemType type)
+	static ItemInfo* getItemInfo(int templaterId)
 	{
 		auto& rMap = getInfoMap();
 		if (rMap.size() == 0) {
 			load(rMap);
 		}
-		auto it = rMap.find(type);
+		auto it = rMap.find(templaterId);
 		if (it != rMap.end())
 			return &it->second;
 		return nullptr;
@@ -50,59 +45,38 @@ private:
 	static void load(TItemInfoMap& t)
 	{
 		TiXmlDocument doc;
-		if (doc.LoadFile("Config/ItemInfoTable.xml")) {
+		if (doc.LoadFile("Config/ItemTable.xml")) {
+			auto& rMap = getInfoMap();
 			auto root = doc.RootElement();
 			auto info = root->FirstChildElement();
 			while (info)
 			{//读取info数据
 				auto name = info->Attribute("type");
-				static char* TypeTable[] = { "popo","str_water","roller_skates","sport_shoe","red_evil","ride" };
+				static char* TypeTable[] = { "normal","ride"};
 				static int len = sizeof(TypeTable) / sizeof(TypeTable[0]);
-				size_t i = 0;
+				int i = 0;
 
 				for (; i < len; ++i) {
 					if (strcmp(TypeTable[i], name) == 0)
 						break;
 				}
-				if (i <= len)
-				{
-					ItemType type = ItemType(i);
-					t[type] = ItemInfo();
-					auto& rInfo = t[type];
-					rInfo.type = type;
+				if (i < len){
+					
+					int tid = atoi(info->Attribute("templateId"));
+
+					rMap.insert(make_pair(tid, ItemInfo()));
+					auto& rInfo = rMap[tid];
+					
+					rInfo.templateId = tid;
+					rInfo.type = ItemType(i);
 					rInfo.group = info->Attribute("group");
 					rInfo.ani = info->Attribute("ani");
-					auto prop = info->FirstChildElement();
-					
-					while (prop){
-						static char* typeTable[] = {"popo_num","popo_str","speed","move_popo"};
-						static int len = sizeof(typeTable) / sizeof(typeTable[0]);
-						size_t i = 0;
-
-						for (; i < len; ++i) {
-							if (strcmp(typeTable[i], name) == 0)
-								break;
-						}
-						if (i < len) {
-							ItemPropType propType = ItemPropType(i);
-							rInfo.props.push_back(ItemPropInfo());
-							auto& rProp = rInfo.props[rInfo.props.size() - 1];
-							switch (propType)
-							{
-							case IPT_KICK_POPO:
-							//case IPT_NUM:
-							case IPT_POPO_NUM:
-							case IPT_POPO_STR:
-							case IPT_PLAYER_SPEED:
-							{
-								rProp.type = propType;
-								rProp.value = atoi(prop->Attribute("value"));
-							}
-							break;
-							}
-						}
-						prop = prop->NextSiblingElement();
-					}
+					rInfo.popoNum = atoi(info->Attribute("popo_num"));
+					rInfo.popoStr = atoi(info->Attribute("popo_str"));
+					rInfo.roleSpeed = atoi(info->Attribute("role_speed"));
+					rInfo.canKick = atoi(info->Attribute("kick_popo")) != 0;
+					rInfo.rideGroup = info->Attribute("ride_group");
+					//rInfo.isFlying = atoi(info->Attribute("fly")) != 0;
 				}
 				info = info->NextSiblingElement();
 			}

@@ -3,7 +3,7 @@
 
 #include "Animation.h"
 #include "BaseDef.h"
-
+//#include "PlayScene.h"
 class PlayScene;
 
 class GameObject
@@ -52,4 +52,3 @@ public:
 };
 
 #endif // !_GAME_OBJECT_H_
-

@@ -97,25 +97,31 @@ enum OrderType {
 
 };
 
-// 道具种类
-enum ItemType 
+//// 道具种类
+//enum ItemType 
+//{
+//	IT_POPO,			 // 水泡：可以增加炸弹数量
+//	IT_STRENGTH_WATER,   // 力量水：增加炸弹威力
+//	IT_ROLLER_SKATES,    // 旱冰鞋：角色的移动速度加快
+//	IT_SPORTS_SHOE,       // 运动鞋：可以踢炸弹
+//	IT_RED_EVIL,         // 红魔：使人物达到最快的速度，并且可以踢走炸弹
+//	IT_RIDE,             // 坐骑
+//	EI_NUM
+//};
+enum ItemType
 {
-	IT_POPO,			 // 水泡：可以增加炸弹数量
-	IT_STRENGTH_WATER,   // 力量水：增加炸弹威力
-	IT_ROLLER_SKATES,    // 旱冰鞋：角色的移动速度加快
-	IT_SPORTS_SHOE,       // 运动鞋：可以踢炸弹
-	IT_RED_EVIL,         // 红魔：使人物达到最快的速度，并且可以踢走炸弹
-	IT_RIDE,             // 坐骑
-	EI_NUM
+	IT_NORMAL,
+	IT_RIDE,
+	IT_NUM
 };
 
-// 道具影响的玩家属性
-enum ItemPropType
-{
-	IPT_POPO_NUM,//泡泡数量
-	IPT_POPO_STR,
-	IPT_PLAYER_SPEED,
-	IPT_KICK_POPO, // 踢炸弹
-	IPT_NUM
-};
+//// 道具影响的玩家属性
+//enum ItemPropType
+//{
+//	IPT_POPO_NUM,//泡泡数量
+//	IPT_POPO_STR,
+//	IPT_PLAYER_SPEED,
+//	IPT_KICK_POPO, // 踢炸弹
+//	IPT_NUM
+//};
 #endif // !__BASE_DEF_H__
