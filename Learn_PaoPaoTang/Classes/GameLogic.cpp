@@ -13,6 +13,7 @@ GameLogic::~GameLogic()
 }
 
 bool GameLogic::applicationDidFinishLaunching() {
+	srand(time(nullptr));
     // initialize director
     auto pDirector = Director::getInstance();
     auto glview = pDirector->getOpenGLView();

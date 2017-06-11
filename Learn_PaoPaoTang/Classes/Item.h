@@ -11,11 +11,16 @@ public:
 		 
 	}
 
-	void init(int tid)
+	bool init(int tid)
 	{
+		char buf[256];
+		sprintf(buf, "iem_%d", tid);
 		auto info = ItemInfoMgr::getItemInfo(tid);
-		mRenderObj.addPart("p", Point::ZERO);
-		mRenderObj.setAni("p", info->group.c_str(), info->ani.c_str());
+		if (info == nullptr)
+			return false;
+		mRenderObj.addPart(buf, Point::ZERO);
+		mRenderObj.setAni(buf, info->group.c_str(), info->ani.c_str());
+		return true;
 	}
 
 	virtual void load(const char* szName)

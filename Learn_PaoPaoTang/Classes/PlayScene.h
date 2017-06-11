@@ -22,12 +22,15 @@ class PlayScene:public BaseScene,public Scene
 	bool mMapBarrier[GRID_WIDTH][GRID_HEIGHT]; // 阻挡格子
 	map<EventKeyboard::KeyCode, bool> keys;    // 按键状态
 	vector<ControlType> ectTypes;// 输入缓存
+	float mGlobalPercent; // 全局的物品掉落概率
+	vector<int> mItemsPercent; // 不同道具的掉落概率
 public:
 	PlayScene()
 		:mGroundLayer(nullptr)
 		, mObjectLayer(nullptr)
 		, mUILayer(nullptr)
-		,mPlayer(*this)
+		, mPlayer(*this)
+		,mGlobalPercent(0.0f)
 	{
 		mGroundLayer = Layer::create();
 		mGroundLayer->setPosition(Point(20, 40)); // 定位
@@ -41,15 +44,14 @@ public:
 		mSceneLayer->addChild(mUILayer);
 
 		memset(mMapBarrier, false, sizeof(mMapBarrier));
-		
-		
 	}
-
 
 	virtual void onEnterScene();
 	virtual void onExitScene();
 	virtual void onUpdate(float dt);
 public:
+	float getGlobalPercent() { return mGlobalPercent; }
+	vector<int>& getItemsPercent() { return mItemsPercent; }
 	void setCurrentSceneFile(const char* szFile);// 设置当前场景的文件
 	void loadScene();
 
@@ -73,13 +75,18 @@ public:
 	void destroy(GameObject* obj);
 	void addObj(GameObject *obj, int gridX, int gridY)
 	{
-		mMapObject[gridX][gridY].push_back(obj);
-		mObjectLayer->addChild(obj->getSprite());
+		if (gridX >= 0 && gridX < GRID_WIDTH&&gridY >= 0 && gridY < GRID_HEIGHT){
+			mMapObject[gridX][gridY].push_back(obj);
+			mObjectLayer->addChild(obj->getSprite());
+		}
 	}
 	// 根据坐标返回该位置上的对象数组
 	vector<GameObject*>& getObject(int gridx, int gridy)
 	{
-		return mMapObject[gridx][gridy];
+		static vector<GameObject*> vec;
+		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy < GRID_HEIGHT)
+			return mMapObject[gridx][gridy];
+		return vec;
 	}
 	virtual void handleInput(ControlType ectType, PressState epState)
 	{

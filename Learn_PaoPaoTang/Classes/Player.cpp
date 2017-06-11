@@ -171,10 +171,8 @@ void Player::moveStateUpdate(float dt)
 	int newy = (int(rPoint.y / GRID_SIZE))*GRID_SIZE + GRID_SIZE / 2;
 
 	if (mMoveState == PMS_LEFT || mMoveState == PMS_RIGHT) { // 左右移动：检查上下阻挡
-
 		if (pgy > 0 && pgy < GRID_HEIGHT)// 边界不做修正
 		{
-
 			if (rPoint.y + dy > 0 || rPoint.y + dy < GRID_HEIGHT*GRID_SIZE - GRID_SIZE / 2)
 				if (mScene.getBarrier(pgx, pgy - 1) && rPoint.y < newy - GRID_SIZE / 3)
 				{
@@ -182,23 +180,22 @@ void Player::moveStateUpdate(float dt)
 					pgy = rPoint.y / GRID_SIZE;
 					nextPosY = rPoint.y - GRID_SIZE / 3 + dy;
 				}        // 修正位置
-				else if (mScene.getBarrier(pgx, pgy + 1) && rPoint.y > newy + GRID_SIZE / 3)
+				else if (mScene.getBarrier(pgx, pgy + 1) && rPoint.y > newy )
 				{
 					((Point&)rPoint).y = newy;
 					pgy = rPoint.y / GRID_SIZE;
-					nextPosY = rPoint.y + GRID_SIZE / 3 + dy;
+					nextPosY = rPoint.y + dy;
 				}
 		}
-	}
-	else {                                                   // 上下移动
-		if ((mScene.getBarrier(pgx - 1, pgy) && (rPoint.x < (int(rPoint.x / GRID_SIZE))*GRID_SIZE + GRID_SIZE / 2)) ||
-			(mScene.getBarrier(pgx + 1, pgy) && (rPoint.x >(int(rPoint.x / GRID_SIZE))*GRID_SIZE + GRID_SIZE / 2))) {
-			if (pgx>0 || pgx<GRID_WIDTH) {
-				((Point&)rPoint).x = (int(rPoint.x / GRID_SIZE))*GRID_SIZE + GRID_SIZE / 2;
-				pgx = rPoint.x / GRID_SIZE;
-				if (rPoint.x + dx>GRID_SIZE / 2 || rPoint.x + dx<GRID_WIDTH*GRID_SIZE - GRID_SIZE / 2)
-					nextPosX = rPoint.x + dx;
-			}
+	}                                    // 上下移动
+	else if (pgx > 0 && pgx < GRID_WIDTH)// 边界不做修正 
+	{
+		if ((mScene.getBarrier(pgx - 1, pgy) && (rPoint.x < newx)) ||
+			(mScene.getBarrier(pgx + 1, pgy) && (rPoint.x > newx))) {
+			((Point&)rPoint).x = (int(rPoint.x / GRID_SIZE))*GRID_SIZE + GRID_SIZE / 2;
+			pgx = rPoint.x / GRID_SIZE;
+			if (rPoint.x + dx > GRID_SIZE / 2 || rPoint.x + dx < GRID_WIDTH*GRID_SIZE - GRID_SIZE / 2)
+				nextPosX = rPoint.x + dx;
 		}
 	}
 

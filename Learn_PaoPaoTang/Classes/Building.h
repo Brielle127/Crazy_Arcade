@@ -35,7 +35,7 @@ public:
 			int bw = info.barrierX*GRID_SIZE; // 阻挡的宽
 			int fw = mRenderObj.getSize()->size.width;// 对象的宽
 			int anx = (bw - fw) / 2; // 锚点横坐标
-			mRenderObj.setAnchorPoint(Point(anx, 0));
+			mRenderObj.setAnchorPoint(Point(anx, -GRID_SIZE/6));
 		}
 	
 		mBarrierGridCnt = info.barrierX;
@@ -45,7 +45,7 @@ public:
 	// 用于排序
 	virtual float getDepth()
 	{
-		return -(mRenderObj.getPosition().y + GRID_SIZE); // 向上漂移一格
+		return -(mRenderObj.getPosition().y + GRID_SIZE-GRID_SIZE/6); // 向上漂移一格
 	}
 
 	virtual void update(float dt)
@@ -66,12 +66,20 @@ public:
 	{
 		if (mDestroyEnable) {
 			destroy(); // 被摧毁
-			// 显示道具
-			Item* pItem = (Item*)mScene.createObject(GOT_Item);
-			pItem->init(10000);
-			pItem->setPosition(mRenderObj.getPosition());
-			mScene.addObj(pItem, mGridX, mGridY);
 			mNeedDestroy = true;
+			// 显示道具
+			if (CCRANDOM_0_1() < mScene.getGlobalPercent()) {
+				Item* pItem = (Item*)mScene.createObject(GOT_Item);
+				int idx = int(CCRANDOM_0_1()*(mScene.getItemsPercent().size()));
+				if (pItem->init(mScene.getItemsPercent()[idx])) {
+					pItem->setPosition(mRenderObj.getPosition());
+					mScene.addObj(pItem, mGridX, mGridY);
+				}
+				else {  // 创建道具失败
+					delete pItem;
+					return;
+				}
+			}
 		}
 	}
 

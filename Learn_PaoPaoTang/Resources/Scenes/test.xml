@@ -3,7 +3,7 @@
 		<ground ani="ground2" tiles="1,2,3,4,6,7"/>
 		<ground ani="ground3" tiles="18,27,49,55,66,77"/>
 	</grounds>
-	<buildings >
+	<buildings>
 		<building gridX="0" gridY="0" name="SandCactiGreen"/>
 		<building gridX="5" gridY="5" name="SandCactiGreen"/>
 		<building gridX="10" gridY="10" name="SandCactiGreen"/>
@@ -12,4 +12,14 @@
 		<building gridX="5" gridY="3" name="SandBox"/>
 		<building gridX="6" gridY="6" name="SandBox"/>
 	</buildings>
+	<items global_percent="0.3">
+		<item tid="10000" p="10"/>
+		<item tid="10001" p="30"/>
+		<item tid="10002" p="50"/>
+		<item tid="10004" p="10"/>
+		<item tid="10005" p="30"/>
+		<item tid="20000" p="10"/>
+		<item tid="20001" p="10"/>
+		<item tid="20002" p="10"/>
+	</items>
 </config>

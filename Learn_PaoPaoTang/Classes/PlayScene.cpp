@@ -254,6 +254,19 @@ void PlayScene::loadScene()
 				building = building->NextSiblingElement();
 			}
 		}
+
+		// ╪сть╣ю╬ъ
+		auto items = buildings->NextSiblingElement();
+		mGlobalPercent = atof(items->Attribute("global_percent"));
+		auto item = items->FirstChildElement();
+		while (item) {
+			int tid= atoi(item->Attribute("tid"));
+			int percent= atoi(item->Attribute("p"));
+			for (int i = 0; i < percent; ++i){
+				mItemsPercent.push_back(tid);
+			}
+			item = item->NextSiblingElement();
+		}
 	}
 
 }
