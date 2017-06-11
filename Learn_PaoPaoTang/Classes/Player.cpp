@@ -8,6 +8,7 @@ Player::Player(PlayScene & rScene)
 	, mMaxBombNum(PRV_NORMAL_POPO_NUM)
 	, mBombStrength(RPV_NORMAL_POPO_STR)
 	, mIsRiding(false)
+	,mCanKickPopo(false)
 {
 	mRenderObj.addPart(PART_BODY, Point::ZERO);
 	//mRenderObj.addPart(PART_EFX, Point::ZERO);
@@ -174,11 +175,11 @@ void Player::moveStateUpdate(float dt)
 		if (pgy > 0 && pgy < GRID_HEIGHT)// 边界不做修正
 		{
 			if (rPoint.y + dy > 0 || rPoint.y + dy < GRID_HEIGHT*GRID_SIZE - GRID_SIZE / 2)
-				if (mScene.getBarrier(pgx, pgy - 1) && rPoint.y < newy - GRID_SIZE / 3)
+				if (mScene.getBarrier(pgx, pgy - 1) && rPoint.y < newy - GRID_SIZE / 2)
 				{
 					((Point&)rPoint).y = newy;
 					pgy = rPoint.y / GRID_SIZE;
-					nextPosY = rPoint.y - GRID_SIZE / 3 + dy;
+					nextPosY = rPoint.y - GRID_SIZE / 2 + dy;
 				}        // 修正位置
 				else if (mScene.getBarrier(pgx, pgy + 1) && rPoint.y > newy )
 				{
@@ -202,13 +203,23 @@ void Player::moveStateUpdate(float dt)
 	pgx += dirx[mMoveState];
 	pgy += diry[mMoveState];
 
-	static int baTestFactorX[] = { 0,			 0, int(GRID_SIZE*1.5), -GRID_SIZE / 2 };
+	static int baTestFactorX[] = { 0,			 0, int(GRID_SIZE*1.5), -GRID_SIZE / 4 };
 	static int baTestFactorY[] = { -GRID_SIZE / 2,GRID_SIZE + 1,			0,				0 };
 
 	if (pgy<GRID_HEIGHT)
 		if (mScene.getBarrier(pgx, pgy)) {                       // 下一位置阻挡物	
-			int bax = pgx*GRID_SIZE + baTestFactorX[mMoveState];
-			int bay = pgy*GRID_SIZE + baTestFactorY[mMoveState]; // 从右向左走
+			auto& rObjs = mScene.getObject(pgx, pgy);
+			for (size_t i = 0; i < rObjs.size(); ++i) {
+				auto popo = rObjs[i];
+				if (popo->getType() == GOT_Bomb) {
+					if (mCanKickPopo) {
+						((Bomb*)popo)->beKicked(dirx[mMoveState], diry[mMoveState]);
+						break;
+					}
+				}
+			}
+			int bax = pgx*GRID_SIZE + baTestFactorX[mMoveState];//  下一个格子
+			int bay = pgy*GRID_SIZE + baTestFactorY[mMoveState]; 
 			switch (mMoveState)
 			{
 			case PMS_UP:
@@ -257,9 +268,9 @@ void Player::moveAndStandOrderHandler(OrderType type, void * data)
 		if (mScene.getBarrier(gridx, gridy))
 			return;
 
-		auto obj = (Bomb*)mScene.createObject(GOT_Bomb);
+		Bomb* obj = (Bomb*)mScene.createObject(GOT_Bomb);
+		obj->setStrLen(mBombStrength);
 		obj->setRelatedPtr(&mMaxBombNum);
-		obj->setPosition(Point(gridx*GRID_SIZE + GRID_SIZE / 2, gridy*GRID_SIZE + GRID_SIZE / 2));
 		obj->setGrid(gridx, gridy);
 		mScene.addObj(obj, gridx, gridy);
 		mMaxBombNum--;  // 放一次炸弹递减数量

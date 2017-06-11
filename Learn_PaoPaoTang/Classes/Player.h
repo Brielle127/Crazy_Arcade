@@ -43,7 +43,7 @@ class Player :public GameObject
 	int mMaxBombNum;  // 炸弹数量
 	int mBombStrength;// 炸弹威力
 	bool mIsRiding;   // 是否骑乘
-
+	bool mCanKickPopo;  
 
 	PlayerLogicState mTransTable[PI_NUM][PLS_NUM]; // 状态转换表  请求动作+当前状态->下一状态
 	StateMethod states[PLS_NUM];
@@ -68,6 +68,10 @@ public:
 	int getBombNum() { return mMaxBombNum; }
 	int getStr() { return mBombStrength; }
 	int getSpeed() { return mSpeed; }
+	void setCanKickPopo(bool value)
+	{
+		mCanKickPopo = value;
+	}
 private:
 	void handleDown(ControlType ectType);
 	void handleUp(ControlType ectType);

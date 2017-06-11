@@ -31,6 +31,11 @@ public:
 	}
 
 public:
+	void setStrLen(int len)
+	{
+		mLength = len;
+	}
+
 	void setRelatedPtr(int *ptr)
 	{
 		mBombPtr = ptr;
@@ -44,6 +49,7 @@ public:
 	{
 		GameObject::setGrid(gridx, gridy);
 		mScene.setBarrier(gridx, gridy, true);
+		setPosition(Point(gridx*GRID_SIZE + GRID_SIZE / 2, gridy*GRID_SIZE + GRID_SIZE / 2));
 	}
 	// 取得泡泡的深度
 	virtual float getDepth()
@@ -87,6 +93,28 @@ public:
 		}
 
 		GameObject::update(dt);
+	}
+	void beKicked(int dirx,int diry) // 踢炸弹
+	{
+		if (mState != BS_IDLE)
+			return;
+		int newPx = mGridX, newPy = mGridY;
+		
+		while (dirx!=0) {  // 左右方向
+				if (mScene.getBarrier(newPx + dirx, mGridY))  // 向前搜索障碍物
+					break;  
+			newPx += dirx;
+		}
+		while (diry!=0) { // 上下方向
+			if (mScene.getBarrier(mGridX, newPy+diry))  // 向前搜索障碍物
+				break;
+			newPy += diry;
+		}
+	
+		if (newPx == mGridX && newPy == mGridY)
+			return;
+		mScene.setBarrier(mGridX, mGridY, false);  // 清除当前位置的炸弹
+		setGrid(newPx, newPy);
 	}
 private:
 	void explosion();// 爆炸效果

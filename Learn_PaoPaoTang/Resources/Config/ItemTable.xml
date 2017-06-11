@@ -26,6 +26,6 @@
 	<item templateId="10005" type="normal" group="gift" ani="Gift6" popo_num="0" popo_str="0" role_speed="0" kick_popo="1" ride_group="" ignore_item="0" ignore_static="0"/>	
 	<!--坐骑-->
 	<item templateId="20000" type="ride" group="gift" ani="GiftOwl" popo_num="0" popo_str="0" role_speed="10" kick_popo="1" ride_group="Owl" ignore_item="0" ignore_static="0" ride_point_x="20" ride_point_y="33"/>	
-	<item templateId="20001" type="ride" group="gift" ani="GiftTurtle" popo_num="10" popo_str="0" role_speed="50" kick_popo="0" ride_group="FastTurtle" ignore_item="0" ignore_static="0" ride_point_x="24" ride_point_y="20"/>	
+	<item templateId="20001" type="ride" group="gift" ani="GiftTurtle" popo_num="10" popo_str="0" role_speed="-9999" kick_popo="0" ride_group="FastTurtle" ignore_item="0" ignore_static="0" ride_point_x="24" ride_point_y="20"/>	
 	<item templateId="20002" type="ride" group="gift" ani="GiftUFO" popo_num="0" popo_str="0" role_speed="100" kick_popo="0" ride_group="FastUFO" ignore_item="1" ignore_static="1" ride_point_x="26" ride_point_y="18"/>	
 </config>

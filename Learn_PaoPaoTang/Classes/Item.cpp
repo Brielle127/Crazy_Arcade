@@ -33,6 +33,9 @@ void Item::update(float dt)
 		speed = speed > RPV_MIN_SPEED ? speed : RPV_MIN_SPEED;
 		speed = speed < RPV_MAX_SPEED ? speed : RPV_MAX_SPEED;
 		player->setSpeed(speed);
+
+		if (mInfo->canKick)
+			player->setCanKickPopo(true);
 		}
 		break;
 		case IT_RIDE:  // ×øÆï

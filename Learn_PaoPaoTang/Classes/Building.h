@@ -34,8 +34,8 @@ public:
 		if (rect) {
 			int bw = info.barrierX*GRID_SIZE; // 阻挡的宽
 			int fw = mRenderObj.getSize()->size.width;// 对象的宽
-			int anx = (bw - fw) / 2; // 锚点横坐标
-			mRenderObj.setAnchorPoint(Point(anx, -GRID_SIZE/6));
+			int anx = (fw - bw) / 2; // 锚点横坐标
+			mRenderObj.setAnchorPoint(Point(anx, 0));
 		}
 	
 		mBarrierGridCnt = info.barrierX;

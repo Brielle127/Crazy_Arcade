@@ -16,14 +16,14 @@
 		<building gridX="2" gridY="5" name="SandBox"/>
 		<building gridX="4" gridY="1" name="SandBox"/>
 	</buildings>
-	<items global_percent="0.3">
-		<item tid="10000" p="50"/>
+	<items global_percent="1">
+		<item tid="10000" p="50"/>	
 		<item tid="10001" p="50"/>
 		<item tid="10002" p="50"/>
 		<item tid="10004" p="50"/>
 		<item tid="10005" p="50"/>
-		<item tid="20000" p="10"/>
-		<item tid="20001" p="10"/>
-		<item tid="20002" p="10"/>
+		<item tid="20000" p="50"/>
+		<item tid="20001" p="50"/>
+		<item tid="20002" p="50"/>
 	</items>
 </config>

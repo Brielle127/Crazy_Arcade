@@ -34,7 +34,10 @@ public:
 	}
 
 	virtual void update(float dt);
-
+	virtual float getDepth()
+	{
+		return -(mRenderObj.getPosition().y + GRID_SIZE - GRID_SIZE / 6); // 向上漂移一格
+	}
 };
 
 #endif // !_PALYER_H_
