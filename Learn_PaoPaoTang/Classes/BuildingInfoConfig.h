@@ -30,9 +30,21 @@ struct BuildingInfo
 
 typedef map<string, BuildingInfo> TBuildingInfoMap; 
 // 管理器
-class BuildingIfoMgr
+class BuildingInfoMgr
 {
 public:
+	static BuildingInfo* getBuildingInfo(const char* name)
+	{
+		auto& rMap = getInfoMap();
+		if (rMap.size()==0) {
+			load(rMap);
+		}
+		auto it = rMap.find(name);
+		if (it != rMap.end())
+			return &it->second;
+		return nullptr;
+	}
+private:
 	// 加载函数
 	static void load(TBuildingInfoMap& t)
 	{
@@ -67,18 +79,6 @@ public:
 			}
 		}
 	}
-	static BuildingInfo* getBuildingInfo(const char* name)
-	{
-		auto& rMap = getInfoMap();
-		if (rMap.size()==0) {
-			load(rMap);
-		}
-		auto it = rMap.find(name);
-		if (it != rMap.end())
-			return &it->second;
-		return nullptr;
-	}
-private:
 	static TBuildingInfoMap& getInfoMap()
 	{
 		static TBuildingInfoMap tMap;

@@ -21,7 +21,7 @@ public:
 
 	virtual void load(const char* szName)
 	{
-		BuildingInfo& info = *BuildingIfoMgr::getBuildingInfo(szName);
+		BuildingInfo& info = *BuildingInfoMgr::getBuildingInfo(szName);
 		 
 		for (size_t i = 0; i < info.partInfo.size(); ++i)
 		{

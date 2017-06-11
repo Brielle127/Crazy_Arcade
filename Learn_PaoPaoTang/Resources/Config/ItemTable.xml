@@ -1,0 +1,31 @@
+<config>
+	<!--
+	道具
+	templateId 模板ID，用于索引某种道具的数据
+	10000 ~ 19999 为普通道具
+	20000 ~ 29999 为坐骑
+
+	type 道具类型，用于解析属性  normal为普通道具 ride为坐骑
+	group 道具表现形式
+	ani 道具表现形式
+	
+	//道具属性说明
+	popo_num 增加泡泡数目
+	popo_str 增加泡泡威力
+	role_speed 增加角色移动速度 若为 max则为玩家最大速度 若为min则为玩家最小速度 
+	kick_popo 是否可以踢泡泡 0表示false， 1表示true
+	rode_group 若为坐骑，则这个属性表示坐骑外观
+	fly 角色是否为飞行模式，飞行模式下，将忽略可摧毁建筑
+	-->
+	
+	<!--普通道具-->
+	<item templateId="10000" type="normal" group="gift" ani="Gift1" popo_num="1" popo_str="0" role_speed="0" kick_popo="0" ride_group="" ignore_item="0" ignore_static="0"/>
+	<item templateId="10001" type="normal" group="gift" ani="Gift2" popo_num="0" popo_str="0" role_speed="10" kick_popo="0" ride_group="" ignore_item="0" ignore_static="0"/>
+	<item templateId="10002" type="normal" group="gift" ani="Gift3" popo_num="0" popo_str="1" role_speed="0" kick_popo="0" ride_group="" ignore_item="0" ignore_static="0"/>	
+	<item templateId="10004" type="normal" group="gift" ani="Gift5" popo_num="0" popo_str="0" role_speed="999999" kick_popo="1" ride_group="" ignore_item="0" ignore_static="0"/>	
+	<item templateId="10005" type="normal" group="gift" ani="Gift6" popo_num="0" popo_str="0" role_speed="0" kick_popo="1" ride_group="" ignore_item="0" ignore_static="0"/>	
+	<!--坐骑-->
+	<item templateId="20000" type="ride" group="gift" ani="GiftOwl" popo_num="0" popo_str="0" role_speed="10" kick_popo="1" ride_group="Owl" ignore_item="0" ignore_static="0" ride_point_x="20" ride_point_y="33"/>	
+	<item templateId="20001" type="ride" group="gift" ani="GiftTurtle" popo_num="10" popo_str="0" role_speed="50" kick_popo="0" ride_group="FastTurtle" ignore_item="0" ignore_static="0" ride_point_x="24" ride_point_y="20"/>	
+	<item templateId="20002" type="ride" group="gift" ani="GiftUFO" popo_num="0" popo_str="0" role_speed="100" kick_popo="0" ride_group="FastUFO" ignore_item="1" ignore_static="1" ride_point_x="26" ride_point_y="18"/>	
+</config>
