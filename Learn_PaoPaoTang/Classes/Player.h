@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "RoleTableConfig.h"
 #include"ItemConfig.h"
+#include "Buff.h"
 
 #include<map>
 #include <vector>
@@ -36,32 +37,61 @@ union TransParam
 {
 	PlayerDirection nextDirection;
 };
+// 玩家基本属性
+struct BaseAttri 
+{
+	float mSpeed;     // 速度
+	int mMaxBombNum;  // 炸弹数量
+	int mBombStrength;// 炸弹威力
+	bool mCanKickPopo;
+	bool mIgnoreItem;   // 忽略道具
+	bool mIgnoreStatic; // 忽略阻挡物
+};
 
 class Player :public GameObject
 {
 	PlayerLogicState mState; // 角色当前状态
 	PlayerDirection mDirection; // 移动方向
-	TransParam mTransParam;
-	float mSpeed;     // 速度
-	int mMaxBombNum;  // 炸弹数量
-	int mBombStrength;// 炸弹威力
 	bool mIsRiding;   // 是否骑乘
-	bool mCanKickPopo;  
+	TransParam mTransParam;
+	BaseAttri mAttri;
+	BaseAttri mAttriEx; // 附加属性 
 	PlayerLogicState mTransTable[PI_NUM][PLS_NUM]; // 状态转换表  请求动作+当前状态->下一状态
 	StateMethod states[PLS_NUM];
 	bool move_flag=false;
-
 	RoleInfo* mRoleInfo;
-	class ItemInfo* mRideInfo;
+	struct ItemInfo* mRideInfo;
+	
+	vector<Buff*> mBuffList;
 public:
 	Player(PlayScene& rScene);
 	
+	void addBuff(Buff* p)
+	{
+		mBuffList.push_back(p);
+		p->attach(this);
+		for (auto it = mBuffList.begin(); it != mBuffList.end();++it)
+		{
+			if (*it == p) {
+				mBuffList.erase(it);
+				break;
+			}
+		}
+		for (size_t i = 0; i < mBuffList.size(); ++i)
+			mBuffList[i]->update(0);
+	}
+	void removeBuff(Buff* p)
+	{
+		p->remove();
+		p->update(0);
+	}
+
 	virtual void load(const char* szName)
 	{
 		mRoleInfo = RoleInfoMgr::getRoleInfo(100);
-		mMaxBombNum = mRoleInfo->original_popo_num;
-		mSpeed = mRoleInfo->original_speed;
-		mBombStrength = mRoleInfo->original_str;
+		mAttri.mMaxBombNum = mRoleInfo->original_popo_num;
+		mAttri.mSpeed = mRoleInfo->original_speed;
+		mAttri.mBombStrength = mRoleInfo->original_str;
 
 		mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "stand_up");
 		mRenderObj.modifyPartOffset(PART_BODY,Point(-mRenderObj.getSize()->size.width / 2, 0));
@@ -71,6 +101,9 @@ public:
 	}
 	virtual void update(float dt)
 	{
+		for (size_t i = 0; i < mBuffList.size(); ++i)
+			mBuffList[i]->update(0);
+
 		(this->*states[mState].update)(dt); // 调用成员函数
 		GameObject::update(dt);
 	}
@@ -78,31 +111,85 @@ public:
 	void ride(ItemInfo* rideInfo);
 	void handleInput(ControlType ectType, PressState epState);
 public:
-	void setBombNum(int bn)
+	void setBombNum(int value)
 	{
-		bn = bn > mRoleInfo->min_popo_num? bn : mRoleInfo->min_popo_num ;
-		bn = bn < mRoleInfo->max_popo_num ? bn : mRoleInfo->max_popo_num  ;
+		value = value > mRoleInfo->min_popo_num? value : mRoleInfo->min_popo_num ;
+		value = value < mRoleInfo->max_popo_num ? value : mRoleInfo->max_popo_num  ;
+		mAttri.mMaxBombNum = value;
+	}
+	void setBombNumEx(int value)
+	{
+		value = value > mRoleInfo->min_popo_num ? value : mRoleInfo->min_popo_num;
+		value = value < mRoleInfo->max_popo_num ? value : mRoleInfo->max_popo_num;
+		mAttriEx.mMaxBombNum = value - mAttri.mMaxBombNum;
+	}
+	int getBombNum() { return mAttri.mMaxBombNum+mAttriEx.mMaxBombNum; }
+	
+	void setStr(int value) 
+	{
+		value = value >  mRoleInfo->min_str? value : mRoleInfo->min_str;
+		value = value <  mRoleInfo->max_str? value : mRoleInfo->max_str;
+		mAttri.mBombStrength = value; 
+	}
+	void setStrEx(int value)
+	{
+		value = value >  mRoleInfo->min_str ? value : mRoleInfo->min_str;
+		value = value <  mRoleInfo->max_str ? value : mRoleInfo->max_str;
+		mAttriEx.mBombStrength = value - mAttri.mBombStrength;
+	}
+	int getStr() { return mAttri.mBombStrength+mAttriEx.mBombStrength; }
 
-		mMaxBombNum = bn; 
-	}
-	void setStr(int bs) 
-	{
-		bs = bs >  mRoleInfo->min_str? bs : mRoleInfo->min_str;
-		bs = bs <  mRoleInfo->max_str? bs : mRoleInfo->max_str;
-		mBombStrength = bs; 
-	}
-	void setSpeed(int sp) 
+	void setSpeed(int value) 
 	{ 
-		sp = sp > mRoleInfo->min_speed ? sp : mRoleInfo->min_speed;
-		sp = sp <  mRoleInfo->max_speed? sp : mRoleInfo->max_speed;
-		mSpeed = sp; 
+		value = value > mRoleInfo->min_speed ? value : mRoleInfo->min_speed;
+		value = value <  mRoleInfo->max_speed? value : mRoleInfo->max_speed;
+		mAttri.mSpeed = value;
 	}
-	int getBombNum() { return mMaxBombNum; }
-	int getStr() { return mBombStrength; }
-	int getSpeed() { return mSpeed; }
+	void setSpeedEx(float value)
+	{
+		value = value > mRoleInfo->min_speed ? value : mRoleInfo->min_speed;
+		value = value <  mRoleInfo->max_speed ? value : mRoleInfo->max_speed;
+		mAttriEx.mSpeed = value - mAttri.mSpeed;
+	}
+	int getSpeed() { return mAttri.mSpeed+mAttriEx.mSpeed; }
+	
+	void setIgnoreItem(bool value)
+	{
+		mAttri.mIgnoreItem = mAttri.mIgnoreItem || value;
+	}
+	void setIgnoreItemEx(bool value)
+	{
+		mAttriEx.mIgnoreItem = mAttriEx.mIgnoreItem || value;
+	}
+	bool getIgnoreItem()
+	{
+		return mAttri.mIgnoreItem || mAttriEx.mIgnoreItem;
+	}
+
+	void setIgnoreStatic(bool value)
+	{
+		mAttri.mIgnoreStatic = mAttri.mIgnoreStatic || value;
+	}
+	void setIgnoreStaticEx(bool value)
+	{
+		mAttriEx.mIgnoreStatic = mAttriEx.mIgnoreStatic || value;
+	}
+	bool getIgnoreStatic()
+	{
+		return mAttri.mIgnoreStatic || mAttriEx.mIgnoreStatic;
+	}
+
 	void setCanKickPopo(bool value)
 	{
-		mCanKickPopo = value;
+		mAttri.mCanKickPopo = mAttri.mCanKickPopo || value;
+	}
+	void setCanKickPopoEx(bool value)
+	{
+		mAttriEx.mCanKickPopo = mAttriEx.mCanKickPopo || value;
+	}
+	bool getCanKickPopo()
+	{
+		return mAttri.mCanKickPopo || mAttriEx.mCanKickPopo;
 	}
 private:
 	void handleDown(ControlType ectType);

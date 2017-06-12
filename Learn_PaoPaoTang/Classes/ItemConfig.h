@@ -23,6 +23,8 @@ struct ItemInfo
 	string rideGroup;
 	int ridePointX;
 	int ridePointY;
+	bool ignoreItem;   // ºöÂÔµÀ¾ß
+	bool ignoreStatic; // ºöÂÔ×èµ²Îï
 };
 
 
@@ -84,7 +86,8 @@ private:
 					rInfo.ridePointY = arri2!=NULL ? atoi(arri2) : 0;
 
 					rInfo.rideGroup = info->Attribute("ride_group");
-					//rInfo.isFlying = atoi(info->Attribute("fly")) != 0;
+					rInfo.ignoreItem = atoi(info->Attribute("ignore_item")) != 0;
+					rInfo.ignoreStatic = atoi(info->Attribute("ignore_static")) != 0;
 				}
 				info = info->NextSiblingElement();
 			}

@@ -1,6 +1,7 @@
 #include "Item.h"
 #include "PlayScene.h"
 #include "Player.h"
+#include "Buff.h"
 void Item::update(float dt)
 {
 	if (mNeedDestroy)
@@ -29,13 +30,26 @@ void Item::update(float dt)
 			int speed = player->getSpeed() + mInfo->roleSpeed;
 			player->setSpeed(speed);
 
-			if (mInfo->canKick)
-				player->setCanKickPopo(true);
+			player->setCanKickPopo(mInfo->canKick);
+			player->setIgnoreItem(mInfo->ignoreItem);
+			player->setIgnoreStatic(mInfo->ignoreStatic);
 		}
 		break;
 		case IT_RIDE:  // ×øÆï
+		{
+			AtrributeBuff* pBuff = new AtrributeBuff();
+			pBuff->canKick = mInfo->canKick;
+			pBuff->ignoreItem = mInfo->ignoreItem;
+			pBuff->ignoreStatic = mInfo->ignoreStatic;
+			pBuff->popoNum = mInfo->popoNum;
+			pBuff->popoStr = mInfo->popoStr;
+			pBuff->roleSpeed = mInfo->roleSpeed;
+
+
+			player->addBuff(pBuff);
 			player->ride(mInfo);
-			break;
+		}
+		break;
 		default:
 			return;
 		}

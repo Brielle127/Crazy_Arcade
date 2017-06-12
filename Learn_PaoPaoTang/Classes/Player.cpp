@@ -4,14 +4,12 @@
 Player::Player(PlayScene & rScene)
 	:GameObject(rScene, GOT_Player)
 	, mState(PLS_STAND)
-	, mSpeed(RPV_NORMAL_SPEED)
-	, mMaxBombNum(PRV_NORMAL_POPO_NUM)
-	, mBombStrength(RPV_NORMAL_POPO_STR)
-	, mIsRiding(false)
-	,mCanKickPopo(false)
+	,mIsRiding(false)
 	,mRideInfo(nullptr)
 	,mRoleInfo(nullptr)
 {
+	memset(&mAttri, 0, sizeof(BaseAttri));
+	memset(&mAttriEx, 0, sizeof(BaseAttri));
 	mRenderObj.addPart(PART_BODY, Point::ZERO);
 	mRenderObj.addPart(PART_EFX, Point::ZERO);
 	mRenderObj.addPart(PART_RIDE, Point::ZERO);
@@ -169,8 +167,8 @@ void Player::moveStateUpdate(float dt)
 	static int dirx[] = { 0,0,-1,1 };
 	static int diry[] = { 1,-1,0,0 };
 	// 步径大小
-	float dx = dirx[mDirection] * mSpeed * dt;
-	float dy = diry[mDirection] * mSpeed * dt;
+	float dx = dirx[mDirection] * getSpeed() * dt;
+	float dy = diry[mDirection] * getSpeed() * dt;
 
 	// 边界碰撞：限定玩家的移动范围
 	auto& rPoint = mRenderObj.getPosition(); // 当前位置
@@ -235,7 +233,7 @@ void Player::moveStateUpdate(float dt)
 			for (size_t i = 0; i < rObjs.size(); ++i) {
 				auto popo = rObjs[i];
 				if (popo->getType() == GOT_Bomb) {
-					if (mCanKickPopo) {
+					if (getCanKickPopo()) {
 						((Bomb*)popo)->beKicked(dirx[mDirection], diry[mDirection]);
 						break;
 					}
@@ -282,7 +280,7 @@ void Player::moveAndStandOrderHandler(OrderType type, void * data)
 	{
 	case OT_SET_BOMB:
 	{
-		if (mMaxBombNum <= 0)
+		if (getBombNum() <= 0)
 			return;
 
 		auto& rPoint = this->getPosition();
@@ -292,11 +290,11 @@ void Player::moveAndStandOrderHandler(OrderType type, void * data)
 			return;
 
 		Bomb* obj = (Bomb*)mScene.createObject(GOT_Bomb);
-		obj->setStrLen(mBombStrength);
-		obj->setRelatedPtr(&mMaxBombNum);
+		obj->setStrLen(getStr());
+		obj->setRelatedPtr(&mAttri.mMaxBombNum);
 		obj->setGrid(gridx, gridy);
 		mScene.addObj(obj, gridx, gridy);
-		mMaxBombNum--;  // 放一次炸弹递减数量
+		setBombNum(getBombNum() - 1);  // 放一次炸弹递减数量
 	}
 	break;
 	default:
