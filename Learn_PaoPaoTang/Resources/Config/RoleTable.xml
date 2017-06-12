@@ -1,0 +1,8 @@
+<config>
+  <!--小红人-->
+  <role template_id="100" group="role1" min_speed="100" max_speed="200" original_speed="100" min_str="1" max_str="6" original_str="1"
+        min_popo_num="1" max_popo_num="5" original_popo_num="1"/>
+  <!--海盗王-->
+  <role template_id="101" group="role2" min_speed="100" max_speed="200" original_speed="130" min_str="1" max_str="6" original_str="2"
+      min_popo_num="1" max_popo_num="5" original_popo_num="2"/>
+</config>

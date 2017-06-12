@@ -2,6 +2,8 @@
 #define _PLAYER_H_
 
 #include "GameObject.h"
+#include "RoleTableConfig.h"
+
 #include<map>
 #include <vector>
 using namespace std;
@@ -31,28 +33,35 @@ struct StateMethod  // 状态方法
 
 union TransParam
 {
-	PlayerMoveState nextMoveState;
+	PlayerDirection nextDirection;
 };
 
 class Player :public GameObject
 {
 	PlayerLogicState mState; // 角色当前状态
-	PlayerMoveState mMoveState; // 移动方向
+	PlayerDirection mDirection; // 移动方向
 	TransParam mTransParam;
 	float mSpeed;     // 速度
 	int mMaxBombNum;  // 炸弹数量
 	int mBombStrength;// 炸弹威力
 	bool mIsRiding;   // 是否骑乘
 	bool mCanKickPopo;  
-
 	PlayerLogicState mTransTable[PI_NUM][PLS_NUM]; // 状态转换表  请求动作+当前状态->下一状态
 	StateMethod states[PLS_NUM];
+	bool move_flag=false;
+
+	RoleInfo* mRoleInfo;
 public:
 	Player(PlayScene& rScene);
 	
 	virtual void load(const char* szName)
 	{
-		mRenderObj.setAni(PART_BODY, "role1", "stand_down");
+		mRoleInfo = RoleInfoMgr::getRoleInfo(100);
+		mMaxBombNum = mRoleInfo->original_popo_num;
+		mSpeed = mRoleInfo->original_speed;
+		mBombStrength = mRoleInfo->original_str;
+		mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "stand_down");
+		mRenderObj.setAnchorPoint(Point(mRenderObj.getSize()->size.width/2, 0));
 	}
 	virtual void update(float dt)
 	{
@@ -62,9 +71,25 @@ public:
 public:
 	void handleInput(ControlType ectType, PressState epState);
 public:
-	void setBombNum(int bn) { mMaxBombNum = bn; }
-	void setStr(int bs) { mBombStrength = bs; }
-	void setSpeed(int sp) { mSpeed = sp; }
+	void setBombNum(int bn)
+	{
+		bn = bn > mRoleInfo->min_popo_num? bn : mRoleInfo->min_popo_num ;
+		bn = bn < mRoleInfo->max_popo_num ? bn : mRoleInfo->max_popo_num  ;
+
+		mMaxBombNum = bn; 
+	}
+	void setStr(int bs) 
+	{
+		bs = bs >  mRoleInfo->min_str? bs : mRoleInfo->min_str;
+		bs = bs <  mRoleInfo->max_str? bs : mRoleInfo->max_str;
+		mBombStrength = bs; 
+	}
+	void setSpeed(int sp) 
+	{ 
+		sp = sp > mRoleInfo->min_speed ? sp : mRoleInfo->min_speed;
+		sp = sp <  mRoleInfo->max_speed? sp : mRoleInfo->max_speed;
+		mSpeed = sp; 
+	}
 	int getBombNum() { return mMaxBombNum; }
 	int getStr() { return mBombStrength; }
 	int getSpeed() { return mSpeed; }
@@ -78,10 +103,13 @@ private:
 	// 切换状态
 	void changeState(PlayerLogicState nextState);
 private:
+	void standStateEnter();
+
 	// 切换动画
 	void moveStateEnter();
 	void moveStateUpdate(float dt);
 	void moveAndStandOrderHandler(OrderType type, void* data);
+	const char* getCurrentAni(PlayerDirection);
 private: // 默认方法
 	void defaultEnter() {}
 	void defaultExit() {}

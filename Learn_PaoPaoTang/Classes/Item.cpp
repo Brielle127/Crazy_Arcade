@@ -19,23 +19,18 @@ void Item::update(float dt)
 		switch (mInfo->type)
 		{
 		case IT_NORMAL: // ÆÕÍ¨µÀ¾ß
-		{int num = player->getBombNum() + mInfo->popoNum;
-		num = num > RPV_MIN_POPO_NUM ? num : RPV_MIN_POPO_NUM;
-		num = num < RPV_MAX_POPO_NUM ? num : RPV_MAX_POPO_NUM;
-		player->setBombNum(num);
+		{
+			int num = player->getBombNum() + mInfo->popoNum;
+			player->setBombNum(num);
 
-		int str = player->getStr() + mInfo->popoStr;
-		str = str > RPV_MIN_POPO_STR ? str : RPV_MIN_POPO_STR;
-		str = str < RPV_MAX_POPO_STR ? str : RPV_MAX_POPO_STR;
-		player->setStr(str);
+			int str = player->getStr() + mInfo->popoStr;
+			player->setStr(str);
 
-		int speed = player->getSpeed() + mInfo->roleSpeed;
-		speed = speed > RPV_MIN_SPEED ? speed : RPV_MIN_SPEED;
-		speed = speed < RPV_MAX_SPEED ? speed : RPV_MAX_SPEED;
-		player->setSpeed(speed);
+			int speed = player->getSpeed() + mInfo->roleSpeed;
+			player->setSpeed(speed);
 
-		if (mInfo->canKick)
-			player->setCanKickPopo(true);
+			if (mInfo->canKick)
+				player->setCanKickPopo(true);
 		}
 		break;
 		case IT_RIDE:  // ×øÆï

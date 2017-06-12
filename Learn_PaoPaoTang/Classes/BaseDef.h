@@ -73,12 +73,12 @@ enum PlayerInput
 };
 
 /* 角色移动方向 */
-enum PlayerMoveState
+enum PlayerDirection
 {
-	PMS_UP,
-	PMS_DOWN,
-	PMS_LEFT,
-	PMS_RIGHT
+	PD_UP,
+	PD_DOWN,
+	PD_LEFT,
+	PD_RIGHT
 };
 
 /*炸弹状态*/
@@ -105,7 +105,7 @@ enum RolePropValue
 {   // 泡泡数量
 	RPV_MIN_POPO_NUM=3,   
 	PRV_NORMAL_POPO_NUM=3,
-	RPV_MAX_POPO_NUM=5,
+	RPV_MAX_POPO_NUM=10,
 
 	RPV_MIN_POPO_STR=3,
 	RPV_NORMAL_POPO_STR=3,

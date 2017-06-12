@@ -21,7 +21,6 @@ struct ItemInfo
 	int roleSpeed;
 	bool canKick;
 	string rideGroup;
-	bool isFlying;
 };
 
 
@@ -52,7 +51,7 @@ private:
 			while (info)
 			{//¶ÁÈ¡infoÊý¾Ý
 				auto name = info->Attribute("type");
-				static char* TypeTable[] = { "normal","ride"};
+				static char* TypeTable[] = { "normal","ride" };
 				static int len = sizeof(TypeTable) / sizeof(TypeTable[0]);
 				int i = 0;
 
@@ -60,13 +59,13 @@ private:
 					if (strcmp(TypeTable[i], name) == 0)
 						break;
 				}
-				if (i < len){
-					
+				if (i < len) {
+
 					int tid = atoi(info->Attribute("templateId"));
 
 					rMap.insert(make_pair(tid, ItemInfo()));
 					auto& rInfo = rMap[tid];
-					
+
 					rInfo.templateId = tid;
 					rInfo.type = ItemType(i);
 					rInfo.group = info->Attribute("group");
@@ -88,4 +87,4 @@ private:
 		return tMap;
 	}
 };
-#endif // !_ITEM_CONFIG_H
+#endif 
