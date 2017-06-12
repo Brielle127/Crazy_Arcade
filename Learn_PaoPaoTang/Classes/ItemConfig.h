@@ -21,6 +21,8 @@ struct ItemInfo
 	int roleSpeed;
 	bool canKick;
 	string rideGroup;
+	int ridePointX;
+	int ridePointY;
 };
 
 
@@ -74,6 +76,13 @@ private:
 					rInfo.popoStr = atoi(info->Attribute("popo_str"));
 					rInfo.roleSpeed = atoi(info->Attribute("role_speed"));
 					rInfo.canKick = atoi(info->Attribute("kick_popo")) != 0;
+					
+					auto arri1 = info->Attribute("ride_point_x");
+					rInfo.ridePointX = arri1 ? atoi(arri1) : 0;
+					
+					auto arri2 = info->Attribute("ride_point_y");
+					rInfo.ridePointY = arri2!=NULL ? atoi(arri2) : 0;
+
 					rInfo.rideGroup = info->Attribute("ride_group");
 					//rInfo.isFlying = atoi(info->Attribute("fly")) != 0;
 				}

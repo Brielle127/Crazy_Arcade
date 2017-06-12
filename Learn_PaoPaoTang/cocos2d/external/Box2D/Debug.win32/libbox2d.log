@@ -17,11 +17,11 @@
   b2StackAllocator.cpp
   b2Timer.cpp
   b2Body.cpp
+  b2ContactManager.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义 (编译源文件 ..\Common\b2Timer.cpp)
   c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\sal.h(2866): note: 参见“__useHeader”的前一个定义 (编译源文件 ..\Common\b2Timer.cpp)
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义 (编译源文件 ..\Common\b2Timer.cpp)
   c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\sal.h(2876): note: 参见“__on_failure”的前一个定义 (编译源文件 ..\Common\b2Timer.cpp)
-  b2ContactManager.cpp
   b2Fixture.cpp
   b2Island.cpp
   b2World.cpp

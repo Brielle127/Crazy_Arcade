@@ -101,9 +101,9 @@ d:\_codes\learnppt\learn_paopaotang\cocos2d\external\bullet\bulletdynamics\const
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\bullet\bulletdynamics\constraintsolver\btconetwistconstraint.cpp(971): warning C4244: “=”: 从“double”转换到“btScalar”，可能丢失数据
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\bullet\bulletdynamics\constraintsolver\btconetwistconstraint.cpp(973): warning C4244: “=”: 从“double”转换到“btScalar”，可能丢失数据
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\bullet\bulletdynamics\constraintsolver\btcontactconstraint.h(25): warning C4359: “btContactConstraint”: 对齐说明符小于实际对齐方式(128)，将被忽略。 (编译源文件 ..\BulletDynamics\ConstraintSolver\btContactConstraint.cpp)
+  btGearConstraint.cpp
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\bullet\bulletdynamics\character\btkinematiccharactercontroller.cpp(137): warning C4305: “=”: 从“double”到“btScalar”截断
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\bullet\bulletdynamics\character\btkinematiccharactercontroller.cpp(148): warning C4305: “=”: 从“double”到“btScalar”截断
-  btGearConstraint.cpp
   btGeneric6DofConstraint.cpp
   btGeneric6DofSpringConstraint.cpp
   btHinge2Constraint.cpp
@@ -134,8 +134,8 @@ d:\_codes\learnppt\learn_paopaotang\cocos2d\external\bullet\bulletdynamics\mlcps
   d:\_codes\learnppt\learn_paopaotang\cocos2d\external\bullet\bulletdynamics\mlcpsolvers\btdantziglcp.cpp(1567): note: 缺失的可变参数 2 为格式字符串“% s”所需
   btWheelInfo.cpp
   btGpu3DGridBroadphase.cpp
-d:\_codes\learnppt\learn_paopaotang\cocos2d\external\bullet\bulletdynamics\constraintsolver\btcontactconstraint.h(25): warning C4359: “btContactConstraint”: 对齐说明符小于实际对齐方式(128)，将被忽略。 (编译源文件 ..\BulletDynamics\Vehicle\btRaycastVehicle.cpp)
   btParallelConstraintSolver.cpp
+d:\_codes\learnppt\learn_paopaotang\cocos2d\external\bullet\bulletdynamics\constraintsolver\btcontactconstraint.h(25): warning C4359: “btContactConstraint”: 对齐说明符小于实际对齐方式(128)，将被忽略。 (编译源文件 ..\BulletDynamics\Vehicle\btRaycastVehicle.cpp)
   btThreadSupportInterface.cpp
   PosixThreadSupport.cpp
   SequentialThreadSupport.cpp

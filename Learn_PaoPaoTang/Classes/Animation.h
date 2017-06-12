@@ -201,7 +201,7 @@ public:
 		if (mPlaying == false)
 			return;
 		if (currentAniData) {
-			if (currentAniData->framesData.size() == 1) // 处理只有1帧的动画
+			if (currentAniData->framesData.size() <= 1) // 处理只有1帧的动画
 				return;
 			currentElapsed += dt;
 			currentFrame = currentElapsed*currentAniData->fps;

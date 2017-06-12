@@ -9,10 +9,12 @@ Player::Player(PlayScene & rScene)
 	, mBombStrength(RPV_NORMAL_POPO_STR)
 	, mIsRiding(false)
 	,mCanKickPopo(false)
+	,mRideInfo(nullptr)
+	,mRoleInfo(nullptr)
 {
 	mRenderObj.addPart(PART_BODY, Point::ZERO);
-	//mRenderObj.addPart(PART_EFX, Point::ZERO);
-	//mRenderObj.addPart(PART_RIDE, Point::ZERO);
+	mRenderObj.addPart(PART_EFX, Point::ZERO);
+	mRenderObj.addPart(PART_RIDE, Point::ZERO);
 	memset(mTransTable, PLS_NONE, sizeof(mTransTable));
 
 	// 设置默认允许的操作……
@@ -31,6 +33,19 @@ Player::Player(PlayScene & rScene)
 	states[PLS_MOVE].init(&Player::moveStateEnter, &Player::defaultExit, &Player::moveStateUpdate, &Player::moveAndStandOrderHandler);
 	states[PLS_WRAPPED].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate, &Player::defaultOrderHandler);
 	states[PLS_DEAD].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate, &Player::defaultOrderHandler);
+}
+
+// 骑乘坐骑
+void Player::ride(ItemInfo * rideInfo)
+{
+	mRideInfo = rideInfo;
+	mIsRiding = true;
+	mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), getCurrentAni(mDirection));
+	mRenderObj.modifyPartOffset(PART_BODY, Point(-mRenderObj.getSize()->size.width / 2, rideInfo->ridePointY));
+	
+	auto ani = getRideAni(mDirection);
+	mRenderObj.setAni(PART_RIDE, rideInfo->rideGroup.c_str(), ani);
+	mRenderObj.modifyPartOffset(PART_RIDE, Point(-rideInfo->ridePointX, 0));
 }
 
 void Player::handleInput(ControlType ectType, PressState epState)
@@ -119,6 +134,12 @@ void Player::standStateEnter()
 	if (pAniName) {
 		mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), pAniName);
 		move_flag = false;
+		
+		if (mIsRiding) {
+			auto ani = getRideAni(mTransParam.nextDirection);
+			mRenderObj.setAni(PART_RIDE, mRideInfo->rideGroup.c_str(), ani);
+			mRenderObj.modifyPartOffset(PART_RIDE, Point(-mRideInfo->ridePointX, 0));
+		}
 	}
 }
 
@@ -129,8 +150,13 @@ void Player::moveStateEnter()
 	
 	auto pAniName = getCurrentAni(mTransParam.nextDirection);
 	if (pAniName) {
-		if (mDirection != mTransParam.nextDirection||!move_flag) { // 改变方向或状态
+		if (mDirection != mTransParam.nextDirection || !move_flag) { // 改变方向或改变移动状态
 			mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), pAniName);
+			if (mIsRiding) { // 坐骑动画转换
+				auto ani = getRideAni(mTransParam.nextDirection);
+				mRenderObj.setAni(PART_RIDE, mRideInfo->rideGroup.c_str(), ani);
+				mRenderObj.modifyPartOffset(PART_RIDE, Point(-mRideInfo->ridePointX, 0));
+			}
 			move_flag = true;
 		}
 		mDirection = mTransParam.nextDirection;
@@ -302,6 +328,29 @@ const char * Player::getCurrentAni(PlayerDirection dir)
 			return nullptr;
 		}
 		break;
+	default:
+		return nullptr;
+	}
+}
+
+const char * Player::getRideAni(PlayerDirection dir)
+{
+	if (!mIsRiding)
+		return nullptr;
+	static const char* moveAnis[] = { "walk_up","walk_down","walk_left","walk_right" };
+	static const char* standAnis[] = { "stand_up","stand_down","stand_left","stand_right" };
+	switch (dir)
+	{
+	case PD_UP:
+	case PD_DOWN:
+	case PD_LEFT:
+	case PD_RIGHT:
+		if (mState == PLS_MOVE) {
+			return moveAnis[dir];
+		}
+		else if (mState == PLS_STAND) {
+			return standAnis[dir];
+		}
 	default:
 		return nullptr;
 	}

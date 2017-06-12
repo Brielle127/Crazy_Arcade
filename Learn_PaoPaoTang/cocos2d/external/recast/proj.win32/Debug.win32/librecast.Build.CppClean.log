@@ -1,3 +1,8 @@
+d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detourdebugdraw.obj
+d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detourpathqueue.obj
+d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detouralloc.obj
+d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detourcommon.obj
+d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detournavmesh.obj
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detourcrowd.obj
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detourtilecachebuilder.obj
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detournavmeshquery.obj
@@ -9,11 +14,6 @@ d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detourobstacleavoidance.obj
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detourtilecache.obj
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detournode.obj
-d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detourdebugdraw.obj
-d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detourpathqueue.obj
-d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detouralloc.obj
-d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detourcommon.obj
-d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\detournavmesh.obj
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\librecast.pdb
 d:\_codes\learnppt\learn_paopaotang\cocos2d\external\recast\proj.win32\debug.win32\fastlz.obj
 d:\_codes\learnppt\learn_paopaotang\proj.win32\debug.win32\librecast.lib

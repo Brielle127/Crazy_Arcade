@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "RoleTableConfig.h"
+#include"ItemConfig.h"
 
 #include<map>
 #include <vector>
@@ -51,6 +52,7 @@ class Player :public GameObject
 	bool move_flag=false;
 
 	RoleInfo* mRoleInfo;
+	class ItemInfo* mRideInfo;
 public:
 	Player(PlayScene& rScene);
 	
@@ -60,8 +62,12 @@ public:
 		mMaxBombNum = mRoleInfo->original_popo_num;
 		mSpeed = mRoleInfo->original_speed;
 		mBombStrength = mRoleInfo->original_str;
-		mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "stand_down");
-		mRenderObj.setAnchorPoint(Point(mRenderObj.getSize()->size.width/2, 0));
+
+		mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "stand_up");
+		mRenderObj.modifyPartOffset(PART_BODY,Point(-mRenderObj.getSize()->size.width / 2, 0));
+		
+		/*mRenderObj.setAni(PART_RIDE, "FastTurtle", "stand_up");
+		mRenderObj.modifyPartOffset(PART_RIDE, Point(-mRenderObj.getSize()->size.width / 2, 0));*/
 	}
 	virtual void update(float dt)
 	{
@@ -69,6 +75,7 @@ public:
 		GameObject::update(dt);
 	}
 public:
+	void ride(ItemInfo* rideInfo);
 	void handleInput(ControlType ectType, PressState epState);
 public:
 	void setBombNum(int bn)
@@ -100,16 +107,17 @@ public:
 private:
 	void handleDown(ControlType ectType);
 	void handleUp(ControlType ectType);
-	// ÇÐ»»×´Ì¬
-	void changeState(PlayerLogicState nextState);
+	
+	void changeState(PlayerLogicState nextState);// ÇÐ»»×´Ì¬
 private:
 	void standStateEnter();
 
-	// ÇÐ»»¶¯»­
-	void moveStateEnter();
+	
+	void moveStateEnter();// ÇÐ»»¶¯»­
 	void moveStateUpdate(float dt);
 	void moveAndStandOrderHandler(OrderType type, void* data);
-	const char* getCurrentAni(PlayerDirection);
+	const char* getCurrentAni(PlayerDirection dir);
+	const char* getRideAni(PlayerDirection dir);
 private: // Ä¬ÈÏ·½·¨
 	void defaultEnter() {}
 	void defaultExit() {}

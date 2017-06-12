@@ -34,6 +34,7 @@ void Item::update(float dt)
 		}
 		break;
 		case IT_RIDE:  // ×øÆï
+			player->ride(mInfo);
 			break;
 		default:
 			return;
