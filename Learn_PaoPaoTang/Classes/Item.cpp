@@ -16,6 +16,8 @@ void Item::update(float dt)
 
 	const float range = GRID_SIZE / 3; // 触碰道具的范围
 	if (dx*dx + dy*dy < range*range) {
+		if (player->getIgnoreItem())  // 忽略道具
+			return;
 		mNeedDestroy = true;
 		switch (mInfo->type)
 		{

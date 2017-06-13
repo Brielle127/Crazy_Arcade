@@ -83,6 +83,11 @@ public:
 		}
 	}
 
+	bool destroyEnable() 
+	{
+		return mDestroyEnable;
+	}
+
 	void destroy()
 	{
 		for (int i = 0; i < mBarrierGridCnt; ++i)

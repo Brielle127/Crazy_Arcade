@@ -8,6 +8,7 @@ public:
 	virtual void update(float dt) = 0;
 	virtual void attach(class Player* pT) = 0;  // 附加到玩家身上
 	virtual void remove() = 0;
+	virtual void compute() = 0;
 };
 
 class AtrributeBuff :public Buff {
@@ -24,7 +25,6 @@ public:
 	virtual void update(float dt);
 	virtual void attach(class Player* pT);
 	virtual void remove();
-private:
-	void compute();
+	virtual void compute();
 };
 #endif // !_BUFF_H_

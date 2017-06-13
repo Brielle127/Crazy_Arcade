@@ -7,6 +7,7 @@ Player::Player(PlayScene & rScene)
 	,mIsRiding(false)
 	,mRideInfo(nullptr)
 	,mRoleInfo(nullptr)
+	,mCurrentUsedBombNum(0)
 {
 	memset(&mAttri, 0, sizeof(BaseAttri));
 	memset(&mAttriEx, 0, sizeof(BaseAttri));
@@ -141,7 +142,6 @@ void Player::standStateEnter()
 	}
 }
 
-
 // 切换动画
 void Player::moveStateEnter()
 {
@@ -196,13 +196,13 @@ void Player::moveStateUpdate(float dt)
 		if (pgy > 0 && pgy < GRID_HEIGHT)// 边界不做修正
 		{
 			if (rPoint.y + dy > 0 || rPoint.y + dy < GRID_HEIGHT*GRID_SIZE - GRID_SIZE / 2)
-				if (mScene.getBarrier(pgx, pgy - 1) && rPoint.y < newy - GRID_SIZE / 2)
+				if (mScene.getBarrier(pgx, pgy - 1, getIgnoreStatic()) && rPoint.y < newy - GRID_SIZE / 2)
 				{
 					((Point&)rPoint).y = newy;
 					pgy = rPoint.y / GRID_SIZE;
 					nextPosY = rPoint.y - GRID_SIZE / 2 + dy;
 				}        // 修正位置
-				else if (mScene.getBarrier(pgx, pgy + 1) && rPoint.y > newy )
+				else if (mScene.getBarrier(pgx, pgy + 1, getIgnoreStatic()) && rPoint.y > newy )
 				{
 					((Point&)rPoint).y = newy;
 					pgy = rPoint.y / GRID_SIZE;
@@ -212,8 +212,8 @@ void Player::moveStateUpdate(float dt)
 	}                                    // 
 	else if (pgx > 0 && pgx < GRID_WIDTH)// 边界不做修正 
 	{
-		if ((mScene.getBarrier(pgx - 1, pgy) && (rPoint.x < newx)) ||
-			(mScene.getBarrier(pgx + 1, pgy) && (rPoint.x > newx))) {
+		if ((mScene.getBarrier(pgx - 1, pgy, getIgnoreStatic()) && (rPoint.x < newx)) ||
+			(mScene.getBarrier(pgx + 1, pgy, getIgnoreStatic()) && (rPoint.x > newx))) {
 			((Point&)rPoint).x = (int(rPoint.x / GRID_SIZE))*GRID_SIZE + GRID_SIZE / 2;
 			pgx = rPoint.x / GRID_SIZE;
 			if (rPoint.x + dx > GRID_SIZE / 2 || rPoint.x + dx < GRID_WIDTH*GRID_SIZE - GRID_SIZE / 2)
@@ -228,15 +228,14 @@ void Player::moveStateUpdate(float dt)
 	static int baTestFactorY[] = { -GRID_SIZE / 2,GRID_SIZE + 1,			0,				0 };
 
 	if (pgy<GRID_HEIGHT)
-		if (mScene.getBarrier(pgx, pgy)) {                       // 下一位置阻挡物	
+		if (mScene.getBarrier(pgx, pgy,getIgnoreStatic())) {                       // 下一位置阻挡物	
 			auto& rObjs = mScene.getObject(pgx, pgy);
 			for (size_t i = 0; i < rObjs.size(); ++i) {
 				auto popo = rObjs[i];
 				if (popo->getType() == GOT_Bomb) {
-					if (getCanKickPopo()) {
+					if (getCanKickPopo())
 						((Bomb*)popo)->beKicked(dirx[mDirection], diry[mDirection]);
-						break;
-					}
+					break;
 				}
 			}
 			int bax = pgx*GRID_SIZE + baTestFactorX[mDirection];//  下一个格子
@@ -280,7 +279,7 @@ void Player::moveAndStandOrderHandler(OrderType type, void * data)
 	{
 	case OT_SET_BOMB:
 	{
-		if (getBombNum() <= 0)
+		if (mCurrentUsedBombNum >= getBombNum())
 			return;
 
 		auto& rPoint = this->getPosition();
@@ -291,10 +290,10 @@ void Player::moveAndStandOrderHandler(OrderType type, void * data)
 
 		Bomb* obj = (Bomb*)mScene.createObject(GOT_Bomb);
 		obj->setStrLen(getStr());
-		obj->setRelatedPtr(&mAttri.mMaxBombNum);
+		obj->setRelatedPtr(&mCurrentUsedBombNum);
 		obj->setGrid(gridx, gridy);
 		mScene.addObj(obj, gridx, gridy);
-		setBombNum(getBombNum() - 1);  // 放一次炸弹递减数量
+		mCurrentUsedBombNum++;  // 放一次炸弹递减数量
 	}
 	break;
 	default:

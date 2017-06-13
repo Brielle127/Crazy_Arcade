@@ -63,27 +63,36 @@ class Player :public GameObject
 	struct ItemInfo* mRideInfo;
 	
 	vector<Buff*> mBuffList;
+	int mCurrentUsedBombNum;
 public:
 	Player(PlayScene& rScene);
 	
 	void addBuff(Buff* p)
 	{
+		if (mBuffList.size())
+			mBuffList.erase(mBuffList.begin()); // 移除之前的Buff
 		mBuffList.push_back(p);
 		p->attach(this);
+		refreshBuff();
+	}
+	void removeBuff(Buff* p)
+	{
 		for (auto it = mBuffList.begin(); it != mBuffList.end();++it)
 		{
 			if (*it == p) {
+				p->remove();
 				mBuffList.erase(it);
 				break;
 			}
 		}
-		for (size_t i = 0; i < mBuffList.size(); ++i)
-			mBuffList[i]->update(0);
+		refreshBuff();
 	}
-	void removeBuff(Buff* p)
+
+	void refreshBuff()
 	{
-		p->remove();
-		p->update(0);
+		memset(&mAttriEx, 0, sizeof(mAttriEx)); // 清空附加属性
+		for (size_t i = 0; i < mBuffList.size(); ++i)
+			mBuffList[i]->compute();
 	}
 
 	virtual void load(const char* szName)
@@ -92,7 +101,7 @@ public:
 		mAttri.mMaxBombNum = mRoleInfo->original_popo_num;
 		mAttri.mSpeed = mRoleInfo->original_speed;
 		mAttri.mBombStrength = mRoleInfo->original_str;
-
+		mCurrentUsedBombNum = 0;
 		mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "stand_up");
 		mRenderObj.modifyPartOffset(PART_BODY,Point(-mRenderObj.getSize()->size.width / 2, 0));
 		

@@ -12,7 +12,7 @@ void AtrributeBuff::attach(Player * pT)
 	// ...
 	
 }
-
+ 
 void AtrributeBuff::compute()
 {
 	if (canKick)
@@ -22,12 +22,12 @@ void AtrributeBuff::compute()
 	if (ignoreStatic)
 		mTarget->setIgnoreStaticEx(true);
 
-	mTarget->setBombNumEx(popoNum);
-	mTarget->setStrEx(popoStr);
-	mTarget->setSpeedEx(roleSpeed);
+	mTarget->setBombNumEx(popoNum + mTarget->getBombNum());
+	mTarget->setStrEx(popoStr + mTarget->getStr());
+	mTarget->setSpeedEx(roleSpeed + mTarget->getSpeed());
 }
 
 void AtrributeBuff::remove()
 {
-
+	delete this;
 }

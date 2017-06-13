@@ -8,9 +8,9 @@
 #include <vector>
 #include <map>
 #include"Player.h"
+
 USING_NS_CC;
 using namespace std;
-
 class PlayScene:public BaseScene,public Scene
 {
 	Layer* mGroundLayer; // 地砖
@@ -63,12 +63,7 @@ public:
 			mMapBarrier[gridx][gridy] = bBarrier;
 	}
 
-	bool getBarrier(int gridx, int gridy)
-	{
-		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy < GRID_HEIGHT)
-			return mMapBarrier[gridx][gridy];
-		return true; // 地图以外设为阻挡
-	}
+	bool getBarrier(int gridx, int gridy, bool isIgnoreStatic = false);
 public:
 	// 创建对象
 	GameObject* createObject(GameObjectType objType);

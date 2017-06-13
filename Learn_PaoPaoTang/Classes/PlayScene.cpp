@@ -271,6 +271,24 @@ void PlayScene::loadScene()
 	;
 }
 
+bool PlayScene::getBarrier(int gridx, int gridy, bool isIgnoreStatic)
+{
+	if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy < GRID_HEIGHT) {
+		if (isIgnoreStatic) {  // 玩家可以忽略障碍物
+			auto& rObjs = getObject(gridx, gridy);
+			for (auto& ob : rObjs)
+				if (ob->getType() == GOT_Building) {
+					auto building = (Building*)ob;
+					if (building->destroyEnable()) {
+						return false;  // 忽略可摧毁障碍物
+					}
+				}
+		}
+		return mMapBarrier[gridx][gridy];
+	}
+	return true; // 地图以外设为阻挡
+}
+
 GameObject * PlayScene::createObject(GameObjectType objType)
 {
 	GameObject* obj = nullptr;

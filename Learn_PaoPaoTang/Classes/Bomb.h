@@ -77,7 +77,7 @@ public:
 				mCurrentTime = 0;
 				mScene.setBarrier(mGridX, mGridY, false);
 				explosion();
-				(*mBombPtr)++;  // 增加炸弹计数
+				(*mBombPtr)--;  // 释放炸弹占用个数
 				// ... 
 				mState = BS_EXPLODE;       // 状态切换为爆炸
 			}
