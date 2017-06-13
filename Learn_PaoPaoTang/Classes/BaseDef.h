@@ -58,7 +58,7 @@ enum PlayerLogicState
 	PLS_NONE,
 	PLS_STAND,
 	PLS_MOVE,
-	PLS_WRAPPED,
+	PLS_SURROUNDED,
 	PLS_DEAD,
 	PLS_NUM
 };

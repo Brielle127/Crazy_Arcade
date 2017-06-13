@@ -32,7 +32,7 @@ public:
 	{
 
 	}
-
+	virtual void beAttacked(){}
 	virtual void update(float dt);
 	virtual float getDepth()
 	{

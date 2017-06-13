@@ -94,6 +94,10 @@ public:
 
 		GameObject::update(dt);
 	}
+	virtual void beAttacked() 
+	{ 
+		attack();
+	}
 	void beKicked(int dirx,int diry) // ÌßÕ¨µ¯
 	{
 		if (mState != BS_IDLE)
@@ -119,6 +123,7 @@ public:
 private:
 	void explosion();// ±¬Õ¨Ð§¹û
 	void attack();   // Õ¨µ¯¹¥»÷
+	bool doAttackPlayer(int gridx, int gridy);
 };
 
 #endif // !_PALYER_H_

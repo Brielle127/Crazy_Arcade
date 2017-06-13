@@ -91,16 +91,16 @@ private:
 public:
 	static AniData* getAni(const char* groupName, const char* aniName)
 	{
-		static map<string, AniGroup> aniGroup; // aniGroup表示一个动画组：组名->动画
-		if (aniGroup.size() == 0)
-			load(aniGroup);
-		auto it = aniGroup.find(groupName);
-		if (it != aniGroup.end())       // 找到动画组
-		{
-			auto ii = it->second.find(aniName);
-			if (ii != it->second.end())   // 找到动画
-				return &ii->second;
-		}
+			static map<string, AniGroup> aniGroup; // aniGroup表示一个动画组：组名->动画
+			if (aniGroup.size() == 0)
+				load(aniGroup);
+			auto it = aniGroup.find(groupName);
+			if (it != aniGroup.end())       // 找到动画组
+			{
+				auto ii = it->second.find(aniName);
+				if (ii != it->second.end())   // 找到动画
+					return &ii->second;
+			}
 		return nullptr;
 	}
 	static const AniGroup* getGroup(const char* groupName)
@@ -167,19 +167,24 @@ public:
 		return nullptr;
 	}
 
+	void setAlpha(float alpha)// 设置透明度
+	{
+		sprite->setOpacity(255 * alpha);
+	}
+
 	void setAni(const char* groupName, const char* aniName)
 	{
 
 		mPlaying = true;
 		//mFlag = flag;
-		if (groupName == NULL || aniName == NULL) {
-			currentAniData = NULL;
-			sprite->setTexture(NULL);
+		if (groupName == nullptr || aniName == nullptr) {
+			currentAniData = nullptr;
+			sprite->setTexture(nullptr);
 		}
 		else {
 			currentAniData = AnimationMgr::getAni(groupName, aniName);
-			if (currentAniData == NULL) {
-				sprite->setTexture(NULL);
+			if (currentAniData == nullptr) {
+				sprite->setTexture(nullptr);
 			}
 			else {
 				Texture2D* pTexture = Director::getInstance()->getTextureCache()->addImage(currentAniData->fileName.c_str());
@@ -281,6 +286,13 @@ public:
 	{
 		return position;
 	}
+
+	void setAlpha (const char* partName, float alpha)
+	{	auto it = partsMap.find(partName);
+		if (it != partsMap.end())                      // 在partsMap中找到对应的部件
+			it->second->setAlpha(alpha);  // 将任务转接给CRendrPart::setAni()
+	}
+
 
 	// 使用名字设置部件动画
 	void setAni(const char* partName,const char* groupName,const char* aniName)

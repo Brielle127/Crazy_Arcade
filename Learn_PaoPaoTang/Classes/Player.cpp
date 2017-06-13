@@ -13,25 +13,43 @@ Player::Player(PlayScene & rScene)
 	memset(&mAttriEx, 0, sizeof(BaseAttri));
 	mRenderObj.addPart(PART_BODY, Point::ZERO);
 	mRenderObj.addPart(PART_RIDE, Point::ZERO);
-	mRenderObj.addPart(PART_EFX, Point::ZERO);
+	mRenderObj.addPart(PART_EFX, Point(-36,-5));
+	mRenderObj.setAlpha(PART_EFX, 0.5);
 	memset(mTransTable, PLS_NONE, sizeof(mTransTable));
 
 	// ÉèÖÃÄ¬ÈÏÔÊÐíµÄ²Ù×÷¡­¡­
-	mTransTable[PI_KILL][PLS_STAND] = PLS_WRAPPED; // ¾²Ö¹×´Ì¬+Õ¨µ¯±¬Õ¨->±»ÅÝÅÝ°ü¹ü
+	mTransTable[PI_KILL][PLS_STAND] = PLS_SURROUNDED; // ¾²Ö¹×´Ì¬+Õ¨µ¯±¬Õ¨->±»ÅÝÅÝ°ü¹ü
 	mTransTable[PI_MOVE][PLS_STAND] = PLS_MOVE;    // ¾²Ö¹×´Ì¬+ÇëÇóÒÆ¶¯->ÒÆ¶¯×´Ì¬
 
 	mTransTable[PI_MOVE][PLS_MOVE] = PLS_MOVE;
-	mTransTable[PI_KILL][PLS_MOVE] = PLS_WRAPPED;
+	mTransTable[PI_KILL][PLS_MOVE] = PLS_SURROUNDED;
 	mTransTable[PI_STOP][PLS_MOVE] = PLS_STAND;
 
-	// ·ÉÕëµÀ¾ß¡­
-	mTransTable[PI_KILL][PLS_WRAPPED] = PLS_DEAD;
+	// ..
+	mTransTable[PI_KILL][PLS_SURROUNDED] = PLS_SURROUNDED;
 
 	// ³õÊ¼»¯Ä¬ÈÏ·½·¨
 	states[PLS_STAND].init(&Player::standStateEnter, &Player::defaultExit, &Player::defaultUpdate, &Player::moveAndStandOrderHandler);
 	states[PLS_MOVE].init(&Player::moveStateEnter, &Player::defaultExit, &Player::moveStateUpdate, &Player::moveAndStandOrderHandler);
-	states[PLS_WRAPPED].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate, &Player::defaultOrderHandler);
+	states[PLS_SURROUNDED].init(&Player::surroundedStateEnter, &Player::surroundedStateExit, &Player::defaultUpdate, &Player::defaultOrderHandler);
 	states[PLS_DEAD].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate, &Player::defaultOrderHandler);
+}
+
+void Player::beAttacked()
+{
+	if (mIsRiding) {  // ×øÆï¿ÉÒÔ±ÜÃâÒ»´ÎËÀÍö
+		mRenderObj.removePart(PART_RIDE);
+		mIsRiding = false;
+		mRenderObj.modifyPartOffset(PART_BODY, Point(-mRenderObj.getSize()->size.width / 2, 0));
+		mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), getCurrentAni(mDirection));
+		mBuffList.erase(mBuffList.begin()); // Çå³ýbuff(Ä¿Ç°Ä¬ÈÏÖ»ÓÐÒ»¸öbuff)
+		refreshBuff();
+	}
+	else {
+		PlayerLogicState s = mTransTable[PI_KILL][mState]; // ÇëÇó¹¥»÷
+		if (s != PLS_NONE && mState != s)
+			changeState(s);
+	}
 }
 
 // Æï³Ë×øÆï
@@ -42,6 +60,7 @@ void Player::ride(ItemInfo * rideInfo)
 	mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), getCurrentAni(mDirection));
 	mRenderObj.modifyPartOffset(PART_BODY, Point(-mRenderObj.getSize()->size.width / 2, rideInfo->ridePointY));
 	
+	mRenderObj.removePart(PART_RIDE);
 	auto ani = getRideAni(mDirection);
 	mRenderObj.addPart(PART_RIDE, Point::ZERO);
 	mRenderObj.setAni(PART_RIDE, rideInfo->rideGroup.c_str(), ani);
@@ -128,6 +147,7 @@ void Player::changeState(PlayerLogicState nextState)
 	(this->*rNext.enter)();
 }
 
+// ÇÐ»»¶¯»­
 void Player::standStateEnter()
 {
 	auto pAniName = getCurrentAni(mDirection);
@@ -143,7 +163,6 @@ void Player::standStateEnter()
 	}
 }
 
-// ÇÐ»»¶¯»­
 void Player::moveStateEnter()
 {
 	
@@ -274,6 +293,19 @@ void Player::moveStateUpdate(float dt)
 	mRenderObj.setPosition(Point(nextPosX, nextPosY));
 }
 
+void Player::surroundedStateEnter() // ½øÈë±»ÅÝÅÝ°üÎ§×´Ì¬
+{
+	mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "surrounded");
+	mRenderObj.addPart(PART_EFX, Point(-36, -5));
+	mRenderObj.setAlpha(PART_EFX, 0.5);
+	mRenderObj.setAni(PART_EFX, "BigPopo", "surrounded");
+}
+
+void Player::surroundedStateExit()
+{
+	mRenderObj.removePart(PART_EFX); // Çå³ýÌØÐ§¶¯»­
+}
+
 void Player::moveAndStandOrderHandler(OrderType type, void * data)
 {
 	switch (type)
@@ -358,6 +390,10 @@ void Player::clearAllThings()
 {
 	if (mIsRiding)
 		mRenderObj.removePart(PART_RIDE);
+	if (mState == PLS_SURROUNDED)
+		mRenderObj.removePart(PART_EFX);
+	mIsRiding = false;
+	memset(&mAttri, 0, sizeof(mAttri));
 	memset(&mAttriEx, 0, sizeof(mAttriEx)); // Çå¿Õ¸½¼ÓÊôÐÔ
 	for (auto it = mBuffList.begin(); it != mBuffList.end(); ++it)
 		((AtrributeBuff*)(*it))->remove();

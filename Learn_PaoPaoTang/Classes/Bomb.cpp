@@ -68,6 +68,7 @@ void Bomb::explosion()
 
 void Bomb::attack()
 {
+	bool attacked = doAttackPlayer(mGridX, mGridY);
 	// 向上
 	for (int i = 0; i < mLength; ++i) {
 		int idx = i + 1;
@@ -78,6 +79,8 @@ void Bomb::attack()
 			}
 			break;
 		}
+	if(!attacked)
+		attacked=doAttackPlayer(mGridX, mGridY + idx);
 	}
 
 
@@ -91,6 +94,8 @@ void Bomb::attack()
 			}
 			break;
 		}
+		if (!attacked)
+			attacked = doAttackPlayer(mGridX, mGridY - idx);
 	}
 	// 向左
 	for (int i = 0; i < mLength; ++i) {
@@ -102,6 +107,8 @@ void Bomb::attack()
 			}
 			break;
 		}
+		if (!attacked)
+			attacked = doAttackPlayer(mGridX - idx, mGridY);
 	}
 	// 向右
 	for (int i = 0; i < mLength; ++i) {
@@ -113,6 +120,26 @@ void Bomb::attack()
 			}
 			break;
 		}
+		if (!attacked)
+			attacked = doAttackPlayer(mGridX + idx, mGridY);
 	}
+}
+
+bool Bomb::doAttackPlayer(int gridx, int gridy)
+{
+	auto player = mScene.getPlayer();
+	auto& rPoint = player->getPosition(); // 玩家位置
+	auto rPos = Point(gridx*GRID_SIZE + GRID_SIZE / 2, gridy*GRID_SIZE);
+
+	float dx = rPoint.x - rPos.x;
+	float dy = rPoint.y - rPos.y;
+
+	const float range = GRID_SIZE/2 ;
+	if (dx*dx + dy*dy < range*range)
+	{
+		player->beAttacked();
+		return true;
+	}
+	return false;
 }
 

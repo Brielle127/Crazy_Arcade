@@ -92,6 +92,7 @@ void PlayScene::onEnterScene()
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, mObjectLayer);
 
+	
 	mPlayer.load("101");
 	auto& rP = mBornPoints[0];
 	mPlayer.setPosition(Point(rP.gridx*GRID_SIZE+GRID_SIZE/2, rP.gridy*GRID_SIZE));
@@ -121,6 +122,7 @@ void PlayScene::onExitScene()
 	mBornPoints.clear();
 	mItemsPercent.clear();
 	mUILayer->removeAllChildrenWithCleanup(true);
+	memset(mMapBarrier, 0, sizeof(mMapBarrier));
 }
 
 void PlayScene::onUpdate(float dt)

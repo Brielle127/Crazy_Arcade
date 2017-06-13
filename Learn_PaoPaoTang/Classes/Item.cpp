@@ -47,7 +47,6 @@ void Item::update(float dt)
 			pBuff->popoStr = mInfo->popoStr;
 			pBuff->roleSpeed = mInfo->roleSpeed;
 
-
 			player->addBuff(pBuff);
 			player->ride(mInfo);
 		}

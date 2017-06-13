@@ -41,7 +41,7 @@ public:
 public:
 	virtual float getDepth() { return -mRenderObj.getPosition().y; }
 	virtual void load(const char* szName) = 0;
-	virtual void beAttacked() {}
+	virtual void beAttacked() = 0;  // Κάµ½Υ¨µ―µΔΉ¥»χ
 	virtual void update(float dt)
 	{
 		//log("GameObject::update");

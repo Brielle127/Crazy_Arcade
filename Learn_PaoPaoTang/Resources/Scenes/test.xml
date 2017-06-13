@@ -12,13 +12,15 @@
 	<buildings>
 		<building gridX="0" gridY="0" name="SandCactiGreen"/>
 		<building gridX="5" gridY="5" name="SandCactiGreen"/>
-		<building gridX="10" gridY="10" name="SandCactiGreen"/>
+		<building gridX="10" gridY="10" name="SandTentRed"/>
 		<building gridX="11" gridY="11" name="SandCactiGreen"/>
-		<building gridX="2" gridY="11" name="SandBox"/>
+		<building gridX="2" gridY="11" name="SandTree"/>
 		<building gridX="5" gridY="3" name="SandBox"/>
 		<building gridX="3" gridY="11" name="SandBox"/>
 		<building gridX="4" gridY="3" name="SandBox"/>
 		<building gridX="6" gridY="6" name="SandBox"/>
+		<building gridX="6" gridY="3" name="oasis"/>
+		<building gridX="4" gridY="6" name="SandShopBlue"/>
 		<building gridX="2" gridY="5" name="SandBox"/>
 		<building gridX="4" gridY="1" name="SandBox"/>
 	</buildings>

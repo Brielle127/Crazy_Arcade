@@ -58,11 +58,11 @@ class Player :public GameObject
 	BaseAttri mAttriEx; // 附加属性 
 	PlayerLogicState mTransTable[PI_NUM][PLS_NUM]; // 状态转换表  请求动作+当前状态->下一状态
 	StateMethod states[PLS_NUM];
-	bool move_flag=false;
 	RoleInfo* mRoleInfo;
 	struct ItemInfo* mRideInfo;
 	vector<Buff*> mBuffList;
 	int mCurrentUsedBombNum;
+	bool move_flag=false;
 public:
 	Player(PlayScene& rScene);
 	
@@ -86,7 +86,6 @@ public:
 		}
 		refreshBuff();
 	}
-
 	void refreshBuff()
 	{
 		memset(&mAttriEx, 0, sizeof(mAttriEx)); // 清空附加属性
@@ -100,11 +99,13 @@ public:
 		clearAllThings();
 		int id = atoi(szName);
 		mRoleInfo = RoleInfoMgr::getRoleInfo(id);
+		mState = PLS_STAND;
 		mAttri.mMaxBombNum = mRoleInfo->original_popo_num;
 		mAttri.mSpeed = mRoleInfo->original_speed;
 		mAttri.mBombStrength = mRoleInfo->original_str;
 		mCurrentUsedBombNum = 0;
 		mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "stand_down");
+		//mRenderObj.setAni(PART_EFX, "BigPopo", "surrounded");
 		mRenderObj.modifyPartOffset(PART_BODY,Point(-mRenderObj.getSize()->size.width / 2, 0));
 		
 		/*mRenderObj.setAni(PART_RIDE, "FastTurtle", "stand_up");
@@ -118,6 +119,7 @@ public:
 		(this->*states[mState].update)(dt); // 调用成员函数
 		GameObject::update(dt);
 	}
+	virtual void beAttacked();
 public:
 	void ride(ItemInfo* rideInfo);
 	void handleInput(ControlType ectType, PressState epState);
@@ -207,10 +209,14 @@ private:
 	void handleUp(ControlType ectType);
 	
 	void changeState(PlayerLogicState nextState);// 切换状态
-private:
+private:// 切换动画
 	void standStateEnter();
-	void moveStateEnter();// 切换动画
+	
+	void moveStateEnter();
 	void moveStateUpdate(float dt);
+
+	void surroundedStateEnter();
+	void surroundedStateExit();
 
 	void moveAndStandOrderHandler(OrderType type, void* data);
 	const char* getCurrentAni(PlayerDirection dir);
@@ -224,4 +230,4 @@ private: // 默认方法
 	void defaultOrderHandler(OrderType, void*) {}
 };
 
-#endif // !_PALYER_H_
+#endif 
