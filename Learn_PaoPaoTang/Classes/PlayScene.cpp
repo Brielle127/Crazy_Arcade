@@ -4,6 +4,7 @@
 #include "Building.h"
 #include "Bomb.h"
 #include "Item.h"
+#include "AI.h"
 USING_NS_CC;
 
 ControlType getControllType(EventKeyboard::KeyCode keyCode)
@@ -41,9 +42,6 @@ bool isValidCT(ControlType ectType)
 	}
 	return false;
 }
-
-
-
 
 void PlayScene::onEnterScene()
 { 
@@ -94,17 +92,22 @@ void PlayScene::onEnterScene()
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, mObjectLayer);
 
-	mPlayer.load("");
-	mPlayer.setPosition(Point(100,100));
+	mPlayer.load("101");
+	auto& rP = mBornPoints[0];
+	mPlayer.setPosition(Point(rP.gridx*GRID_SIZE+GRID_SIZE/2, rP.gridy*GRID_SIZE));
 	mObjectLayer->addChild(mPlayer.getSprite());
 	
+	mPlayer2.load("100");
+	auto& rP2 = mBornPoints[1];
+	mPlayer2.setPosition(Point(rP2.gridx*GRID_SIZE + GRID_SIZE / 2, rP2.gridy*GRID_SIZE));
+	mObjectLayer->addChild(mPlayer2.getSprite());
 }
 
 void PlayScene::onExitScene()
 {
 	mGroundLayer->removeAllChildrenWithCleanup(true);
-	
 	mObjectLayer->removeAllChildrenWithCleanup(true);
+	
 	for (int w = 0; w < GRID_WIDTH; ++w) {
 		for (int h = 0; h < GRID_HEIGHT; ++h) {
 			auto& rObjects = mMapObject[w][h];
@@ -115,7 +118,8 @@ void PlayScene::onExitScene()
 			rObjects.clear();
 		}
 	}
-
+	mBornPoints.clear();
+	mItemsPercent.clear();
 	mUILayer->removeAllChildrenWithCleanup(true);
 }
 
@@ -136,15 +140,12 @@ void PlayScene::onUpdate(float dt)
 			}
 		}
 	}
-	mObjectLayer->reorderChild(mPlayer.getSprite(), mPlayer.getDepth());
-	mPlayer.update(dt);
-	typedef EventKeyboard::KeyCode KC;
+	typedef EventKeyboard::KeyCode KC; // 键盘事件(待抽取)
 	if (ectTypes.empty())
 	{
 		mPlayer.handleInput(CT_NONE, PS_DOWN);
 		mPlayer.handleInput(CT_NONE, PS_UP);
 	}
-
 	else
 		switch (ectTypes.back())
 		{
@@ -177,8 +178,13 @@ void PlayScene::onUpdate(float dt)
 			mPlayer.handleInput(CT_NONE, PS_UP);
 			break;
 		}
+	
+	mObjectLayer->reorderChild(mPlayer.getSprite(), mPlayer.getDepth());
+	mPlayer.update(dt);
+	
+	mObjectLayer->reorderChild(mPlayer2.getSprite(), mPlayer2.getDepth());
+	mPlayer2.update(dt);
 }
-
 
 void PlayScene::setCurrentSceneFile(const char * szFile)
 {
@@ -192,11 +198,22 @@ void PlayScene::loadScene()
 	if (doc.LoadFile(mCurrentFile.c_str())) {
 		map<size_t, bool> usedMap; // 地图网格被占用情况
 		auto root = doc.RootElement();
-		auto grounds = root->FirstChildElement();
-		auto defaultAni = grounds->Attribute("defaultAni"); // 默认背景
 
-		// 加载背景
-		auto ground = grounds->FirstChildElement();
+		auto bornPoints = root->FirstChildElement();
+		auto bornP = bornPoints->FirstChildElement();
+		while (bornP) {
+			int gridx = atoi(bornP->Attribute("gridx"));
+			int gridy = atoi(bornP->Attribute("gridy"));
+			mBornPoints.push_back(BornPoint());
+			auto& rP = mBornPoints[mBornPoints.size() - 1];
+			rP.gridx = gridx;
+			rP.gridy = gridy;
+			bornP = bornP->NextSiblingElement();
+		}
+
+		auto grounds = bornPoints->NextSiblingElement();
+		auto defaultAni = grounds->Attribute("defaultAni"); // 默认背景
+		auto ground = grounds->FirstChildElement();	// 加载背景
 		while (ground) {
 			auto ani = ground->Attribute("ani");
 			string tiles = ground->Attribute("tiles");
@@ -305,6 +322,9 @@ GameObject * PlayScene::createObject(GameObjectType objType)
 		break;
 	case GOT_Item:
 		obj = new Item(*this);
+		break;
+	case GOT_AI:
+		obj = new AIPlayer(*this);
 		break;
 	default:
 		break;

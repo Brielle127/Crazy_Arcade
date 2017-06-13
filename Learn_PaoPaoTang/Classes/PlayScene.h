@@ -18,19 +18,27 @@ class PlayScene:public BaseScene,public Scene
 	Layer* mUILayer;     // UI
 	string mCurrentFile; // 当前场景的文件
 	Player mPlayer;
+	Player mPlayer2;
 	vector<GameObject*> mMapObject[GRID_WIDTH][GRID_HEIGHT];  // 静态对象
 	bool mMapBarrier[GRID_WIDTH][GRID_HEIGHT]; // 阻挡格子
+	float mGlobalPercent; // 全局的物品掉落概率
 	map<EventKeyboard::KeyCode, bool> keys;    // 按键状态
 	vector<ControlType> ectTypes;// 输入缓存
-	float mGlobalPercent; // 全局的物品掉落概率
 	vector<int> mItemsPercent; // 不同道具的掉落概率
+	
+	struct BornPoint {
+		int gridx;
+		int gridy;
+	};
+	vector<BornPoint> mBornPoints;
 public:
 	PlayScene()
 		:mGroundLayer(nullptr)
 		, mObjectLayer(nullptr)
 		, mUILayer(nullptr)
 		, mPlayer(*this)
-		,mGlobalPercent(0.0f)
+		, mPlayer2(*this)
+		, mGlobalPercent(0.0f)
 	{
 		mGroundLayer = Layer::create();
 		mGroundLayer->setPosition(Point(20, 40)); // 定位

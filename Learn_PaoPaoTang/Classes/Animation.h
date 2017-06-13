@@ -287,7 +287,7 @@ public:
 	{
 		auto it = partsMap.find(partName);
 		if (it != partsMap.end())                      // 在partsMap中找到对应的部件
-			it->second->setAni(groupName, aniName);    // 将任务转接给CRendrPart::setAni()
+			it->second->setAni(groupName, aniName);  // 将任务转接给CRendrPart::setAni()
 	}
 	// 使用索引设置部件动画
 	void setAni(int idx,const char* groupName, const char* aniName)

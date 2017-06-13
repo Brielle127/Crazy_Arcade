@@ -8,8 +8,8 @@ class PlayScene;
 
 class GameObject
 {
-	GameObjectType mType;
 protected:
+	GameObjectType mType;
 	RenderObj mRenderObj;
 	PlayScene& mScene;
 	int mGridX;

@@ -12,8 +12,8 @@ Player::Player(PlayScene & rScene)
 	memset(&mAttri, 0, sizeof(BaseAttri));
 	memset(&mAttriEx, 0, sizeof(BaseAttri));
 	mRenderObj.addPart(PART_BODY, Point::ZERO);
-	mRenderObj.addPart(PART_EFX, Point::ZERO);
 	mRenderObj.addPart(PART_RIDE, Point::ZERO);
+	mRenderObj.addPart(PART_EFX, Point::ZERO);
 	memset(mTransTable, PLS_NONE, sizeof(mTransTable));
 
 	// 设置默认允许的操作……
@@ -43,6 +43,7 @@ void Player::ride(ItemInfo * rideInfo)
 	mRenderObj.modifyPartOffset(PART_BODY, Point(-mRenderObj.getSize()->size.width / 2, rideInfo->ridePointY));
 	
 	auto ani = getRideAni(mDirection);
+	mRenderObj.addPart(PART_RIDE, Point::ZERO);
 	mRenderObj.setAni(PART_RIDE, rideInfo->rideGroup.c_str(), ani);
 	mRenderObj.modifyPartOffset(PART_RIDE, Point(-rideInfo->ridePointX, 0));
 }
@@ -224,8 +225,8 @@ void Player::moveStateUpdate(float dt)
 	pgx += dirx[mDirection];
 	pgy += diry[mDirection];
 
-	static int baTestFactorX[] = { 0,			 0, int(GRID_SIZE*1.5), -GRID_SIZE / 2 };
-	static int baTestFactorY[] = { -GRID_SIZE / 2,GRID_SIZE + 1,			0,				0 };
+	static int baTestFactorX[] = { 0,0, int(GRID_SIZE*1.5), -GRID_SIZE / 2 };
+	static int baTestFactorY[] = { -GRID_SIZE / 2,GRID_SIZE + 1,0,0 };
 
 	if (pgy<GRID_HEIGHT)
 		if (mScene.getBarrier(pgx, pgy,getIgnoreStatic())) {                       // 下一位置阻挡物	
@@ -351,4 +352,15 @@ const char * Player::getRideAni(PlayerDirection dir)
 	default:
 		return nullptr;
 	}
+}
+
+void Player::clearAllThings()
+{
+	if (mIsRiding)
+		mRenderObj.removePart(PART_RIDE);
+	memset(&mAttriEx, 0, sizeof(mAttriEx)); // 清空附加属性
+	for (auto it = mBuffList.begin(); it != mBuffList.end(); ++it)
+		((AtrributeBuff*)(*it))->remove();
+	mBuffList.clear();
+	
 }

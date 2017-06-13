@@ -61,7 +61,6 @@ class Player :public GameObject
 	bool move_flag=false;
 	RoleInfo* mRoleInfo;
 	struct ItemInfo* mRideInfo;
-	
 	vector<Buff*> mBuffList;
 	int mCurrentUsedBombNum;
 public:
@@ -97,12 +96,15 @@ public:
 
 	virtual void load(const char* szName)
 	{
-		mRoleInfo = RoleInfoMgr::getRoleInfo(100);
+		// 清除之前的状态
+		clearAllThings();
+		int id = atoi(szName);
+		mRoleInfo = RoleInfoMgr::getRoleInfo(id);
 		mAttri.mMaxBombNum = mRoleInfo->original_popo_num;
 		mAttri.mSpeed = mRoleInfo->original_speed;
 		mAttri.mBombStrength = mRoleInfo->original_str;
 		mCurrentUsedBombNum = 0;
-		mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "stand_up");
+		mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "stand_down");
 		mRenderObj.modifyPartOffset(PART_BODY,Point(-mRenderObj.getSize()->size.width / 2, 0));
 		
 		/*mRenderObj.setAni(PART_RIDE, "FastTurtle", "stand_up");
@@ -207,13 +209,13 @@ private:
 	void changeState(PlayerLogicState nextState);// 切换状态
 private:
 	void standStateEnter();
-
-	
 	void moveStateEnter();// 切换动画
 	void moveStateUpdate(float dt);
+
 	void moveAndStandOrderHandler(OrderType type, void* data);
 	const char* getCurrentAni(PlayerDirection dir);
 	const char* getRideAni(PlayerDirection dir);
+	void clearAllThings();
 private: // 默认方法
 	void defaultEnter() {}
 	void defaultExit() {}

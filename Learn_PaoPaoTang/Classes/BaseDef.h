@@ -48,6 +48,7 @@ enum GameObjectType
 	GOT_Building, 
 	GOT_Bomb,     
 	GOT_Item,
+	GOT_AI, // AI
 	GOT_Num
 };
 

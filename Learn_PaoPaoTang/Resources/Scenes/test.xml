@@ -1,4 +1,10 @@
 <config>
+	<born_points>
+		<born gridx="2" gridy="4"/>
+		<born gridx="3" gridy="3"/>
+		<born gridx="4" gridy="4"/>
+		<born gridx="2" gridy="2"/>
+	</born_points>
 	<grounds defaultAni="ground8">
 		<ground ani="ground2" tiles="1,2,3,4,6,7"/>
 		<ground ani="ground3" tiles="18,27,49,55,66,77"/>
