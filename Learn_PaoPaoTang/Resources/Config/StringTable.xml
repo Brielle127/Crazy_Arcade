@@ -3,4 +3,6 @@
 	<item key="exit" text="退出游戏"/>
 	<item key="main_menu" text="主菜单"/>
 	<item key="game_over" text="游戏结束"/>
+	<item key="back2menu" text="返回菜单"/>
+	<item key="replay" text="重新开始"/>
 </config>

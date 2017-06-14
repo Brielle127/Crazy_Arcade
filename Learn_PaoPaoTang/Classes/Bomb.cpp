@@ -68,6 +68,7 @@ void Bomb::explosion()
 
 void Bomb::attack()
 {
+	mDidAttack = true;
 	bool attacked = doAttackPlayer(mGridX, mGridY);
 	// œÚ…œ
 	for (int i = 0; i < mLength; ++i) {

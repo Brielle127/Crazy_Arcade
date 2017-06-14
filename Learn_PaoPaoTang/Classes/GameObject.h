@@ -26,13 +26,12 @@ public:
 
 	GameObjectType getType() { return mType; }
 	bool isNeedDestroy() { return mNeedDestroy; }
-	/* …Ë÷√Œª÷√ */
+public:	/* Œª÷√ */
 	virtual void setGrid(int gridx, int gridy) { mGridX = gridx; mGridY = gridy; }
 	virtual void setPosition(const Point& rPoint)
 	{
 		mRenderObj.setPosition(rPoint);
 	}
-
 	const Point& getPosition()
 	{
 		return mRenderObj.getPosition();

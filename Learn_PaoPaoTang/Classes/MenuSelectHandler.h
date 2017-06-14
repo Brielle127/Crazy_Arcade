@@ -27,6 +27,11 @@ public:
 		GameLogic::sharedGameLogic().handleEvent(SSE_Play);
 	}
 
+	void onMenu_Replay(Ref* pSeder)
+	{
+		GameLogic::sharedGameLogic().handleEvent(SSE_Replay);
+	}
+
 	void onMenu_Exit(Ref* pSender)
 	{
 		GameLogic::sharedGameLogic().handleEvent(SSE_Exit);

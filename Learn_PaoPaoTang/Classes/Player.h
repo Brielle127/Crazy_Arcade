@@ -15,10 +15,10 @@ using namespace std;
 #define PART_RIDE "ride"
 
 class Player;
-typedef void(Player::*Method)();       // Player的无参无返回值成员函数
-typedef void(Player::*UpdateMethod)(float); // 更新方法
-typedef void(Player::*OrderMethod)(OrderType, void*);   // 逻辑命令输入
-struct StateMethod  // 状态方法
+typedef void(Player::*Method)();                        // 不同状态的enter、exit方法
+typedef void(Player::*UpdateMethod)(float);             // 不同状态的更新方法
+typedef void(Player::*OrderMethod)(OrderType, void*);   // 逻辑输入
+struct StateMethod  // 不同状态状态的实现方法
 {
 	Method enter;
 	Method exit;
@@ -37,35 +37,42 @@ union TransParam
 {
 	PlayerDirection nextDirection;
 };
-// 玩家基本属性
-struct BaseAttri 
+
+struct BaseAttri        // 玩家基本属性
 {
-	float mSpeed;     // 速度
-	int mMaxBombNum;  // 炸弹数量
-	int mBombStrength;// 炸弹威力
-	bool mCanKickPopo;
+	float mSpeed;       // 速度
+	int mMaxBombNum;    // 炸弹数量
+	int mBombStrength;  // 炸弹威力
+	bool mCanKickPopo;  // 时候可以踢泡泡
 	bool mIgnoreItem;   // 忽略道具
 	bool mIgnoreStatic; // 忽略阻挡物
 };
 
 class Player :public GameObject
 {
-	PlayerLogicState mState; // 角色当前状态
+	BaseAttri mAttri;           // 自身属性
+	BaseAttri mAttriEx;         // 附加属性 
+	
+	TransParam mTransParam;     // 状态转换参数
+	PlayerLogicState mTransTable[PI_NUM][PLS_NUM]; // 状态转换表:请求动作+当前状态->下一状态
+	
+	PlayerLogicState mState;    // 角色当前状态
+	StateMethod states[PLS_NUM];// 状态方法
+	
+	RoleInfo* mRoleInfo;        // 角色信息
+	struct ItemInfo* mRideInfo; // 道具信息
+	vector<Buff*> mBuffList;    // 道具Buff列表
+	
 	PlayerDirection mDirection; // 移动方向
-	bool mIsRiding;   // 是否骑乘
-	TransParam mTransParam;
-	BaseAttri mAttri;
-	BaseAttri mAttriEx; // 附加属性 
-	PlayerLogicState mTransTable[PI_NUM][PLS_NUM]; // 状态转换表  请求动作+当前状态->下一状态
-	StateMethod states[PLS_NUM];
-	RoleInfo* mRoleInfo;
-	struct ItemInfo* mRideInfo;
-	vector<Buff*> mBuffList;
+	bool mIsRiding;             // 是否骑乘坐骑
 	int mCurrentUsedBombNum;
+	float mSurroundedTime;
 	bool move_flag=false;
+
 public:
 	Player(PlayScene& rScene);
-	
+
+public:/*   接口   */	
 	void addBuff(Buff* p)
 	{
 		if (mBuffList.size())
@@ -74,56 +81,15 @@ public:
 		p->attach(this);
 		refreshBuff();
 	}
-	void removeBuff(Buff* p)
-	{
-		for (auto it = mBuffList.begin(); it != mBuffList.end();++it)
-		{
-			if (*it == p) {
-				p->remove();
-				mBuffList.erase(it);
-				break;
-			}
-		}
-		refreshBuff();
-	}
-	void refreshBuff()
-	{
-		memset(&mAttriEx, 0, sizeof(mAttriEx)); // 清空附加属性
-		for (size_t i = 0; i < mBuffList.size(); ++i)
-			mBuffList[i]->compute();
-	}
-
-	virtual void load(const char* szName)
-	{
-		// 清除之前的状态
-		clearAllThings();
-		int id = atoi(szName);
-		mRoleInfo = RoleInfoMgr::getRoleInfo(id);
-		mState = PLS_STAND;
-		mAttri.mMaxBombNum = mRoleInfo->original_popo_num;
-		mAttri.mSpeed = mRoleInfo->original_speed;
-		mAttri.mBombStrength = mRoleInfo->original_str;
-		mCurrentUsedBombNum = 0;
-		mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "stand_down");
-		//mRenderObj.setAni(PART_EFX, "BigPopo", "surrounded");
-		mRenderObj.modifyPartOffset(PART_BODY,Point(-mRenderObj.getSize()->size.width / 2, 0));
-		
-		/*mRenderObj.setAni(PART_RIDE, "FastTurtle", "stand_up");
-		mRenderObj.modifyPartOffset(PART_RIDE, Point(-mRenderObj.getSize()->size.width / 2, 0));*/
-	}
-	virtual void update(float dt)
-	{
-		for (size_t i = 0; i < mBuffList.size(); ++i)
-			mBuffList[i]->update(0);
-
-		(this->*states[mState].update)(dt); // 调用成员函数
-		GameObject::update(dt);
-	}
-	virtual void beAttacked();
-public:
-	void ride(ItemInfo* rideInfo);
+	void ride(ItemInfo* rideInfo); // 骑乘坐骑
+	bool isDead() { return mState == PLS_DEAD; }
+public:/* 重写函数 */
 	void handleInput(ControlType ectType, PressState epState);
-public:
+	virtual void load(const char* szName);
+	virtual void update(float dt);
+	virtual void beAttacked();
+
+public:/* 属性操作 */
 	void setBombNum(int value)
 	{
 		value = value > mRoleInfo->min_popo_num? value : mRoleInfo->min_popo_num ;
@@ -204,12 +170,10 @@ public:
 	{
 		return mAttri.mCanKickPopo || mAttriEx.mCanKickPopo;
 	}
-private:
-	void handleDown(ControlType ectType);
-	void handleUp(ControlType ectType);
-	
+
+private:/* 状态操作 */
 	void changeState(PlayerLogicState nextState);// 切换状态
-private:// 切换动画
+	
 	void standStateEnter();
 	
 	void moveStateEnter();
@@ -217,17 +181,45 @@ private:// 切换动画
 
 	void surroundedStateEnter();
 	void surroundedStateExit();
+	void surroundedStateUpdate(float dt);
+
+	void deadStateEnter();
 
 	void moveAndStandOrderHandler(OrderType type, void* data);
-	const char* getCurrentAni(PlayerDirection dir);
-	const char* getRideAni(PlayerDirection dir);
-	void clearAllThings();
-private: // 默认方法
+private:
 	void defaultEnter() {}
 	void defaultExit() {}
 	void defaultUpdate(float dt) {}
 	void defaultHandleInput(ControlType ectType, PressState epState) {}
 	void defaultOrderHandler(OrderType, void*) {}
+
+private:
+	void handleDown(ControlType ectType);// 处理键盘按下事件
+	void handleUp(ControlType ectType);  // 处理键盘松开事件
+	
+	void removeBuff(Buff* p)
+	{
+		for (auto it = mBuffList.begin(); it != mBuffList.end();++it)
+		{
+			if (*it == p) {
+				p->remove();
+				mBuffList.erase(it);
+				break;
+			}
+		}
+		refreshBuff();
+	}
+	void refreshBuff()
+	{
+		memset(&mAttriEx, 0, sizeof(mAttriEx)); // 清空附加属性
+		for (size_t i = 0; i < mBuffList.size(); ++i)
+			mBuffList[i]->compute();
+	}
+
+	const char* getCurrentAni(PlayerDirection dir);
+	const char* getRideAni(PlayerDirection dir);
+	
+	void reset();// 清除状态
 };
 
-#endif 
+#endif

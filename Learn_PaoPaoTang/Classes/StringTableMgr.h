@@ -1,7 +1,6 @@
 #ifndef _STRING_TABLE_MGR_
 #define _STRING_TABLE_MGR_
 #include"tinyxml.h"
-#include<assert.h>
 #include<map>
 #include<string>
 using namespace std;
@@ -15,7 +14,7 @@ private:
 		
 		TiXmlDocument doc;
 		bool loaded = doc.LoadFile("Config/StringTable.xml");
-		assert(loaded == true);
+		//assert(loaded == true);
 		auto element = doc.RootElement()->FirstChildElement();
 		while (element != NULL)
 		{

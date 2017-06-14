@@ -1,5 +1,6 @@
 #include "GameLogic.h"
-
+#include "BeginScene.h"
+#include "PlayScene.h"
 USING_NS_CC;
 GameLogic::GameLogic()
 	:mSceneRoot(nullptr),mBeginScene(nullptr)
@@ -86,10 +87,10 @@ void GameLogic::handleEvent(int eventType, void * data)
 			mCurrentScene = nullptr;
 			Director::getInstance()->end();
 			
-			delete mBeginScene;
+			/*delete mBeginScene;
 			mBeginScene = nullptr;
 			delete mPlayScene;
-			mPlayScene = nullptr;
+			mPlayScene = nullptr;*/
 
 			return;// Ω· ¯¥¶¿Ì
 		}

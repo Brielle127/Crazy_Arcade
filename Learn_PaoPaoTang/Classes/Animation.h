@@ -121,7 +121,7 @@ public:
 class RenderPart
 {
 public:
-	enum PlayFlag {
+	enum PlayFlag {  // 用于控制播放效果
 		PF_LOOP,
 		PF_COMPLETE_CLEAR,
 		PF_COMPLETE_STOP,
@@ -172,19 +172,19 @@ public:
 		sprite->setOpacity(255 * alpha);
 	}
 
-	void setAni(const char* groupName, const char* aniName)
+	void setAni(const char* groupName, const char* aniName, PlayFlag flag = PF_LOOP)
 	{
 
 		mPlaying = true;
-		//mFlag = flag;
+		mFlag = flag;
 		if (groupName == nullptr || aniName == nullptr) {
 			currentAniData = nullptr;
-			sprite->setTexture(nullptr);
+			return;
 		}
 		else {
 			currentAniData = AnimationMgr::getAni(groupName, aniName);
 			if (currentAniData == nullptr) {
-				sprite->setTexture(nullptr);
+				return;
 			}
 			else {
 				Texture2D* pTexture = Director::getInstance()->getTextureCache()->addImage(currentAniData->fileName.c_str());
@@ -203,15 +203,17 @@ public:
 	void update(float dt)
 	{
 		//log("RenderPart::update");
-		if (mPlaying == false)
+		if (!mPlaying)
 			return;
 		if (currentAniData) {
 			if (currentAniData->framesData.size() <= 1) // 处理只有1帧的动画
 				return;
 			currentElapsed += dt;
 			currentFrame = currentElapsed*currentAniData->fps;
-			const int maxFrame = currentAniData->framesData.size();
-			if (currentFrame >= maxFrame) {
+			const int maxFrame = currentAniData->framesData.size(); 
+			if (!maxFrame)
+				return;
+			if (currentFrame >= maxFrame) { // 已经到达最后一帧动画
 				switch (mFlag)
 				{
 				case PF_LOOP:
@@ -219,8 +221,9 @@ public:
 					currentFrame %= maxFrame;
 				}
 				break;
-				case PF_COMPLETE_CLEAR:
-					setAni(NULL, NULL);
+				case PF_COMPLETE_CLEAR:  
+					//setAni(groupName,nullptr, nullptr);
+					sprite->setOpacity(0);// 。。。
 					return;
 				case PF_COMPLETE_STOP:
 					currentFrame = maxFrame - 1;
@@ -295,17 +298,17 @@ public:
 
 
 	// 使用名字设置部件动画
-	void setAni(const char* partName,const char* groupName,const char* aniName)
+	void setAni(const char* partName, const char* groupName, const char* aniName, RenderPart::PlayFlag playFlag= RenderPart::PF_LOOP)
 	{
 		auto it = partsMap.find(partName);
 		if (it != partsMap.end())                      // 在partsMap中找到对应的部件
-			it->second->setAni(groupName, aniName);  // 将任务转接给CRendrPart::setAni()
+			it->second->setAni(groupName, aniName, playFlag);  // 将任务转接给CRendrPart::setAni()
 	}
 	// 使用索引设置部件动画
-	void setAni(int idx,const char* groupName, const char* aniName)
+	void setAni(int idx,const char* groupName, const char* aniName, RenderPart::PlayFlag playFlag = RenderPart::PF_LOOP)
 	{
 		auto p = parts[idx];
-		p->setAni(groupName, aniName);
+		p->setAni(groupName, aniName,playFlag);
 	}
 
 	/* 添加部件 */

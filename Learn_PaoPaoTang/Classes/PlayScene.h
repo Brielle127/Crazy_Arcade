@@ -1,4 +1,3 @@
-#pragma once
 #ifndef _PLAY_SCENE_H_
 #define _PLAY_SCENE_H_
 
@@ -8,22 +7,25 @@
 #include <vector>
 #include <map>
 #include"Player.h"
+#include "GameOverMenu.h"
 
 USING_NS_CC;
 using namespace std;
 class PlayScene:public BaseScene,public Scene
 {
-	Layer* mGroundLayer; // 地砖
-	Layer* mObjectLayer; // 物件
-	Layer* mUILayer;     // UI
 	string mCurrentFile; // 当前场景的文件
+	Layer* mGroundLayer; // 地砖层
+	Layer* mObjectLayer; // 物件层
+	Layer* mUILayer;     // UI层
 	Player mPlayer;
 	Player mPlayer2;
 	vector<GameObject*> mMapObject[GRID_WIDTH][GRID_HEIGHT];  // 静态对象
-	bool mMapBarrier[GRID_WIDTH][GRID_HEIGHT]; // 阻挡格子
-	float mGlobalPercent; // 全局的物品掉落概率
-	map<EventKeyboard::KeyCode, bool> keys;    // 按键状态
-	vector<ControlType> ectTypes;// 输入缓存
+	bool mMapBarrier[GRID_WIDTH][GRID_HEIGHT];                // 障碍物
+	
+	map<EventKeyboard::KeyCode, bool> keys; // 按键状态
+	vector<ControlType> ectTypes;           // 输入缓存
+	
+	float mGlobalPercent;      // 全局的物品掉落概率
 	vector<int> mItemsPercent; // 不同道具的掉落概率
 	
 	struct BornPoint {
@@ -31,6 +33,8 @@ class PlayScene:public BaseScene,public Scene
 		int gridy;
 	};
 	vector<BornPoint> mBornPoints;
+	
+	GameOverMenu* mGameOverMenu;
 public:
 	PlayScene()
 		:mGroundLayer(nullptr)
@@ -41,7 +45,7 @@ public:
 		, mGlobalPercent(0.0f)
 	{
 		mGroundLayer = Layer::create();
-		mGroundLayer->setPosition(Point(20, 40)); // 定位
+		mGroundLayer->setPosition(Point(20, 40));
 		mSceneLayer->addChild(mGroundLayer);
 
 		mObjectLayer = Layer::create();
@@ -51,61 +55,38 @@ public:
 		mUILayer = Layer::create();
 		mSceneLayer->addChild(mUILayer);
 
+		mGameOverMenu = new GameOverMenu();
+		mGameOverMenu->autorelease();
+		mSceneLayer->addChild(mGameOverMenu);
+		mGameOverMenu->setPosition(designResolutionSize.width / 2, designResolutionSize.height / 2);
+
 		memset(mMapBarrier, false, sizeof(mMapBarrier));
 	}
-
-	virtual void onEnterScene();
-	virtual void onExitScene();
-	virtual void onUpdate(float dt);
 public:
-	Player* getPlayer() { return &mPlayer; }
-	float getGlobalPercent() { return mGlobalPercent; }
-	vector<int>& getItemsPercent() { return mItemsPercent; }
-	void setCurrentSceneFile(const char* szFile);// 设置当前场景的文件
-	void loadScene();
-
-	// 设置障碍物
-	void setBarrier(int gridx, int gridy, bool bBarrier)
-	{
-		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy < GRID_HEIGHT)
-			mMapBarrier[gridx][gridy] = bBarrier;
-	}
-
-	bool getBarrier(int gridx, int gridy, bool isIgnoreStatic = false);
-public:
-	// 创建对象
-	GameObject* createObject(GameObjectType objType);
-	// 销毁对象
-	void destroy(GameObject* obj);
-	void addObj(GameObject *obj, int gridX, int gridY)
-	{
-		if (gridX >= 0 && gridX < GRID_WIDTH&&gridY >= 0 && gridY < GRID_HEIGHT){
-			mMapObject[gridX][gridY].push_back(obj);
-			mObjectLayer->addChild(obj->getSprite());
-		}
-	}
-	// 根据坐标返回该位置上的对象数组
-	vector<GameObject*>& getObject(int gridx, int gridy)
-	{
-		static vector<GameObject*> vec;
-		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy < GRID_HEIGHT)
-			return mMapObject[gridx][gridy];
-		return vec;
-	}
+	virtual void onEnterScene();    // 进入场景
+	virtual void onExitScene();     // 退出场景
+	virtual void onUpdate(float dt);// 场景更新
 	virtual void handleInput(ControlType ectType, PressState epState)
 	{
 		mPlayer.handleInput(ectType, epState);
 	}
+public:/* 场景 */
+	void setCurrentSceneFile(const char* szFile) { mCurrentFile = szFile; } // 设置当前场景的文件
+	void loadScene();                                                       // 加载场景
 private:
-	Sprite* createGroundTile(const char* ani,size_t gx,size_t gy);
-private:
-	void onKeyPressedss(EventKeyboard::KeyCode keyCode, Event* ev)
-	{
-		log("key %d pressed", keyCode);
-	}
-	void onKeyReleasedss(EventKeyboard::KeyCode keyCode, Event* ev)
-	{
-		log("key released");
-	}
+	Sprite* createGroundTile(const char* ani,size_t gx,size_t gy);          // 创建地砖
+public:/* 对象 */
+	GameObject* createObject(GameObjectType objType);    // 创建对象
+	void addObj(GameObject *obj, int gridX, int gridY);  // 添加对象
+	void destroy(GameObject* obj);                       // 销毁对象
+	vector<GameObject*>& getObject(int gridx, int gridy);// 返回坐标上的对象数组
+public:/* 角色 */
+	Player* getPlayer() { return &mPlayer; }
+public:/* 道具 */
+	float getGlobalPercent() { return mGlobalPercent; }
+	vector<int>& getItemsPercent() { return mItemsPercent; }
+public:/* 障碍物 */
+	void setBarrier(int gridx, int gridy, bool bBarrier); // 设置障碍物
+	bool getBarrier(int gridx, int gridy, bool isIgnoreStatic = false);
 };
 #endif // !_PLAY_SCENE_H_

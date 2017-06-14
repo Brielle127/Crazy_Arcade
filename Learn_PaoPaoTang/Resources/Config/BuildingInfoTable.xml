@@ -1,5 +1,5 @@
 <config>
-	<info name="oasis" barrierX = "4" barrierY = "2" destroy="0">
+	<info name="oasis" barrierX = "4" barrierY = "1" destroy="0">
 		<part name="part1" group="buildings" ani="SandOasis" offsetX="0" offsetY="71"/>
 		<part name="part2" group="buildings" ani="SandOasisAni" offsetX="0" offsetY="0"/>
 	</info>

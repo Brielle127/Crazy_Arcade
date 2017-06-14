@@ -37,6 +37,7 @@ enum PressState
 enum SceneSwitchEvent
 {
 	SSE_Play,
+	SSE_Replay,
 	SSE_Exit,
 	SSE_Back2Menu
 };
@@ -102,39 +103,13 @@ enum ItemType
 	IT_NUM
 };
 
+/*玩家属性*/
 enum RolePropValue
-{   // 泡泡数量
-	//RPV_MIN_POPO_NUM=3,   
-	PRV_NORMAL_POPO_NUM=3,
-	//RPV_MAX_POPO_NUM=10,
-
-	//RPV_MIN_POPO_STR=3,
-	RPV_NORMAL_POPO_STR=3,
-	//RPV_MAX_POPO_STR=10,
-
-	//RPV_MIN_SPEED=50,
-	RPV_NORMAL_SPEED=100,
-	//RPV_MAX_SPEED=200,
+{   
+	RPV_NORMAL_POPO_NUM = 3,
+	RPV_NORMAL_POPO_STR = 3,
+	RPV_NORMAL_SPEED = 100,
+	RPV_DEAD_TIME = 5, // 玩家死亡时间  
 };
-//// 道具种类
-//enum ItemType 
-//{
-//	IT_POPO,			 // 水泡：可以增加炸弹数量
-//	IT_STRENGTH_WATER,   // 力量水：增加炸弹威力
-//	IT_ROLLER_SKATES,    // 旱冰鞋：角色的移动速度加快
-//	IT_SPORTS_SHOE,       // 运动鞋：可以踢炸弹
-//	IT_RED_EVIL,         // 红魔：使人物达到最快的速度，并且可以踢走炸弹
-//	IT_RIDE,             // 坐骑
-//	EI_NUM
-//};
 
-//// 道具影响的玩家属性
-//enum ItemPropType
-//{
-//	IPT_POPO_NUM,//泡泡数量
-//	IPT_POPO_STR,
-//	IPT_PLAYER_SPEED,
-//	IPT_KICK_POPO, // 踢炸弹
-//	IPT_NUM
-//};
 #endif 

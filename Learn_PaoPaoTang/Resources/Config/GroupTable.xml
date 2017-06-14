@@ -65,6 +65,7 @@
   <!--大泡泡-->
   <group name="BigPopo">
     <sub file= "pic/BigPopo.png" tileWidth = "9" tileHeight="1" width="648" height="72">
+      <ani name="surrounded_begin" begin="0" end="2" fps="6"/>
       <ani name="surrounded" begin ="3" end="3" fps="4"/>
       <ani name="ani2" begin ="4" end="8" fps="4"/>
     </sub>

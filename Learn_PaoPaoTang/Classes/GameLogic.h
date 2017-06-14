@@ -3,8 +3,6 @@
 
 #include "cocos2d.h"
 #include "BaseDef.h"
-#include "BeginScene.h"
-#include "PlayScene.h"
 
 USING_NS_CC;
 

@@ -11,15 +11,16 @@ class Bomb :public GameObject
 	int mLength;  // 威力
 	int *mBombPtr; //持有Player泡泡数目
 	float mCurrentTime; // 当前读秒时间
+	bool mDidAttack;
 	BombState mState;
 public:
-
 	Bomb(PlayScene& rScene, int idleTime = 3, int len = 3)
 		:GameObject(rScene, GOT_Bomb)
 		, mIdleTime(idleTime)
 		, mLength(len)
 		, mState(BS_IDLE)
 		, mCurrentTime(0.0f)
+		, mDidAttack(false)
 	{
 		mRenderObj.addPart("p0", Point::ZERO);
 		mRenderObj.addPart("p1", Point::ZERO);
@@ -30,38 +31,23 @@ public:
 		mRenderObj.setAnchorPoint(Point(mRenderObj.getSize()->size.width / 2, 10));
 	}
 
-public:
-	void setStrLen(int len)
-	{
-		mLength = len;
-	}
-
-	void setRelatedPtr(int *ptr)
-	{
-		mBombPtr = ptr;
-	}
-	virtual void load(const char* szName)
-	{
-
-	}
-
+public:/* 重写函数 */
+	virtual void load(const char* szName) {}
 	virtual void setGrid(int gridx, int gridy)
 	{
 		GameObject::setGrid(gridx, gridy);
 		mScene.setBarrier(gridx, gridy, true);
 		setPosition(Point(gridx*GRID_SIZE + GRID_SIZE / 2, gridy*GRID_SIZE + GRID_SIZE / 2));
 	}
-	// 取得泡泡的深度
 	virtual float getDepth()
 	{
 		if (mState == BS_EXPLODE) 
 		{
-			return -0xffff;    // 爆炸总是发生在玩家下方
+			return -0xffff;                           // 爆炸总是发生在玩家下方
 		}
-	   return -mRenderObj.getPosition().y-GRID_SIZE/4;// 未爆炸状态
+	   return -mRenderObj.getPosition().y-GRID_SIZE/4;// 未爆炸时深度与普通对象一致
 
 	}
-
 	virtual void update(float dt)
 	{
 		if (mNeedDestroy)
@@ -96,7 +82,13 @@ public:
 	}
 	virtual void beAttacked() 
 	{ 
-		attack();
+		if (!mDidAttack)
+			attack();
+	}
+public:/* 接口 */
+	void setStrLen(int len)
+	{
+		mLength = len;
 	}
 	void beKicked(int dirx,int diry) // 踢炸弹
 	{
@@ -119,6 +111,10 @@ public:
 			return;
 		mScene.setBarrier(mGridX, mGridY, false);  // 清除当前位置的炸弹
 		setGrid(newPx, newPy);
+	}	
+	void setRelatedPtr(int *ptr)
+	{
+		mBombPtr = ptr;
 	}
 private:
 	void explosion();// 爆炸效果

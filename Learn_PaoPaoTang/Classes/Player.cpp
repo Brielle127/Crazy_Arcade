@@ -8,6 +8,7 @@ Player::Player(PlayScene & rScene)
 	,mRideInfo(nullptr)
 	,mRoleInfo(nullptr)
 	,mCurrentUsedBombNum(0)
+	,mSurroundedTime(0)
 {
 	memset(&mAttri, 0, sizeof(BaseAttri));
 	memset(&mAttriEx, 0, sizeof(BaseAttri));
@@ -26,13 +27,22 @@ Player::Player(PlayScene & rScene)
 	mTransTable[PI_STOP][PLS_MOVE] = PLS_STAND;
 
 	// ..
-	mTransTable[PI_KILL][PLS_SURROUNDED] = PLS_SURROUNDED;
+	mTransTable[PI_KILL][PLS_SURROUNDED] = PLS_DEAD;
 
 	// 初始化默认方法
 	states[PLS_STAND].init(&Player::standStateEnter, &Player::defaultExit, &Player::defaultUpdate, &Player::moveAndStandOrderHandler);
 	states[PLS_MOVE].init(&Player::moveStateEnter, &Player::defaultExit, &Player::moveStateUpdate, &Player::moveAndStandOrderHandler);
-	states[PLS_SURROUNDED].init(&Player::surroundedStateEnter, &Player::surroundedStateExit, &Player::defaultUpdate, &Player::defaultOrderHandler);
-	states[PLS_DEAD].init(&Player::defaultEnter, &Player::defaultExit, &Player::defaultUpdate, &Player::defaultOrderHandler);
+	states[PLS_SURROUNDED].init(&Player::surroundedStateEnter, &Player::surroundedStateExit, &Player::surroundedStateUpdate, &Player::defaultOrderHandler);
+	states[PLS_DEAD].init(&Player::deadStateEnter, &Player::defaultExit, &Player::defaultUpdate, &Player::defaultOrderHandler);
+}
+
+inline void Player::update(float dt)
+{
+	for (size_t i = 0; i < mBuffList.size(); ++i)
+		mBuffList[i]->update(0);
+
+	(this->*states[mState].update)(dt); // 转接给不同状态的update方法
+	GameObject::update(dt);
 }
 
 void Player::beAttacked()
@@ -47,7 +57,7 @@ void Player::beAttacked()
 	}
 	else {
 		PlayerLogicState s = mTransTable[PI_KILL][mState]; // 请求攻击
-		if (s != PLS_NONE && mState != s)
+		if (s != PLS_NONE && s != PLS_DEAD) // 包围状态下再次爆炸不会立即死亡
 			changeState(s);
 	}
 }
@@ -82,7 +92,24 @@ void Player::handleInput(ControlType ectType, PressState epState)
 	}
 }
 
-void Player::handleDown(ControlType ectType) // 处理键盘按下事件
+inline void Player::load(const char * szName)
+{
+	reset();
+
+	int id = atoi(szName);
+	mRoleInfo = RoleInfoMgr::getRoleInfo(id);
+	mAttri.mMaxBombNum = mRoleInfo->original_popo_num;
+	mAttri.mSpeed = mRoleInfo->original_speed;
+	mAttri.mBombStrength = mRoleInfo->original_str;
+	mCurrentUsedBombNum = 0;
+	mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "stand_down");
+	mRenderObj.modifyPartOffset(PART_BODY, Point(-mRenderObj.getSize()->size.width / 2, 0));
+
+	/*mRenderObj.setAni(PART_RIDE, "FastTurtle", "stand_up");
+	mRenderObj.modifyPartOffset(PART_RIDE, Point(-mRenderObj.getSize()->size.width / 2, 0));*/
+}
+
+void Player::handleDown(ControlType ectType)
 {
 	switch (ectType)
 	{
@@ -135,7 +162,6 @@ void Player::handleUp(ControlType ectType)
 	}
 }
 
-// 切换状态
 void Player::changeState(PlayerLogicState nextState)
 {
 	// 退出先前状态
@@ -147,7 +173,6 @@ void Player::changeState(PlayerLogicState nextState)
 	(this->*rNext.enter)();
 }
 
-// 切换动画
 void Player::standStateEnter()
 {
 	auto pAniName = getCurrentAni(mDirection);
@@ -293,17 +318,43 @@ void Player::moveStateUpdate(float dt)
 	mRenderObj.setPosition(Point(nextPosX, nextPosY));
 }
 
-void Player::surroundedStateEnter() // 进入被泡泡包围状态
+void Player::surroundedStateEnter() 
 {
 	mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "surrounded");
 	mRenderObj.addPart(PART_EFX, Point(-36, -5));
+	mRenderObj.setAni(PART_EFX, "BigPopo", "surrounded_begin");
 	mRenderObj.setAlpha(PART_EFX, 0.5);
-	mRenderObj.setAni(PART_EFX, "BigPopo", "surrounded");
 }
 
 void Player::surroundedStateExit()
 {
-	mRenderObj.removePart(PART_EFX); // 清除特效动画
+	//mRenderObj.removePart(PART_EFX); // 清除特效动画
+}
+
+void Player::surroundedStateUpdate(float dt)
+{ 
+	static bool srd = false;
+	if (mSurroundedTime == 0)
+		srd = false;
+	mSurroundedTime += dt;
+	
+	if (mSurroundedTime > 0.5 && !srd)
+	{
+		mRenderObj.setAni(PART_EFX, "BigPopo", "surrounded");
+		srd = true;
+	}
+	if (mSurroundedTime > RPV_DEAD_TIME)
+	{
+		PlayerLogicState s = mTransTable[PI_KILL][mState]; // 请求攻击
+		if (s != PLS_NONE) 
+			changeState(s);
+	}
+}
+
+void Player::deadStateEnter()
+{
+	mRenderObj.setAni(PART_EFX, "BigPopo", "ani2",RenderPart::PF_COMPLETE_CLEAR);
+	mRenderObj.setAni(PART_BODY, mRoleInfo->group.c_str(), "die", RenderPart::PF_COMPLETE_STOP);
 }
 
 void Player::moveAndStandOrderHandler(OrderType type, void * data)
@@ -386,15 +437,18 @@ const char * Player::getRideAni(PlayerDirection dir)
 	}
 }
 
-void Player::clearAllThings()
+void Player::reset()
 {
-	if (mIsRiding)
-		mRenderObj.removePart(PART_RIDE);
-	if (mState == PLS_SURROUNDED)
-		mRenderObj.removePart(PART_EFX);
+	mRenderObj.removePart(PART_RIDE);
+	mRenderObj.removePart(PART_EFX);
+	mState = PLS_STAND;
 	mIsRiding = false;
+	mSurroundedTime = 0;
+	mCurrentUsedBombNum = 0;
+	mRideInfo = nullptr;
+	mRoleInfo = nullptr;
 	memset(&mAttri, 0, sizeof(mAttri));
-	memset(&mAttriEx, 0, sizeof(mAttriEx)); // 清空附加属性
+	memset(&mAttriEx, 0, sizeof(mAttriEx)); 
 	for (auto it = mBuffList.begin(); it != mBuffList.end(); ++it)
 		((AtrributeBuff*)(*it))->remove();
 	mBuffList.clear();

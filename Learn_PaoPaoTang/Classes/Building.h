@@ -8,14 +8,16 @@
 
 class Building :public GameObject
 {
-private:// 静态属性
-	int mBarrierGridCnt;  // 占用的阻挡格子数
-	bool mDestroyEnable;  // 是否可摧毁
+private:                   // 静态属性
+	int mBarrierGridCntX;  // 占用的网格宽
+	int mBarrierGridCntY;  // 占用的网格高
+	bool mDestroyEnable;   // 是否可摧毁
 public:
 	Building(PlayScene& rScene) 
 		:GameObject(rScene, GOT_Building)
-		,mBarrierGridCnt(0)
-		,mDestroyEnable(false)
+		, mBarrierGridCntX(0)
+		, mBarrierGridCntY(0)
+		, mDestroyEnable(false)
 	{
 	
 	}
@@ -32,17 +34,24 @@ public:
 
 		auto rect = mRenderObj.getSize();
 		if (rect) {
-			int bw = info.barrierX*GRID_SIZE; // 阻挡的宽
+			int bw = info.barrierX*GRID_SIZE;         // 阻挡的宽
 			int fw = mRenderObj.getSize()->size.width;// 对象的宽
-			int anx = (fw - bw) / 2; // 锚点横坐标
+			int anx = (fw - bw) / 2;                  // 锚点横坐标
 			mRenderObj.setAnchorPoint(Point(anx, 0));
 		}
 	
-		mBarrierGridCnt = info.barrierX;
+		mBarrierGridCntX = info.barrierX;
+		mBarrierGridCntY = info.barrierY;
 		mDestroyEnable = info.isDestroyEnable;
 	}
 	
-	// 用于排序
+	void init()
+	{
+		for (int i = 0; i < mBarrierGridCntX; ++i)
+			for (int j = 0; j < mBarrierGridCntY; ++j)
+				mScene.setBarrier(mGridX + i, mGridY + j, true);
+	}
+
 	virtual float getDepth()
 	{
 		return -(mRenderObj.getPosition().y + GRID_SIZE-GRID_SIZE/6); // 向上漂移一格
@@ -54,14 +63,7 @@ public:
 
 		GameObject::update(dt);
 	}
-
-	// 初始化
-	void init()
-	{
-		for (int i = 0; i < mBarrierGridCnt; ++i)
-			mScene.setBarrier(mGridX + i, mGridY, true);
-	}
-
+	
 	virtual void beAttacked()
 	{
 		if (mDestroyEnable) {
@@ -90,7 +92,7 @@ public:
 
 	void destroy()
 	{
-		for (int i = 0; i < mBarrierGridCnt; ++i)
+		for (int i = 0; i < mBarrierGridCntX; ++i)
 			mScene.setBarrier(mGridX + i, mGridY, false);
 	}
 };

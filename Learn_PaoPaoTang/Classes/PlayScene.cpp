@@ -1,10 +1,10 @@
 #include "PlayScene.h"
-#include "MenuSelectHandler.h"
 #include "Player.h"  
 #include "Building.h"
 #include "Bomb.h"
 #include "Item.h"
 #include "AI.h"
+#include "MenuSelectHandler.h"
 USING_NS_CC;
 
 ControlType getControllType(EventKeyboard::KeyCode keyCode)
@@ -46,6 +46,8 @@ bool isValidCT(ControlType ectType)
 void PlayScene::onEnterScene()
 { 
 	/*处理缩放*/
+
+	mGameOverMenu->setVisible(false);
 
 	Sprite* pBG = Sprite::create("pic/BG.png");	 // 游戏场景背景
 	pBG->setAnchorPoint(Point::ZERO);
@@ -186,14 +188,12 @@ void PlayScene::onUpdate(float dt)
 	
 	mObjectLayer->reorderChild(mPlayer2.getSprite(), mPlayer2.getDepth());
 	mPlayer2.update(dt);
+
+	if (mPlayer.isDead()) {
+		mGameOverMenu->setVisible(true);
+	}
 }
 
-void PlayScene::setCurrentSceneFile(const char * szFile)
-{
-	mCurrentFile = szFile;
-}
-
-// 加载场景
 void PlayScene::loadScene()
 {
 	TiXmlDocument doc;
@@ -290,6 +290,12 @@ void PlayScene::loadScene()
 	;
 }
 
+inline void PlayScene::setBarrier(int gridx, int gridy, bool bBarrier)
+{
+	if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy < GRID_HEIGHT)
+		mMapBarrier[gridx][gridy] = bBarrier;
+}
+
 bool PlayScene::getBarrier(int gridx, int gridy, bool isIgnoreStatic)
 {
 	if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy < GRID_HEIGHT) {
@@ -308,7 +314,7 @@ bool PlayScene::getBarrier(int gridx, int gridy, bool isIgnoreStatic)
 	return true; // 地图以外设为阻挡
 }
 
-GameObject * PlayScene::createObject(GameObjectType objType)
+inline GameObject * PlayScene::createObject(GameObjectType objType)
 {
 	GameObject* obj = nullptr;
 	switch (objType)
@@ -334,6 +340,14 @@ GameObject * PlayScene::createObject(GameObjectType objType)
 	return obj;
 }
 
+inline void PlayScene::addObj(GameObject * obj, int gridX, int gridY)
+{
+	if (gridX >= 0 && gridX < GRID_WIDTH&&gridY >= 0 && gridY < GRID_HEIGHT) {
+		mMapObject[gridX][gridY].push_back(obj);
+		mObjectLayer->addChild(obj->getSprite());
+	}
+}
+
 void PlayScene::destroy(GameObject* obj)
 {
 	for (int w = 0; w < GRID_WIDTH; ++w) {
@@ -349,6 +363,14 @@ void PlayScene::destroy(GameObject* obj)
 		}
 	}
 
+}
+
+inline vector<GameObject*>& PlayScene::getObject(int gridx, int gridy)
+{
+	static vector<GameObject*> vec;
+	if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy < GRID_HEIGHT)
+		return mMapObject[gridx][gridy];
+	return vec;
 }
 
 Sprite * PlayScene::createGroundTile(const char * ani, size_t gx, size_t gy)
