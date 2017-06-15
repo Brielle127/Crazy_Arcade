@@ -1,8 +1,17 @@
+///////////////////////////////////////////////////////////////////////////////
+/// \file BaseScene.h
+/// \brief  µœ÷BaseScene¿‡
+/// 
+/// 
+///
+/// \author ¿∂≥˛µœ
+///////////////////////////////////////////////////////////////////////////////
+
 #ifndef _BASE_SCENE_H_
 #define _BASE_SCENE_H_
 
 #include "cocos2d.h"
-#include "StringTableMgr.h"
+#include "StringTableConfig.h"
 #include "BaseDef.h"
 USING_NS_CC;
 

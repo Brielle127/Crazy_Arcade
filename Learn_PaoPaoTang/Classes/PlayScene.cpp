@@ -70,6 +70,7 @@ void PlayScene::onEnterScene()
 	loadScene();
 	
 	// ×¢²á¼üÅÌ¼àÌý
+	//_eventDispatcher->removeEventListenersForType(EventListener::Type::KEYBOARD);
 	auto listener = EventListenerKeyboard::create();
 	listener->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event) {
 			

@@ -1,18 +1,14 @@
 #include"BeginScene.h"
 #include"MenuSelectHandler.h"
-
-using namespace std;
+#include"GameConfig.h"
+#include "SoundMgr.h"
+#include"cocos2d.h"
 USING_NS_CC;
-
-BeginScene::BeginScene()
-{
-
-}
-
 
 void BeginScene::onEnterScene()
 {
-	Sprite* pBG = Sprite::create("pic/BeginScene.png");
+	auto pPic = GameConfig::getInfo("begin_scene_bg_pic");
+	Sprite* pBG = Sprite::create(pPic);
 	pBG->setAnchorPoint(Point::ZERO);
 	mSceneLayer->addChild(pBG);
 
@@ -29,6 +25,7 @@ void BeginScene::onEnterScene()
 	menu->setPosition(Vec2::ZERO);
 	mSceneLayer->addChild(menu,1);
 	
+	SoundMgr::playBackgroundMusic("begin_scene_bg_music",true);
 }
 
 void BeginScene::onExitScene()

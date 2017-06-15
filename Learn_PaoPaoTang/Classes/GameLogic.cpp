@@ -74,9 +74,9 @@ void GameLogic::handleEvent(int eventType, void * data)
 	case SSE_Play:
 	{
 		mCurrentScene->onExitScene(); // 退出当前场景
-		mSceneRoot->removeChild(mCurrentScene->getSceneLayer(), false);
+		mSceneRoot->removeChild(mCurrentScene->getSceneLayer(), true);
 		
-		mCurrentScene = mPlayScene;  //当前场景转化为下一场景
+		mCurrentScene = new (PlayScene)();
 		mSceneRoot->addChild(mCurrentScene->getSceneLayer());
 		mCurrentScene->onEnterScene();
 		return;
@@ -86,19 +86,28 @@ void GameLogic::handleEvent(int eventType, void * data)
 			mCurrentScene->onExitScene();// 释放当前场景
 			mCurrentScene = nullptr;
 			Director::getInstance()->end();
-			
-			/*delete mBeginScene;
+			if (mBeginScene)
+				delete mBeginScene;
 			mBeginScene = nullptr;
-			delete mPlayScene;
-			mPlayScene = nullptr;*/
+			if(mPlayScene)
+				delete mPlayScene;;
+			mPlayScene = nullptr;
 
 			return;// 结束处理
 		}
-	
+	case SSE_Replay:
+	{
+		mCurrentScene->onExitScene();
+		delete mCurrentScene;
+		mCurrentScene = new PlayScene();
+		mSceneRoot->addChild(mCurrentScene->getSceneLayer());
+		mCurrentScene->onEnterScene();
+		return;
+	}
 	case SSE_Back2Menu: /* 返回开始菜单 */
 		{
 			mCurrentScene->onExitScene(); // 退出当前场景
-			mSceneRoot->removeChild(mCurrentScene->getSceneLayer(), false);
+			mSceneRoot->removeChild(mCurrentScene->getSceneLayer(), true);
 			
 			mCurrentScene = mBeginScene;  //当前场景转化为开始场景
 			mSceneRoot->addChild(mCurrentScene->getSceneLayer());

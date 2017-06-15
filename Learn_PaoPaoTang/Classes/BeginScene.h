@@ -1,15 +1,23 @@
+///////////////////////////////////////////////////////////////////////////////
+/// \file BeginScene.h
+/// \brief  µœ÷BeginScene¿‡
+/// 
+/// 
+///
+/// \author ¿∂≥˛µœ 
+///////////////////////////////////////////////////////////////////////////////
+
 #ifndef BEGIN_SCENE_H
 #define BEGIN_SCENE_H
-
-#include"cocos2d.h"
 #include"BaseScene.h"
-
-USING_NS_CC;
 
 class BeginScene :public BaseScene
 {
 public:
-	BeginScene();
+	BeginScene()
+	{
+
+	}
 
 	virtual void onEnterScene();
 	virtual void onExitScene();

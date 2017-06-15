@@ -1,3 +1,12 @@
+///////////////////////////////////////////////////////////////////////////////
+/// \file Player.h
+/// \brief 实现Player类
+/// 
+/// 
+///
+/// \author 蓝楚迪 
+///////////////////////////////////////////////////////////////////////////////
+
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
@@ -18,7 +27,9 @@ class Player;
 typedef void(Player::*Method)();                        // 不同状态的enter、exit方法
 typedef void(Player::*UpdateMethod)(float);             // 不同状态的更新方法
 typedef void(Player::*OrderMethod)(OrderType, void*);   // 逻辑输入
-struct StateMethod  // 不同状态状态的实现方法
+// 不同状态的方法
+// 本类的功能是为状态机提供对应的初始化方法
+struct StateMethod  
 {
 	Method enter;
 	Method exit;
@@ -32,6 +43,8 @@ struct StateMethod  // 不同状态状态的实现方法
 		orderHandler = oh;
 	}
 };
+
+
 
 union TransParam
 {
@@ -50,8 +63,8 @@ struct BaseAttri        // 玩家基本属性
 
 class Player :public GameObject
 {
-	BaseAttri mAttri;           // 自身属性
-	BaseAttri mAttriEx;         // 附加属性 
+	BaseAttri mAttri;           // 玩家自身属性
+	BaseAttri mAttriEx;         // 道具附加属性 
 	
 	TransParam mTransParam;     // 状态转换参数
 	PlayerLogicState mTransTable[PI_NUM][PLS_NUM]; // 状态转换表:请求动作+当前状态->下一状态
@@ -219,7 +232,7 @@ private:
 	const char* getCurrentAni(PlayerDirection dir);
 	const char* getRideAni(PlayerDirection dir);
 	
-	void reset();// 清除状态
+	void reset();// 清除之前的状态
 };
 
 #endif
