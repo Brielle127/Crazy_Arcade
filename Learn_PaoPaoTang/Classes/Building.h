@@ -1,3 +1,20 @@
+//////////////////////////////
+/// \file Building.h
+///  \brief Head file for class Building
+/// å®ç°é™æ€å¯¹è±¡çš„é…ç½®
+///  åŠ è½½ä»¥åŠç®¡ç†
+///
+///
+///
+///\author è“æ¥šè¿ª
+/////////////////////////////
+
+
+
+
+
+
+
 #ifndef _BUILDING_H_
 #define _BUILDING_H_
 
@@ -7,8 +24,8 @@
 
 class Building :public GameObject
 {
-private:// ¾²Ì¬ÊôĞÔ
-	int mBarrierCnt;  // Õ¼ÓÃµÄ×èµ²¸ñ×ÓÊı
+private:///é™æ€å±æ€§
+	int mBarrierCnt;  ///< å ç”¨çš„é˜»æŒ¡æ ¼å­æ•°
 public:
 	Building(PlayScene& rScene) :GameObject(rScene, GOT_Building)
 	{
@@ -27,21 +44,21 @@ public:
 
 		auto rect = mRenderObj.getSize();
 		if (rect) {
-			int bw = info.barrierX*GRID_SIZE; // ×èµ²µÄ¿í
-			int fw = mRenderObj.getSize()->size.width;// ¶ÔÏóµÄ¿í
-			int anx = (bw - fw) / 2; // Ãªµãºá×ø±ê
+			int bw = info.barrierX*GRID_SIZE; ///<é˜»æŒ¡çš„å®½
+			int fw = mRenderObj.getSize()->size.width;///< å¯¹è±¡çš„å®½
+			int anx = (bw - fw) / 2; ///< é”šç‚¹æ¨ªåæ ‡
 			mRenderObj.setAnchorPoint(Point(anx, 0));
 		}
 	}
-	// ÓÃÓÚÅÅĞò
+	/// ç”¨äºæ’åº
 	virtual float getDepth()
 	{
-		return -(mRenderObj.getPosition().y + GRID_SIZE); // ÏòÉÏÆ¯ÒÆÒ»¸ñ
+		return -(mRenderObj.getPosition().y + GRID_SIZE); /// å‘ä¸Šæ¼‚ç§»ä¸€æ ¼
 	}
 
 	virtual void update(float dt)
 	{
-		//  ¡£¡£¡£
+		/// ã€‚ã€‚ã€‚
 
 		GameObject::update(dt);
 	}
