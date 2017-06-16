@@ -1,3 +1,16 @@
+//////////////////////////////
+/// \file GameLogic.h
+///  \brief Head file for class Gamelogic
+/// å¯¹è±¡çŠ¶æ€æ§åˆ¶
+///  åˆ‡æ¢åœºæ™¯
+///
+///
+///
+///\author æ˜“æ˜¥å«
+/////////////////////////////
+
+
+
 #ifndef  _APP_DELEGATE_H_
 #define  _APP_DELEGATE_H_
 
@@ -20,14 +33,14 @@ public:
 
     virtual void applicationWillEnterForeground();
 	
-	// ´¦ÀíÊäÈë
+	///
 	void handleInput(ControlType ectType, PressState epState);
 
 	void handleEvent(int eventType, void *data=nullptr);
 
 	static GameLogic& sharedGameLogic();
 
-	// Ö÷Ñ­»·
+	///
 	virtual void update(float dt);
 private:
 	Scene* mSceneRoot;
