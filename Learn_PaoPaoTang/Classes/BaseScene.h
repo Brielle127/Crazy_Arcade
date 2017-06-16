@@ -1,3 +1,10 @@
+//////////////////////////////////////////
+///\file BaseScene.h
+///\brief Head file for BaseScene
+///
+///
+///\author ËìùÊ•öËø™
+//////////////////////////////////////
 #ifndef _BASE_SCENE_H_
 #define _BASE_SCENE_H_
 
@@ -6,13 +13,14 @@
 #include "BaseDef.h"
 USING_NS_CC;
 
+
 class BaseScene
 {
 public:
 	BaseScene()
 	{
 		mSceneLayer = Layer::create();
-		mSceneLayer->retain(); // ‘ˆº”“˝”√º∆ ˝
+		mSceneLayer->retain(); ///
 	}
 
 	virtual ~BaseScene()
@@ -38,7 +46,7 @@ public:
 	{
 
 	}
-	// UI π”√
+	///
 	virtual void onHandleEvent(int eventType, void* data)
 	{
 
