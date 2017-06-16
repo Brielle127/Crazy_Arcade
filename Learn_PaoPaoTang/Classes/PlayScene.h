@@ -1,3 +1,13 @@
+//////////////////////////////
+/// \file PlayScene
+///  \brief Head file for class PlayScene
+/// 
+///  åˆ›å»ºæ¸¸æˆç•Œé¢
+///
+///
+///
+///\author è“æ¥šè¿ª
+/////////////////////////////
 #pragma once
 #ifndef _PLAY_SCENE_H_
 #define _PLAY_SCENE_H_
@@ -12,13 +22,13 @@ using namespace std;
 
 class PlayScene:public BaseScene
 {
-	Layer* mGroundLayer; // µØ×©
-	Layer* mObjectLayer; // Îï¼ş
-	Layer* mUILayer;     // UI
-	string mCurrentFile; // µ±Ç°³¡¾°µÄÎÄ¼ş
+	Layer* mGroundLayer; ///< åœ°ç –
+	Layer* mObjectLayer; ///< ç‰©ä»¶
+	Layer* mUILayer;     ///<UI
+	string mCurrentFile; ///< å½“å‰åœºæ™¯çš„æ–‡ä»¶
 	Player mPlayer;
-	vector<GameObject*> mMapObject[GRID_WIDTH][GRID_HEIGHT];  // ¾²Ì¬¶ÔÏó
-	bool mMapBarrier[GRID_WIDTH][GRID_HEIGHT]; // ×èµ²¸ñ×Ó
+	vector<GameObject*> mMapObject[GRID_WIDTH][GRID_HEIGHT];  ///< é™æ€å¯¹è±¡
+	bool mMapBarrier[GRID_WIDTH][GRID_HEIGHT]; ///< é˜»æŒ¡æ ¼å­
 public:
 	PlayScene()
 		:mGroundLayer(nullptr)
@@ -27,7 +37,7 @@ public:
 		,mPlayer(*this)
 	{
 		mGroundLayer = Layer::create();
-		mGroundLayer->setPosition(Point(20, 40)); // ¶¨Î»
+		mGroundLayer->setPosition(Point(20, 40)); ///<å®šä½
 		mSceneLayer->addChild(mGroundLayer);
 
 		mObjectLayer = Layer::create();
@@ -45,9 +55,9 @@ public:
 	virtual void onExitScene();
 	virtual void onUpdate(float dt);
 public:
-	void setCurrentSceneFile(const char* szFile);// ÉèÖÃµ±Ç°³¡¾°µÄÎÄ¼ş
+	void setCurrentSceneFile(const char* szFile);/// è®¾ç½®å½“å‰åœºæ™¯çš„æ–‡ä»¶
 	void loadScene();
-	// ÉèÖÃÕÏ°­Îï
+	/// è®¾ç½®éšœç¢ç‰©
 	void setBarrier(int gridx, int gridy, bool bBarrier)
 	{
 		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy << GRID_HEIGHT)
@@ -58,7 +68,7 @@ public:
 	{
 		if (gridx >= 0 && gridx < GRID_WIDTH&&gridy >= 0 && gridy << GRID_HEIGHT)
 			return mMapBarrier[gridx][gridy];
-		return true; // µØÍ¼ÒÔÍâÉèÎª×èµ²
+		return true; ///åœ°å›¾ä»¥å¤–è®¾ä¸ºé˜»æŒ¡
 	}
 public:
 	GameObject* createObject(GameObjectType objType);
