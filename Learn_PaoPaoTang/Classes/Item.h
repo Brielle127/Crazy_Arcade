@@ -1,6 +1,6 @@
 //////////////////////////////
 /// \file Item.h
-///  \brief source file for class Item
+///  \brief Head file for class Item
 /// 实现道具类
 ///  
 ///
