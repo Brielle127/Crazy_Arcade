@@ -1,6 +1,6 @@
 //////////////////////////////
 /// \file GameObject.h
-///  \brief source file for class GameObject
+///  \brief Head file for class GameObject
 /// 
 ///  
 ///
