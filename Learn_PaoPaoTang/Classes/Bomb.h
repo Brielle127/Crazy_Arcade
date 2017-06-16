@@ -1,3 +1,20 @@
+//////////////////////////////
+/// \file Bomb.h
+///  \brief Head file for class Bomb
+/// 实现泡泡类
+///  
+///
+///
+///
+///\author 蓝楚迪
+/////////////////////////////
+
+
+
+
+
+
+
 #ifndef _BOMB_H_
 #define _BOMB_H_
 
