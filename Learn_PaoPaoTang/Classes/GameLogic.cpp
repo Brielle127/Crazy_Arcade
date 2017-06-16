@@ -3,11 +3,11 @@
 /// \file GameLogic.cpp
 ///  \brief source file for class Gamelogic
 /// 对象状态控制
-///  对象逻辑关系
+///  切换场景
 ///
 ///
 ///
-///\author 蓝楚迪
+///\author 易春含
 /////////////////////////////
 
 
