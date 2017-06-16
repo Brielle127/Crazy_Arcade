@@ -1,3 +1,14 @@
+//////////////////////////////
+/// \file Item.h
+///  \brief source file for class Item
+/// 实现道具类
+///  
+///
+///
+///
+///\author 蓝楚迪
+/////////////////////////////
+
 #ifndef _ITEM_H_
 #define _ITEM_H_
 
