@@ -30,7 +30,7 @@ public:
 
 	virtual void update(float dt)
 	{
-		//  
+		/// 
 
 		GameObject::update(dt);
 	}
