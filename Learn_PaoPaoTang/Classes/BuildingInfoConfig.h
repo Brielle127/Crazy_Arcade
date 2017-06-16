@@ -1,3 +1,21 @@
+//////////////////////////////
+/// \file BuildingInfoConfig.h
+///  \brief Head file for BuildingInfoConfig
+/// å®ç°é™æ€å¯¹è±¡çš„é…ç½®
+///  åŠ è½½ä»¥åŠç®¡ç†
+///
+///
+///
+///\author è“æ¥šè¿ª
+/////////////////////////////
+
+
+
+
+
+
+
+
 #ifndef _BUILDING_INFO_CONFIG_H_
 #define _BUILDING_INFO_CONFIG_H_
 
@@ -11,7 +29,7 @@ using namespace std;
 
 #include "tinyxml.h"
 
-// ²¿¼şĞÅÏ¢
+/// éƒ¨ä»¶ä¿¡æ¯
 struct PartInfo
 {
 	string name;
@@ -19,20 +37,21 @@ struct PartInfo
 	string group;
 	Point offset;
 };
+
 struct BuildingInfo
 {
 	string name;
 	vector<PartInfo> partInfo;
-	int barrierX;// ºáÏò×èµ²
-	int barrierY;// ×İÏò×èµ²
+	int barrierX;///< æ¨ªå‘é˜»æŒ¡
+	int barrierY;///<çºµå‘é˜»æŒ¡
 };
 
 typedef map<string, BuildingInfo> TBuildingInfoMap; 
-// ¹ÜÀíÆ÷
+///\brief ç®¡ç†å™¨
 class BuildingIfoMgr
 {
 public:
-	// ¼ÓÔØº¯Êı
+	/// åŠ è½½å‡½æ•°
 	static void load(TBuildingInfoMap& t)
 	{
 		TiXmlDocument doc;
@@ -40,7 +59,7 @@ public:
 			auto root = doc.RootElement();
 			auto info = root->FirstChildElement();
 			while(info)
-			{//¶ÁÈ¡infoÊı¾İ
+			{///è¯»å–infoæ•°æ®
 				auto name = info->Attribute("name");
 				t[name] = BuildingInfo();
 				auto& rInfo = t[name];
@@ -51,7 +70,7 @@ public:
 				auto part = info->FirstChildElement();
 
 				while (part)
-				{// ¶ÁÈ¡partÊı¾İ
+				{///è¯»å–partæ•°æ®
 					rInfo.partInfo.push_back(PartInfo());
 					auto& rPart = rInfo.partInfo[rInfo.partInfo.size() - 1];
 					rPart.aniName = part->Attribute("ani");
