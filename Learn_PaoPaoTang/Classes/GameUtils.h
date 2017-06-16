@@ -1,3 +1,17 @@
+//////////////////////////////
+/// \file GameLogic.cpp
+///  \brief source file for class GameUtils.h
+/// 
+///  
+///
+///
+///
+///\author è“æ¥šè¿ª
+/////////////////////////////
+
+
+
+
 #ifndef _GAME_UTILS_H_
 #define _GAME_UTILS_H_
 
@@ -9,7 +23,7 @@ using namespace std;
 class GameUtils {
 public:
 	static void WStrToUTF8(std::string& dest, const wstring& src)
-	{// ¶à×Ö·û×ª»»ÎªUTF8
+	{///
 		dest.clear();
 
 		for (size_t i = 0; i < src.size(); i++) {
