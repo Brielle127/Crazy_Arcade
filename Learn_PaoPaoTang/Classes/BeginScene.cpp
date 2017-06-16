@@ -12,7 +12,7 @@ void BeginScene::onEnterScene()
 	pBG->setAnchorPoint(Point::ZERO);
 	mSceneLayer->addChild(pBG);
 
-	// �����˵�
+	///创建开始和结束标签
 	auto play_label = Label::createWithSystemFont(StringTableMgr::getString("play"), "Arial", 24);
 	auto play_labelItem = MenuItemLabel::create(play_label, CC_CALLBACK_1(MenuSelectHandler::onMenu_Play, MenuSelectHandler::sharedHandler()));
 	play_labelItem->setPosition(designResolutionSize.width / 2, designResolutionSize.height / 2 );
@@ -24,7 +24,7 @@ void BeginScene::onEnterScene()
 	Menu* menu = Menu::create(play_labelItem, exit_labelItem, NULL);
 	menu->setPosition(Vec2::ZERO);
 	mSceneLayer->addChild(menu,1);
-	
+	 ///设置音效
 	SoundMgr::playBackgroundMusic("begin_scene_bg_music",true);
 }
 
