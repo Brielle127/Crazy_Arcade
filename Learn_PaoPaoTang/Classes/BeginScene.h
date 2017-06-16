@@ -1,10 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// \file BeginScene.h
-/// \brief ÊµÏÖBeginSceneÀà
+/// \brief Head file for class BeginScene
 /// 
 /// 
 ///
-/// \author À¶³şµÏ 
+/// \author æ˜“æ˜¥å«
 ///////////////////////////////////////////////////////////////////////////////
 
 #ifndef BEGIN_SCENE_H
@@ -19,8 +19,8 @@ public:
 
 	}
 
-	virtual void onEnterScene();
-	virtual void onExitScene();
+	virtual void onEnterScene();  ///è¿›å…¥åœºæ™¯
+	virtual void onExitScene();    ///é€€å‡ºåœºæ™¯
 	
 };
 
