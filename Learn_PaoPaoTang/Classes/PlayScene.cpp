@@ -1,3 +1,15 @@
+//////////////////////////////
+/// \file PlayScene.cpp
+///  \brief source file for class PlayScene
+///åˆ›å»ºæ¸¸æˆç•Œé¢
+///  
+///
+///
+///
+///\author è“æ¥šè¿ª
+/////////////////////////////
+
+
 #include "PlayScene.h"
 #include "MenuSelectHandler.h"
 #include "Player.h"  
@@ -10,14 +22,14 @@ USING_NS_CC;
 
 void PlayScene::onEnterScene()
 {
-	/*´¦ÀíËõ·Å*/
+	///å¤„ç†ç¼©æ”¾
 
-	Sprite* pBG = Sprite::create("pic/BG.png");	 // ÓÎÏ·³¡¾°±³¾°
+	Sprite* pBG = Sprite::create("pic/BG.png");	 ///<æ¸¸æˆåœºæ™¯èƒŒæ™¯
 	pBG->setAnchorPoint(Point::ZERO);
 	pBG->setPosition(Point(-20, -40));
 	mGroundLayer->addChild(pBG, 0);
 
-	/*·µ»ØÖ÷²Ëµ¥°´Å¥*/
+	///è¿”å›ä¸»èœå•æŒ‰é’®
 	auto back_label = Label::createWithSystemFont(StringTableMgr::getString("main_menu"), "Arial", 24);
 	auto back_labelItem = MenuItemLabel::create(back_label, CC_CALLBACK_1(MenuSelectHandler::onMenu_Back2Menu, MenuSelectHandler::sharedHandler()));
 
@@ -28,7 +40,7 @@ void PlayScene::onEnterScene()
 	mUILayer->addChild(menu, 1);
 
 
-	//²âÊÔ´úÂë
+	//æµ‹è¯•ä»£ç 
 	//pRenderObj = new (RenderObj)();
 	//mObjectLayer->addChild(pRenderObj->sprite);
 
@@ -69,7 +81,7 @@ void PlayScene::onUpdate(float dt)
 			auto& rObjects = mMapObject[w][h];
 			for (int i = rObjects.size() - 1; i >= 0; --i) {
 				auto obj = rObjects[i];
-				// ÅÅĞò
+				// æ’åº
 				mObjectLayer->reorderChild(obj->getSprite(), obj->getDepth());
 				obj->update(dt);
 			}
@@ -89,10 +101,10 @@ void PlayScene::loadScene()
 {
 	TiXmlDocument doc;
 	if (doc.LoadFile(mCurrentFile.c_str())) {
-		map<size_t, bool> usedMap; // µØÍ¼Íø¸ñ±»Õ¼ÓÃÇé¿ö
+		map<size_t, bool> usedMap; // åœ°å›¾ç½‘æ ¼è¢«å ç”¨æƒ…å†µ
 		auto root = doc.RootElement();
 		auto grounds = root->FirstChildElement();
-		auto defaultAni = grounds->Attribute("defaultAni"); // Ä¬ÈÏ±³¾°
+		auto defaultAni = grounds->Attribute("defaultAni"); // é»˜è®¤èƒŒæ™¯
 		auto ground = grounds->FirstChildElement();
 		while (ground) {
 			auto ani = ground->Attribute("ani");
@@ -136,8 +148,8 @@ void PlayScene::loadScene()
 		mObjectLayer->addChild(obj->getSprite());
 	}
 	
-	{// object initialize
-	// ²âÊÔ´úÂë
+	{/// object initialize
+	///æµ‹è¯•ä»£ç 
 		auto obj = createObject(GOT_Building);
 		obj->setPosition(Point(0, 1));
 		(mMapObject[0][0]).push_back(obj);
