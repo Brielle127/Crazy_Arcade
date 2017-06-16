@@ -1,3 +1,15 @@
+//////////////////////////////
+/// \file MenuSelectHandler.h
+///  \brief source file for class MenuSelectHandler
+/// å®ç°èœå•é€‰æ‹©åŠŸèƒ½
+///  
+///
+///
+///
+///\author è“æ¥šè¿ª
+/////////////////////////////
+
+
 #ifndef _MENU_SELECT_HANDLER_H_
 #define _MENU_SELECT_HANDLER_H_
 
@@ -23,11 +35,11 @@ public:
 	/*
 	void beginScene_PlayItem(Ref* sender)
 	{
-		GameLogic::sharedGameLogic().handleEvent(SSE_Play);// ²âÊÔ´úÂë 
+		GameLogic::sharedGameLogic().handleEvent(SSE_Play);// Â²Ã¢ÃŠÃ”Â´ÃºÃ‚Ã« 
 	}
 	*/
 
-	/* ´¦Àí²Ëµ¥ÊÂ¼ş */
+	///
 	void onMenu_Play(Ref* pSeder)
 	{
 		GameLogic::sharedGameLogic().handleEvent(SSE_Play);
