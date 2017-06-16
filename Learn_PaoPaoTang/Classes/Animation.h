@@ -1,3 +1,21 @@
+//////////////////////////////
+/// \file Animation.h
+///  \brief Head file for Animation
+/// \detail 
+///
+///
+///
+///
+///\author è“æ¥šè¿ª
+/////////////////////////////
+
+
+
+
+
+
+
+
 #ifndef _ANIMATION_H_
 #define _ANIMATION_H_
 #include "cocos2d.h"
@@ -8,26 +26,31 @@ USING_NS_CC;
 #include <map>
 using namespace std;
 
+///\brief  struct AniDataå­˜æ”¾åŠ¨ç”»ç›¸å…³æ•°æ®
 
 struct AniData
 {
-	// ¶¯»­Ãû
-	string name;
-	// ¶¯»­×ÊÔ´ÎÄ¼ş
-	string fileName;
-	// Ö¡ÂÊ
-	int fps;
-	// ¶¯»­Ö¡Êı¾İ
-	vector<Rect> framesData;
+                          
+	string name;  ///<åŠ¨ç”»å
+	
+	string fileName;  ///<åŠ¨ç”»èµ„æºæ–‡ä»¶
+	
+	int fps;   ///< å¸§ç‡
+	
+	vector<Rect> framesData;///< åŠ¨ç”»å¸§æ•°æ®
 };
 
-typedef map<string, AniData> AniGroup;      // Ò»¸öAniGroupÀàĞÍµÄ¶ÔÏó±íÊ¾Ò»¸ö¶¯»­£º ¶¯»­Ãû->¶¯»­µÄ²ÎÊıÅäÖÃ
+typedef map<string, AniData> AniGroup;      ///ä¸€ä¸ªAniGroupç±»å‹çš„å¯¹è±¡è¡¨ç¤ºä¸€ä¸ªåŠ¨ç”»ï¼š åŠ¨ç”»å->åŠ¨ç”»çš„å‚æ•°é…ç½®
 
+///\brief class AnimationMgr
+///
+///æ§åˆ¶åŠ¨ç”»é…ç½®ï¼ŒåŠ è½½é…ç½®æ–‡ä»¶
+///æ‰¾åˆ°åŠ¨ç”»
 class AnimationMgr 
 {
 private: 
-	// ¼ÓÔØÅäÖÃÎÄ¼ş
-	static void load(map<string,AniGroup>& rAniGroups)                             
+	
+	static void load(map<string,AniGroup>& rAniGroups)     ///åŠ è½½é…ç½®æ–‡ä»¶                        
 	{
 		TiXmlDocument doc;
 		if (doc.LoadFile("Config/GroupTable.xml"))
@@ -91,14 +114,14 @@ private:
 public:
 	static AniData* getAni(const char* groupName, const char* aniName)
 	{
-		static map<string, AniGroup> aniGroup; // aniGroup±íÊ¾Ò»¸ö¶¯»­×é£º×éÃû->¶¯»­
+		static map<string, AniGroup> aniGroup; /// aniGroupè¡¨ç¤ºä¸€ä¸ªåŠ¨ç”»ç»„ï¼šç»„å->åŠ¨ç”»
 		if (aniGroup.size() == 0)
 			load(aniGroup);
 		auto it = aniGroup.find(groupName);
-		if (it != aniGroup.end())       // ÕÒµ½¶¯»­×é
+		if (it != aniGroup.end())       /// æ‰¾åˆ°åŠ¨ç”»ç»„
 		{
 			auto ii = it->second.find(aniName);
-			if (ii != it->second.end())   // ÕÒµ½¶¯»­
+			if (ii != it->second.end())   /// æ‰¾åˆ°åŠ¨ç”»
 				return &ii->second;
 		}
 		return nullptr;
@@ -117,7 +140,8 @@ public:
 };
 
 
-/* äÖÈ¾¶ÔÏó²¿¼ş */
+///\brief class RenderPartæ¸²æŸ“å¯¹è±¡éƒ¨ä»¶ 
+
 class RenderPart
 {
 public:
@@ -135,7 +159,7 @@ private:
 	bool mPlaying;
 
 public:
-	Sprite* sprite; // ÓÃÓÚÏÔÊ¾
+	Sprite* sprite; ///< ç”¨äºæ˜¾ç¤º
 	string name;
 
 	RenderPart(const char* szName)
@@ -200,7 +224,7 @@ public:
 		if (mPlaying == false)
 			return;
 		if (currentAniData) {
-			if (currentAniData->framesData.size() == 1) // ´¦ÀíÖ»ÓĞ1Ö¡µÄ¶¯»­
+			if (currentAniData->framesData.size() == 1) /// å¤„ç†åªæœ‰1å¸§çš„åŠ¨ç”»
 				return;
 			currentElapsed += dt;
 			currentFrame = currentElapsed*currentAniData->fps;
@@ -228,13 +252,13 @@ public:
 	}
 };
 
-/* äÖÈ¾¶ÔÏó */
+///\brief class RenderObjæ¸²æŸ“å¯¹è±¡
 class RenderObj
 {
-	vector<RenderPart*> parts;          // vectorÓÃÓÚ¿ìËÙ·ÃÎÊ
-	map<string, RenderPart*> partsMap;  // ²¿¼şÃû³Æ->²¿¼ş¶ÔÏóµÄÓ³Éä
-	Point anchorPoint;  // Ãªµã
-	Point position;     // Î»ÖÃ
+	vector<RenderPart*> parts;          ///< vectorç”¨äºå¿«é€Ÿè®¿é—®
+	map<string, RenderPart*> partsMap;  ///< éƒ¨ä»¶åç§°->éƒ¨ä»¶å¯¹è±¡çš„æ˜ å°„
+	Point anchorPoint;  ///< é”šç‚¹
+	Point position;     ///< ä½ç½®
 public:
 	Sprite* sprite;
 public:
@@ -249,7 +273,7 @@ public:
 		sprite->release();
 	}
 
-	// ·µ»Øµ±Ç°parts¶¯»­µÄÒ»Ö¡
+	/// è¿”å›å½“å‰partsåŠ¨ç”»çš„ä¸€å¸§
 	Rect* getSize()
 	{
 		if (parts.size() > 0)
@@ -257,13 +281,13 @@ public:
 		return nullptr;
 	}
 
-	// ÉèÖÃÃªµã
+	/// è®¾ç½®é”šç‚¹
 	void setAnchorPoint(const Point& rPoint)
 	{
 		anchorPoint = rPoint;
 	}
 
-	// sprite×ÔÉíµÄÎ»ÖÃÉèÖÃ·½·¨
+	/// spriteè‡ªèº«çš„ä½ç½®è®¾ç½®æ–¹æ³•
 	void setPosition(const Point& rPoint)
 	{
 		position = rPoint;
@@ -276,33 +300,33 @@ public:
 		return position;
 	}
 
-	// Ê¹ÓÃÃû×ÖÉèÖÃ²¿¼ş¶¯»­
+	///ä½¿ç”¨åå­—è®¾ç½®éƒ¨ä»¶åŠ¨ç”»
 	void setAni(const char* partName,const char* groupName,const char* aniName)
 	{
 		auto it = partsMap.find(partName);
-		if (it != partsMap.end())                      // ÔÚpartsMapÖĞÕÒµ½¶ÔÓ¦µÄ²¿¼ş
-			it->second->setAni(groupName, aniName);    // ½«ÈÎÎñ×ª½Ó¸øCRendrPart::setAni()
+		if (it != partsMap.end())                      ///åœ¨partsMapä¸­æ‰¾åˆ°å¯¹åº”çš„éƒ¨ä»¶
+			it->second->setAni(groupName, aniName);    /// å°†ä»»åŠ¡è½¬æ¥ç»™CRendrPart::setAni()
 	}
-	// Ê¹ÓÃË÷ÒıÉèÖÃ²¿¼ş¶¯»­
+	/// ä½¿ç”¨ç´¢å¼•è®¾ç½®éƒ¨ä»¶åŠ¨ç”»
 	void setAni(int idx,const char* groupName, const char* aniName)
 	{
 		auto p = parts[idx];
 		p->setAni(groupName, aniName);
 	}
 
-	/* Ìí¼Ó²¿¼ş */
-	void addPart(const char* partName, /*²¿¼şµÄÆ«ÒÆ*/const Point& offset) 
+	/// æ·»åŠ éƒ¨ä»¶
+	void addPart(const char* partName, /*éƒ¨ä»¶çš„åç§»*/ const Point& offset) 
 	{
-		auto pNewPart = new RenderPart(partName);   // Éú³É
+		auto pNewPart = new RenderPart(partName);   /// ç”Ÿæˆ
 		pNewPart->sprite->setPosition(offset);
 		pNewPart->name = partName;
 
-		sprite->addChild(pNewPart->sprite);// ½«²¿¼ş¾«ÁéÌí¼Óµ½sprite
-		parts.push_back(pNewPart);         // ÏòvectorÖĞ×¢²á
-		partsMap[partName] = pNewPart;     // ÏòmapÖĞ×¢²á
+		sprite->addChild(pNewPart->sprite);///å°†éƒ¨ä»¶ç²¾çµæ·»åŠ åˆ°sprite
+		parts.push_back(pNewPart);         ///å‘vectorä¸­æ³¨å†Œ
+		partsMap[partName] = pNewPart;     /// å‘mapä¸­æ³¨å†Œ
 	}
 	
-	/* ĞŞÕıÏà¶ÔÎ»ÒÆ */
+	///ä¿®æ­£ç›¸å¯¹ä½ç§»
 	void modifyPartOffset(const char* partName,const Point& offset)
 	{
 		auto it = partsMap.find(partName);
@@ -312,10 +336,10 @@ public:
 
 	void removePart(const char* partName)
 	{
-		auto it = partsMap.find(partName);  // È¡³ö
+		auto it = partsMap.find(partName);  /// å–å‡º
 
-		sprite->removeChild(it->second->sprite,true);// ´ÓspriteÒÆ³ı²¿¼ş¾«Áé
-		// ´ÓvectorÒÆ³ı
+		sprite->removeChild(it->second->sprite,true);/// ä»spriteç§»é™¤éƒ¨ä»¶ç²¾çµ
+		/// ä»vectorç§»é™¤
 		auto iter = parts.begin(), end = parts.end();
 		for (; iter != end; ++iter) {
 			if ((*iter)->name == partName)
@@ -327,7 +351,7 @@ public:
 
 	void update(float dt)
 	{
-		// ±éÀúparts
+		/// éå†parts
 		auto it = parts.begin(), end = parts.end();
 		for (; it != end; ++it)
 			(*it)->update(dt);
