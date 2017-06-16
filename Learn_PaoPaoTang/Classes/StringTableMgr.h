@@ -1,3 +1,14 @@
+///////////////////////////
+///\file StringTableMgr.h
+///\brief Head file for class StringTableMgr
+///
+///
+///
+///\author 蓝楚迪
+/////////////////////////
+
+
+
 #ifndef _STRING_TABLE_MGR_
 #define _STRING_TABLE_MGR_
 #include"tinyxml.h"
