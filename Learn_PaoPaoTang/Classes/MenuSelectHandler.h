@@ -1,6 +1,6 @@
 //////////////////////////////
 /// \file MenuSelectHandler.h
-///  \brief source file for class MenuSelectHandler
+///  \brief Head file for class MenuSelectHandler
 /// 实现菜单选择功能
 ///  
 ///
