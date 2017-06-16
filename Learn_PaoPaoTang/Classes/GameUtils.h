@@ -1,6 +1,6 @@
 //////////////////////////////
 /// \file GameLogic.cpp
-///  \brief source file for class GameUtils.h
+///  \brief Head file for class GameUtils.h
 /// 
 ///  
 ///
