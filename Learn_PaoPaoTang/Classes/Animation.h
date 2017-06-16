@@ -1,8 +1,8 @@
 //////////////////////////////
 /// \file Animation.h
 ///  \brief Head file for Animation
-/// \detail 
-///
+/// 实现动画配置
+///  渲染对象和对象部件
 ///
 ///
 ///
