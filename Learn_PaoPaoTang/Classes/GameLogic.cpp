@@ -1,3 +1,16 @@
+
+//////////////////////////////
+/// \file GameLogic.cpp
+///  \brief source file for class Gamelogic
+/// å¯¹è±¡çŠ¶æ€æŽ§åˆ¶
+///  å¯¹è±¡é€»è¾‘å…³ç³»
+///
+///
+///
+///\author è“æ¥šè¿ª
+/////////////////////////////
+
+
 #include "GameLogic.h"
 
 USING_NS_CC;
@@ -26,10 +39,10 @@ bool GameLogic::applicationDidFinishLaunching() {
         pDirector->setOpenGLView(glview);
     }
 
-	//
+	///
 	pDirector->getScheduler()->scheduleUpdate(this, 0,	false);
 
-	// ´´½¨³¡¾°
+	///åˆ›å»ºåœºæ™¯
 	mSceneRoot = Scene::create();
 	mBeginScene = new (BeginScene)();
 	mPlayScene = new (PlayScene)();
@@ -38,7 +51,7 @@ bool GameLogic::applicationDidFinishLaunching() {
 	mCurrentScene = mBeginScene;
 	mCurrentScene->onEnterScene();
     
-	// run
+	/// run
     pDirector->runWithScene(mSceneRoot);
 
     return true;
@@ -58,7 +71,7 @@ void GameLogic::applicationWillEnterForeground() {
 
 
 
-// ´¦ÀíÊäÈë
+///å¤„ç†è¾“å…¥
 
 void GameLogic::handleInput(ControlType ectType, PressState epState)
 {
@@ -67,22 +80,22 @@ void GameLogic::handleInput(ControlType ectType, PressState epState)
 
 void GameLogic::handleEvent(int eventType, void * data)
 {
-	// ¹ýÂËÊÂ¼þ
+	///è¿‡æ»¤äº‹ä»¶
 	switch (eventType)
 	{
 	case SSE_Play:
 	{
-		mCurrentScene->onExitScene(); // ÍË³öµ±Ç°³¡¾°
+		mCurrentScene->onExitScene(); /// é€€å‡ºå½“å‰åœºæ™¯
 		mSceneRoot->removeChild(mCurrentScene->getSceneLayer(), false);
 		
-		mCurrentScene = mPlayScene;  //µ±Ç°³¡¾°×ª»¯ÎªÏÂÒ»³¡¾°
+		mCurrentScene = mPlayScene;  ///å½“å‰åœºæ™¯è½¬åŒ–ä¸ºä¸‹ä¸€åœºæ™¯
 		mSceneRoot->addChild(mCurrentScene->getSceneLayer());
 		mCurrentScene->onEnterScene();
 		return;
 	}
 	case SSE_Exit:
 		{
-			mCurrentScene->onExitScene();// ÊÍ·Åµ±Ç°³¡¾°
+			mCurrentScene->onExitScene();///é‡Šæ”¾å½“å‰åœºæ™¯
 			mCurrentScene = nullptr;
 			Director::getInstance()->end();
 			
@@ -91,15 +104,15 @@ void GameLogic::handleEvent(int eventType, void * data)
 			delete mPlayScene;
 			mPlayScene = nullptr;
 
-			return;// ½áÊø´¦Àí
+			return;///ç»“æŸå¤„ç†
 		}
 	
-	case SSE_Back2Menu: /* ·µ»Ø¿ªÊ¼²Ëµ¥ */
+	case SSE_Back2Menu: ///è¿”å›žå¼€å§‹èœå• 
 		{
-			mCurrentScene->onExitScene(); // ÍË³öµ±Ç°³¡¾°
+			mCurrentScene->onExitScene(); /// é€€å‡ºå½“å‰åœºæ™¯
 			mSceneRoot->removeChild(mCurrentScene->getSceneLayer(), false);
 			
-			mCurrentScene = mBeginScene;  //µ±Ç°³¡¾°×ª»¯Îª¿ªÊ¼³¡¾°
+			mCurrentScene = mBeginScene;  ///å½“å‰åœºæ™¯è½¬åŒ–ä¸ºå¼€å§‹åœºæ™¯
 			mSceneRoot->addChild(mCurrentScene->getSceneLayer());
 			mCurrentScene->onEnterScene();
 			return;
@@ -119,7 +132,7 @@ void GameLogic::update(float dt)
 	// to do
 
 	// ...
-	if (mCurrentScene)// µ±Ç°³¡¾°´æÔÚ
+	if (mCurrentScene)///å½“å‰åœºæ™¯å­˜åœ¨
 		mCurrentScene->onUpdate(dt);
 }
 
