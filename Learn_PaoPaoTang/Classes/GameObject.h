@@ -1,3 +1,14 @@
+//////////////////////////////
+/// \file GameObject.h
+///  \brief source file for class GameObject
+/// 
+///  
+///
+///
+///
+///\author è“æ¥šè¿ª
+/////////////////////////////
+
 #ifndef _GAME_OBJECT_H_
 #define _GAME_OBJECT_H_
 
@@ -23,7 +34,7 @@ public:
 	virtual ~GameObject(){}
 
 	GameObjectType getType() { return mType; }
-	/* ÉèÖÃÎ»ÖÃ */
+	///
 	void setGrid(int gridx, int gridy) { mGridX = gridx; mGridY = gridy; }
 	void setPosition(const Point& rPoint)
 	{
@@ -40,7 +51,7 @@ public:
 	virtual void load(const char* szName) = 0;
 	virtual void update(float dt)
 	{
-		mRenderObj.update(dt);// ¸üĞÂÏÔÊ¾ÄÚÈİ
+		mRenderObj.update(dt);///
 	}
 
 	virtual Sprite* getSprite() { return mRenderObj.sprite; }
